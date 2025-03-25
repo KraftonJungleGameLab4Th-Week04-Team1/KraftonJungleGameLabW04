@@ -29,7 +29,7 @@ public class InfoManager : MonoBehaviour
         _maxAircraftState = 100;
         _fuelPerDistance = 1;
         _quotinentByAircraftState = 2;
-        _quotinentByWeight = 2;
+        _quotinentByWeight = 1;
     }
  
     /// <summary>
@@ -76,7 +76,7 @@ public class InfoManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 네 자원을 모두 입력해 가능한 무게값인지 bool값을 반환합니다.
+    /// 네 자원을 모두 입력해 이 자원이 플레이어에게 추가되었을 때 가능한 무게값인지 bool값을 반환합니다.
     /// </summary>
     /// <param name="food"></param>
     /// <param name="bolt"></param>
