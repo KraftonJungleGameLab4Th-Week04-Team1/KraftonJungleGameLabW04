@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("노드 명")]
+    [SerializeField] private string _NodeName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private int _nodeIdx;
+
+    [Header("노드 자원")]
+    [SerializeField] private int _food;
+    [SerializeField] private int _bolt;
+    [SerializeField] private int _not;
+    [SerializeField] private int _fuel;
+
+    [Header("특수 노드 여부")]
+    public NodeType _nodeType;
+
+    public int Food => _food;
+    public int Bolt => _bolt;
+    public int Not => _not;
+    public int Fuel => _fuel;
 }
