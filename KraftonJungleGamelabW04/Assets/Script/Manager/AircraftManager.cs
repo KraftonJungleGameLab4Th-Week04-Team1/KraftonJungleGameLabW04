@@ -7,7 +7,10 @@ public class AircraftManager : MonoBehaviour
     public int Bolt => _bolt; private int _bolt;
     public int Nut => _nut; private int _nut;
     public int Fuel => _fuel; private int _fuel;
-    public int CurrentWeight => _currentWeight; private int _currentWeight;
+    public int CurrentWeight => _currentWeight; private int _currentWeight; //현재무게
+    public int MaxWeight => _maxWeight; private int _maxWeight; //최대 수용가능 무게
+    public int AircraftState => _aircraftState; private int _aircraftState;
+    public int MaxAircraftState => _maxAircraftState; private int _maxAircraftState;
 
 
     /// <summary>
