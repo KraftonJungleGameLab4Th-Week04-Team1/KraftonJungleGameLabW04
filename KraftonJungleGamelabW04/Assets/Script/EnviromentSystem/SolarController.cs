@@ -2,70 +2,131 @@ using UnityEngine;
 
 public class SolarController : MonoBehaviour
 {
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _fastRotationSpeed;
+    [SerializeField] private float _rotationSpeed = 100f;     // 드래그 회전 속도
+    [SerializeField] private float _orbitSpeed = 360f;        // Sun Light 기본 회전 속도
+    [SerializeField] private float _autoRotationSpeed = 30f;  // 자동 회전 속도
+    [SerializeField] private float _cameraLerpSpeed = 2f;     // 카메라 크기 변화 속도
+    [SerializeField] private float _fastMult = 2f;            // 빠른 회전 배수
+
     private Camera _mainCamera;
-    private float _cameraLerpSpeed = 2f;
+    private bool _isDragging = false;
+    private Vector3 _lastMousePosition;
+    private Transform _sunLightTransform;
+    private float _currentLightAngle = 85f;
 
     private bool _isFast = false;
-    private float _currentAngle = 0;
-    private float _targetAngle;
+    private float _rotateAngle;
+    private float _currentCameraAngle = 0f;
 
-    public void Start()
+    private float rotationAmount;
+    private Vector3 dir;
+
+    private void Start()
     {
         _mainCamera = Camera.main;
+        _sunLightTransform = GameObject.Find("Sun Light").transform;
+        Init();
     }
 
     public void Init()
     {
-        _currentAngle = 0f; 
-        _isFast = false;
         if (_mainCamera == null)
             _mainCamera = Camera.main;
+        if (_sunLightTransform == null)
+            _sunLightTransform = GameObject.Find("Sun Light").transform;
+
+        _currentLightAngle = 85f;
+        _currentCameraAngle = 0f;
+        _isFast = false;
     }
 
     private void Update()
     {
-        // 테스트용 코드
+        // 마우스 입력 처리
+        if (!_isFast && Input.GetMouseButtonDown(0))
+        {
+            _isDragging = true;
+            _lastMousePosition = Input.mousePosition;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            _isDragging = false;
+        }
+
+        // 테스트용
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetRotate(50f);
+            SetRotate(90f);
         }
 
-        // 이 부분에서 GameManager의 시간과 동기화 필요
-        if (!_isFast)
-            transform.Rotate(0, _rotationSpeed * Time.deltaTime, 0);
-        else
+        // 회전량 계산
+        if (_isFast)
         {
-            float rotationThisFrame = _fastRotationSpeed * Time.deltaTime;
-            transform.Rotate(0, rotationThisFrame, 0);
-
-            _currentAngle += rotationThisFrame;
-
-            if (_currentAngle >= _targetAngle)
+            rotationAmount = _rotationSpeed * _fastMult * Time.deltaTime;
+            _currentCameraAngle += rotationAmount;
+            dir = Vector3.down;
+            if (_currentCameraAngle >= _rotateAngle)
             {
                 _isFast = false;
-                _currentAngle = 0;
+                _currentCameraAngle = 0f;
             }
         }
+        else if (_isDragging)
+        {
+            Vector3 currentMousePosition = Input.mousePosition;
+            float deltaX = currentMousePosition.x - _lastMousePosition.x;
+            rotationAmount = deltaX * _rotationSpeed * Time.deltaTime;
+            _lastMousePosition = currentMousePosition;
+            dir = Vector3.up;
+        }
+        else if (!_isDragging && !_isFast)
+        {
+            rotationAmount = _autoRotationSpeed * Time.deltaTime;
+            dir = Vector3.down;
+        }
 
-        // 빨리감기할 때 줌인(4), 평소 상태일 때 줌아웃(5)
+        // 카메라 회전
+        _mainCamera.transform.RotateAround(
+            transform.position,
+            dir,
+            rotationAmount
+        );
+
+        // 카메라 크기 조정
         float targetSize = _isFast ? 4f : 5f;
         _mainCamera.orthographicSize = Mathf.Lerp(
             _mainCamera.orthographicSize,
             targetSize,
             Time.deltaTime * _cameraLerpSpeed
         );
+
+        // Sun Light 회전
+        float lightRotationAmount;
+        if (_isFast)
+        {
+            // 카메라와 동일한 속도로 회전
+            lightRotationAmount = rotationAmount;
+            _currentLightAngle -= lightRotationAmount;
+        }
+        else
+        {
+            lightRotationAmount = _orbitSpeed * Time.deltaTime;
+            _currentLightAngle -= lightRotationAmount;
+        }
+
+        if (_currentLightAngle <= 85f - 360f)
+        {
+            _currentLightAngle += 360f;
+        }
+
+        if (_sunLightTransform != null)
+            _sunLightTransform.eulerAngles = new Vector3(0, _currentLightAngle, 0);
     }
 
-    /// <summary>
-    /// targetAngle만큼 회전한다.
-    /// </summary>
-    /// <param name="targetAngle"></param>
-    private void SetRotate(float targetAngle)
+    private void SetRotate(float rotateAngle)
     {
         _isFast = true;
-        _targetAngle = targetAngle;
-        _currentAngle = 0f;
+        _rotateAngle = rotateAngle;
+        _currentCameraAngle = 0f;
     }
 }
