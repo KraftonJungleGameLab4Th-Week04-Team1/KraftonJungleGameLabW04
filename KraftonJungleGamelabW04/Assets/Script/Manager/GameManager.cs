@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -5,7 +6,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
-    #region
+    #region Managers
     public static UIManager UI { get { return Instance._uiManager; } }
     public static AircraftManager Aircraft { get { return Instance._aircraftManager; } }
     public static SolarController Solor { get { return Instance._solarController; } }
@@ -15,6 +16,32 @@ public class GameManager : MonoBehaviour
     private AircraftManager _aircraftManager = new AircraftManager();
     private SolarController _solarController = new SolarController();
     private NodeManager _nodeManager = new NodeManager();
+    #endregion
+    
+    #region Actions
+
+    public Action<float> OnChangedGameTimeAction;
+    
+    // Node index
+    public Action<int> OnSelectNodeAction;
+    
+    // Fuel count
+    public Action<int> OnMoveNodeAction;
+    
+    // Food count, Bolt count, Nut count
+    public Action<Node> OnConfirmNodeAction;
+    #endregion
+    
+    #region Properties
+
+    public int CurrentNodeIndex { get;}
+    public int CurrentTurn { get; private set; } = 0;
+    public float GameTime { get; private set; }
+    private readonly float _timeInterval = 2f;
+    private float _time;
+    
+    private bool _isGameStarted = false;
+    
     #endregion
 
     private void Awake()
@@ -41,9 +68,49 @@ public class GameManager : MonoBehaviour
 
     private void GameStart()
     {
-        //TODO
-        /*
-        게임 시작시 필요한 처리
-         */
+        OnSelectNodeAction += HandleNodeSelected;
+        OnMoveNodeAction += HandleNodeMove;
+        OnConfirmNodeAction += HandleNodeConfirm;
+        
+        StartGameTimer(true);
+    }
+    
+    private void StartGameTimer(bool isStart)
+    {
+        _isGameStarted = isStart;
+    }
+
+    private void Update()
+    {
+        if (!_isGameStarted)
+        {
+            return;
+        }
+
+        // Get game time
+        _time += Time.deltaTime;
+        if (_time >= _timeInterval)
+        {
+            _time -= _timeInterval;
+            GameTime++;
+            OnChangedGameTimeAction?.Invoke(GameTime);
+        }
+    }
+
+    
+    private void HandleNodeSelected(int nodeIndex)
+    {
+        // When selected node
+    }
+
+    
+    private void HandleNodeMove(int nodeIndex)
+    {
+        // When decided to move
+    }
+    
+    private void HandleNodeConfirm(Node node)
+    {
+        // When selected confirm btn
     }
 }
