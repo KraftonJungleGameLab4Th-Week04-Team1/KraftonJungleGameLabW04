@@ -11,13 +11,13 @@ public class GameManager : MonoBehaviour
     public static AircraftManager Aircraft { get { return Instance._aircraftManager; } }
     public static SolarController Solor { get { return Instance._solarController; } }
     public static NodeManager NodeManager { get { return Instance._nodeManager; } }
-    //public static InfoManager Info { get { return Instance._infoManager; } }
+    public static InfoManager Info { get { return Instance._infoManager; } }
 
     private UIManager _uiManager = new UIManager();
     private AircraftManager _aircraftManager = new AircraftManager();
     private SolarController _solarController = new SolarController();
     private NodeManager _nodeManager = new NodeManager();
-    //private InfoManager _infoManager = new InfoManager();
+    private InfoManager _infoManager = new InfoManager();
     #endregion
     
     #region Actions
