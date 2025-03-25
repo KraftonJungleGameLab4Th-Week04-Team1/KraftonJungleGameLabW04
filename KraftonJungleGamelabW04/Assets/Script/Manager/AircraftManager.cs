@@ -18,7 +18,10 @@ public class AircraftManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
-
+        // 우주정거장건설, 기체수리에 쓰이는 모든 자원을 보고서로부터 한번에 받아옵니다.
+        // 따라서 UIManager에서는 Node 객체만들어 담아서 액션을 Invoke해야합니다.
+        GameManager.Instance.OnConfirmUseAction += UseResources;
+        GameManager.Instance.OnConfirmUseAction += RepairAircraft;
     }
 
     void Start()
@@ -30,31 +33,36 @@ public class AircraftManager : MonoBehaviour
     }
 
     //////////자원 업데이트 함수. GameManager의 Action에 등록해야함.
-    private void AddResources(int foodToAdd, int boltToAdd, int nutToAdd, int fuelToAdd)
+    public void GainResources(Node toAircraft)
     {
-        _food += foodToAdd;
-        _bolt += boltToAdd;
-        _nut += nutToAdd;
-        _fuel += fuelToAdd;
+        _food += toAircraft.Food;
+        _bolt += toAircraft.Bolt;
+        _nut += toAircraft.Nut;
+        _fuel += toAircraft.Fuel;
+        
+        _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
     }
 
-    private void DecreaseResources(int foodToDecrease, int boltToDecrease, int nutToDecrease, int fuelToDecrease)
+    public void UseResources(Node fromAircraft)
     {
-        _food -= foodToDecrease;
-        _bolt -= boltToDecrease;
-        _nut -= nutToDecrease;
-        _fuel -= fuelToDecrease;
+        _food -= fromAircraft.Food;
+        _bolt -= fromAircraft.Bolt;
+        _nut -= fromAircraft.Nut;
+        _fuel -= fromAircraft.Fuel;
+
+        _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
     }
 
-    private void DamageAircraft(int damage) // += 착륙시의 액션에 구독되어야함. 한 경우 v.
+    public void DamageAircraft(int damage)
     {
         _currentAircraftState -= damage;
     }
 
-    private void RepairAircraft(int repairValue) // += 수리 액션을 구독해야함. 한 경우에 v.
+    // 우주정거장이랑 기체수리정비소랑 같은 노드가 아니라는 전제로 코드를 짰습니다.
+    public void RepairAircraft(Node fromAircraft)
     {
-        _currentAircraftState += repairValue;
-        if(_currentAircraftState > _maxAircraftState)
+        _currentAircraftState += GameManager.Info.GetRepairValue(fromAircraft.Bolt, fromAircraft.Nut);
+        if (_currentAircraftState > _maxAircraftState)
         {
             _currentAircraftState = _maxAircraftState;
         }

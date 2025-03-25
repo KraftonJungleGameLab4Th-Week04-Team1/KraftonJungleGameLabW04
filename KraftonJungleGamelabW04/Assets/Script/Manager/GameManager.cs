@@ -26,9 +26,10 @@ public class GameManager : MonoBehaviour
     
     public Action<int> OnSelectNodeAction;
     public Action<int> OnMoveNodeAction;
-    public Action<Node> OnConfirmNodeAction;
+    public Action<Node> OnConfirmUseAction;
+    public Action<Node> OnConfirmGainAction;
     #endregion
-    
+
     #region Properties
 
     public int CurrentNodeIndex { get;}
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
     {
         OnSelectNodeAction += HandleNodeSelected;
         OnMoveNodeAction += HandleNodeMove;
-        OnConfirmNodeAction += HandleNodeConfirm;
+        //OnConfirmNodeAction += HandleNodeConfirm;
         
         StartGameTimer(true);
     }
