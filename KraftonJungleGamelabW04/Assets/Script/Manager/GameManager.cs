@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         NodeManager.Init();
         Aircraft.Init();
         Solor.Init();
+        Info.Init();
     }
 
     private void GameStart()
