@@ -6,7 +6,7 @@ public class PlaneController : MonoBehaviour
     private Transform[] _planes = new Transform[22];
     private int _curNodeIdx = 6; 
     private int _targetNodeIdx;
-    private Vector3 _targetPosition;     // 이동 목표 위치
+    private Transform _targetPosition;     // 이동 목표 위치
     private float speed = 0.5f;           // 초당 이동 속도 (유닛/초, 조정 가능)
     private bool _isMoving = false;      // 이동 중 여부
 
@@ -49,8 +49,8 @@ public class PlaneController : MonoBehaviour
     {
         if (!_isMoving) return;
         
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
-        if (Vector3.Distance(_targetPosition, transform.position) < 0.1f)
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition.position, speed * Time.deltaTime);
+        if (Vector3.Distance(_targetPosition.position, transform.position) < 0.1f)
         {
             transform.rotation = _planes[_targetNodeIdx].rotation;
             _curNodeIdx = _targetNodeIdx;
@@ -61,7 +61,7 @@ public class PlaneController : MonoBehaviour
     private void MovePlayer(int nodeIdx)
     {
         _targetNodeIdx = nodeIdx;
-        _targetPosition = _planes[nodeIdx - 1].position;
+        _targetPosition = _planes[nodeIdx - 1];
         _isMoving = true;
     }
 }

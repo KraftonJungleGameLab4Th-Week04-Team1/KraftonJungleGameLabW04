@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +22,7 @@ public class NodeMarkerUI : MonoBehaviour
     {
         _canvasRect = _canvas.GetComponent<RectTransform>();
         
-        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeIdx));
+        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
 
         ActivateNodeMarkerCanvas(false);
@@ -32,7 +31,7 @@ public class NodeMarkerUI : MonoBehaviour
     // Activate node marker UI
     private void ActivateNodeMarkerUI(int index)
     {
-        if (Node.NodeIdx != index)
+        if (Node.NodeNum != index)
         {
             ActivateNodeMarkerCanvas(false);
         }
@@ -77,7 +76,7 @@ public class NodeMarkerUI : MonoBehaviour
     // Move btn click action
     private void OnClickMoveBtn(int index)
     {
-        if (Node.NodeIdx == index)
+        if (Node.NodeNum == index)
         {
             GameManager.Instance.OnMoveNodeAction?.Invoke(index);
         }

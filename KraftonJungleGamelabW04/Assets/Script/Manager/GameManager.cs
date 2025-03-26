@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
     public void ChangeGameTime(float time)
     {
         GameTime += time;
+        //OnChangedGameTimeAction?.Invoke(GameTime);
     }
 
     private void Update()
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
             {
                 _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
-                Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeIdx);
+                Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
             }
         }
     }
