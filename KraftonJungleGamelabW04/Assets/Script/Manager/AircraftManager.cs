@@ -42,12 +42,12 @@ public class AircraftManager
         _currentWeight = GameManager.Info.CalculateCurrentWeight();
     }
 
-    public void RepiarAircraftByInputValue(int value)
+    public void RepairAircraftByInputValue(int value)
     {
-        _currentAircraftState = Mathf.Max(_currentAircraftState + value, _maxAircraftState)
+        _currentAircraftState = Mathf.Max(_currentAircraftState + value, _maxAircraftState);
     }
 
-    /* [Legacy] 격차가 컨펌일때 사용하던 메서드들
+    
     //////////자원 업데이트 함수. GameManager의 Action에 등록해야함.
     public void GainResources(Node toAircraft)
     {
@@ -68,7 +68,8 @@ public class AircraftManager
 
         _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
     }
-    
+
+    /* [Legacy] 격차가 컨펌일때 사용하던 메서드들
     // 우주정거장이랑 기체수리정비소랑 같은 노드가 아니라는 전제로 코드를 짰습니다.
     public void RepairAircraft(Node fromAircraft)
     {
