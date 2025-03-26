@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class BasicUI : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private Canvas _canvas;
     private RectTransform _rectTransform;
 
     [Header("Panel State")]
@@ -23,7 +22,8 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        // 자식 오브젝트의 RectTransform을 가져옵니다.
+        _rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
     }
 
     public void Init()
@@ -40,10 +40,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _isPanelOn = !_isPanelOn;
         if (_isPanelOn)
         {
-            //디버그 코드
-            //Node node = new Node();
-            //node.Fuel = 3;
-            //GameManager.Instance.OnConfirmUseAction.Invoke(node);
             _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
         else
@@ -55,7 +51,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     private void UpdateBasicUI()
     {
         AircraftManager aircraft = GameManager.Aircraft;
-
         _foodText.text = $"{aircraft.Food}";
         _boltText.text = $"{aircraft.Bolt}";
         _nutText.text = $"{aircraft.Nut}";
