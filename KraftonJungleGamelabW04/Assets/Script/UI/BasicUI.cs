@@ -2,12 +2,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BasicUI : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private Canvas _canvas;
-    private Animator _animator;
+    private RectTransform _rectTransform;
 
+    [Header("Panel State")]
+    [SerializeField] private bool _isPanelOn;
+    [SerializeField] private float _panelMoveSpeed = 0.4f;
+
+    [Header("UI Elements")]
     [SerializeField] private TMP_Text _foodText;
     [SerializeField] private TMP_Text _boltText;
     [SerializeField] private TMP_Text _nutText;
@@ -16,12 +22,10 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TMP_Text _currentAircraftStateText;
     [SerializeField] private Button _panelOnOffBtn;
 
-    [SerializeField] private bool _isPanelOn = true;
 
     private void Start()
     {
-        //_panelOnOffBtn.onClick.AddListener(OnClickPanelOnOffBtn);
-        _animator = GetComponent<Animator>();
+        _rectTransform = GetComponent<RectTransform>();
 
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmUseAction += _ => UpdateBasicUI();
@@ -35,11 +39,11 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _isPanelOn = !_isPanelOn;
         if (_isPanelOn)
         {
-            _animator.SetTrigger("Off");
+            _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
         else
         {
-            _animator.SetTrigger("On");
+            _rectTransform.DOAnchorPosY(-220, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
     }
 
