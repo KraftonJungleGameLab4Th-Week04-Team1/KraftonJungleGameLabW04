@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// camera Controller + Solar Controller????
+/// </summary>
 public class SolarController_DE : MonoBehaviour
 {
     public float rotationSpeed = 0.2f;
@@ -19,21 +22,22 @@ public class SolarController_DE : MonoBehaviour
     // 시간 변화에 따른 지구 회전
     private void RotateEarth(float gameTime)
     {
-        transform.eulerAngles = Vector3.up * gameTime * 0.25f;
+        //지구가 회전할 필요는 없는 듯.
+        //transform.eulerAngles = Vector3.up * gameTime * 0.25f;
     }
 
     private void HandleSolarMovement(int targetIndex)
     {
-        int block = targetIndex - GameManager.Instance.CurrentNodeIndex;
+        int block = NodeManager.NodeDic[targetIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
         if (block < 0)
         {
             block += 32;
         }
 
         // StartCoroutine(IncreaseTime(block));
-        GameManager.Instance.ChangeGameTime(block * 45);
+        GameManager.Instance.ChangeGameTime(block * 30);
             
-        Debug.Log($"@@DE ---> {block}칸 이동 / {block * 45}분 지남");
+        Debug.Log($"@@DE ---> {block}칸 이동 / {block * 30}분 지남");
     }
 
     IEnumerator IncreaseTime(int block)
@@ -46,16 +50,16 @@ public class SolarController_DE : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
+            //float t = Mathf.Clamp01(elapsed / duration);
 
-            currentValue = Mathf.Lerp(0f, targetValue, t);
-            GameManager.Instance.ChangeGameTime(currentValue);
+            //currentValue = Mathf.Lerp(0f, targetValue, t);
+            GameManager.Instance.ChangeGameTime(elapsed * 2);
 
             yield return null;
         }
 
-        // 마지막에 정확히 targetValue로 고정
-        GameManager.Instance.ChangeGameTime(targetValue);
+        //// 마지막에 정확히 targetValue로 고정
+        //GameManager.Instance.ChangeGameTime(targetValue);
     }
     
     void Update()

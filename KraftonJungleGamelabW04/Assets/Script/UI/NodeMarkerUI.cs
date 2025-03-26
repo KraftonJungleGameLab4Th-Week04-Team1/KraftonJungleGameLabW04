@@ -17,6 +17,7 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private Button _moveBtn;
 
     private RectTransform _canvasRect;
+    private bool _isMoving; //비행기 움직이면 Move 입력을 막는 변수.
 
     private void Start()
     {
@@ -76,8 +77,10 @@ public class NodeMarkerUI : MonoBehaviour
     // Move btn click action
     private void OnClickMoveBtn(int index)
     {
+        if (_isMoving) return;
+
         if (Node.NodeNum == index)
-        {
+        {            
             GameManager.Instance.OnMoveNodeAction?.Invoke(index);
         }
     }

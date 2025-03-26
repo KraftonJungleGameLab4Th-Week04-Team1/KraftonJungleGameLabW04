@@ -26,18 +26,19 @@ public class GameManager : MonoBehaviour
     
     public Action<int> OnSelectNodeAction;
     public Action<int> OnMoveNodeAction;
+    public Action<int> OnArriveAction; //선택 노드 도착시 시행할 액션.
     //aircraftFood, aircraftBolt, aircraftNut, aircraftFuel, repairValue, nodeFood, nodeBolt, nodeNut, nodeFuel
     public Action<int, int, int, int, int, int, int, int, int> OnConfirmAction;
     #endregion
 
     #region Properties
 
-    public int CurrentNodeIndex { get; private set; } = 1;
+    public int CurrentNodeIndex { get;  set; } = 1;
     private LayerMask _layerMask;
     
     public int CurrentTurn { get; private set; } = 0;
-    public float GameTime { get; private set; }
-    private readonly float _timeInterval = 2f;
+    [SerializeField] public float GameTime { get; private set; }
+    private readonly float _timeInterval = 2f; //2초당 인게임 시간 1분 증가.
     private float _time;
     
     private bool _isGameStarted = false;
@@ -94,6 +95,9 @@ public class GameManager : MonoBehaviour
         _layerMask = LayerMask.GetMask("NodeMarker");
         GameState = GameState.Title;
         CurrentNodeIndex = 1;
+
+        //무빙 확인시 현재 노드 인덱스 변경.
+        OnArriveAction += ChangeCurrentNodeIndex;
     }
     
     public void StartGameTimer(bool isStart)
@@ -104,7 +108,7 @@ public class GameManager : MonoBehaviour
     public void ChangeGameTime(float time)
     {
         GameTime += time;
-        //OnChangedGameTimeAction?.Invoke(GameTime);
+        OnChangedGameTimeAction?.Invoke(GameTime);
     }
 
     private void Update()
@@ -120,6 +124,7 @@ public class GameManager : MonoBehaviour
         {
             _time -= _timeInterval;
             GameTime++;
+            Debug.Log(GameTime);
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
         
@@ -135,5 +140,17 @@ public class GameManager : MonoBehaviour
                 Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
             }
         }
+    }
+
+    void ChangeCurrentNodeIndex(int index)
+    {
+        CurrentNodeIndex = index;
+        Debug.Log("currentNode : " + index);
+        SpawnReport();
+    }
+
+    void SpawnReport()
+    {
+        Instantiate((GameObject)Resources.Load("HW/Canvas_ReportUI"));
     }
 }

@@ -49,12 +49,15 @@ public class PlaneController : MonoBehaviour
     {
         if (!_isMoving) return;
         
+        //움직일 때
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition.position, speed * Time.deltaTime);
         if (Vector3.Distance(_targetPosition.position, transform.position) < 0.1f)
         {
             transform.rotation = _planes[_targetNodeIdx].rotation;
             _curNodeIdx = _targetNodeIdx;
             _isMoving = false;
+
+            GameManager.Instance.OnArriveAction?.Invoke(_curNodeIdx);
         }
     }
 

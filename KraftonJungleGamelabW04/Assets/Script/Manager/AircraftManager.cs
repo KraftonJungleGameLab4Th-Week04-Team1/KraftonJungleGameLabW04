@@ -23,7 +23,7 @@ public class AircraftManager
         _food = 30;
         _fuel = 50;
         _currentWeight = 0;
-        _currentAircraftState = 50;
+        _currentAircraftState = 100;
         _bolt = 0;
         _nut = 0;
     }

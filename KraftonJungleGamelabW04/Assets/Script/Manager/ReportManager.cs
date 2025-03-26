@@ -58,7 +58,7 @@ public class ReportManager : MonoBehaviour
     void Start()
     {
         Info = GameManager.Info;
-        currentNode = NodeManager.NodeDic[3];
+        currentNode = NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex];
         aircraftManager = GameManager.Aircraft;
         _boltToUse = 0;
         _nutToUse = 0;
