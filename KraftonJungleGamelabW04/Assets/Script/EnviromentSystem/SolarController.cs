@@ -1,71 +1,53 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class SolarController : MonoBehaviour
 {
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _fastRotationSpeed;
-    private Camera _mainCamera;
-    private float _cameraLerpSpeed = 2f;
+    
+
+    private GameObject _sunLight;
+    private GameObject _sunCylinder;
+   
+    private Transform _sunLightTransform;
+    private Transform _deadZoneTransform;
+    private Transform _sunCylinderTransform;
+    [SerializeField] private float _currentRotationAngle = 0f;
 
     private bool _isFast = false;
-    private float _currentAngle = 0;
-    private float _targetAngle;
 
-    public void Start()
+    private Vector3 _cameraDir;
+
+    private void Start()
     {
-        _mainCamera = Camera.main;
+        _sunLight = GameObject.Find("SunLight");
+        _sunCylinder = GameObject.Find("LightArea");
+        _sunLightTransform = _sunLight.transform;
+        _sunCylinderTransform = _sunCylinder.transform;
+        //_deadZoneTransform = _sunLight.transform.GetChild(0).transform;
     }
 
     public void Init()
     {
-        _currentAngle = 0f; 
-        _isFast = false;
-        if (_mainCamera == null)
-            _mainCamera = Camera.main;
+        _currentRotationAngle = 0f;
     }
 
     private void Update()
     {
-        // 테스트용 코드
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SetRotate(50f);
-        }
+        float _cylinderRotationAmount = 0f;
 
-        // 이 부분에서 GameManager의 시간과 동기화 필요
-        if (!_isFast)
-            transform.Rotate(0, _rotationSpeed * Time.deltaTime, 0);
-        else
-        {
-            float rotationThisFrame = _fastRotationSpeed * Time.deltaTime;
-            transform.Rotate(0, rotationThisFrame, 0);
+        // 자동 회전
+        _cylinderRotationAmount = _rotationSpeed * Time.deltaTime;
 
-            _currentAngle += rotationThisFrame;
+        _cameraDir = Vector3.down;
 
-            if (_currentAngle >= _targetAngle)
-            {
-                _isFast = false;
-                _currentAngle = 0;
-            }
-        }
+        _currentRotationAngle += _cylinderRotationAmount; // 현재 각도 추적
+        if (_currentRotationAngle >= 360f)
+            _currentRotationAngle %= 360f;
 
-        // 빨리감기할 때 줌인(4), 평소 상태일 때 줌아웃(5)
-        float targetSize = _isFast ? 4f : 5f;
-        _mainCamera.orthographicSize = Mathf.Lerp(
-            _mainCamera.orthographicSize,
-            targetSize,
-            Time.deltaTime * _cameraLerpSpeed
-        );
-    }
-
-    /// <summary>
-    /// targetAngle만큼 회전한다.
-    /// </summary>
-    /// <param name="targetAngle"></param>
-    private void SetRotate(float targetAngle)
-    {
-        _isFast = true;
-        _targetAngle = targetAngle;
-        _currentAngle = 0f;
+        // 태양 실린더는 항상 같은 방향으로 회전
+        _sunCylinderTransform.RotateAround(transform.position, _cameraDir, _cylinderRotationAmount);
     }
 }

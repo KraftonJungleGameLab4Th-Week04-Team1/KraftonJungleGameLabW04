@@ -30,6 +30,7 @@ public class InfoManager
         _maxAircraftState = 100;
         _fuelPerDistance = 5;
         _foodPerDistance = 2;
+        _timePerDistance = 30;
         _quotinentByAircraftState = 2;
         _quotinentByWeight = 1;
         _boltRepairValue = 3;

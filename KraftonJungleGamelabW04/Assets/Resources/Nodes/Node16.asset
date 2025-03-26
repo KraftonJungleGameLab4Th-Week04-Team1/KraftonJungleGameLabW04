@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d891028d2179eeb4386fe58756c1f10f, type: 3}
   m_Name: Node16
   m_EditorClassIdentifier: 
+  _nodeGroup: 4
+  _xPos: 23
   _NodeName: "\uC624\uC2A4\uD2B8\uAC00\uB85C\uC544"
   _nodeIdx: 23
   _food: 120
   _bolt: 5
   _nut: 5
   _fuel: 50
+  _isVisited: 0
   _risk: 10
   _nodeType: 2
   _spaceStationLevel: 0
