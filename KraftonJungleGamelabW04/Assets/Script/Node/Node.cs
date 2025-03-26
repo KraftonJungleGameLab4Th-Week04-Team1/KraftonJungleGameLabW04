@@ -8,6 +8,7 @@ public class Node : ScriptableObject
 
     [Header("노드 명")]
     [SerializeField] private string _NodeName;
+    [SerializeField] private int _nodeNum;
     [SerializeField] private int _nodeIdx;
 
     [Header("노드 자원")]
@@ -25,6 +26,7 @@ public class Node : ScriptableObject
     [SerializeField] private int _spaceStationLevel;
 
     public int NodeGroup => _nodeGroup;
+    public int NodeNum => _nodeNum;
     public int NodeIdx => _nodeIdx;
     public string NodeName => _NodeName;
     public NodeType NodeType => _nodeType;
