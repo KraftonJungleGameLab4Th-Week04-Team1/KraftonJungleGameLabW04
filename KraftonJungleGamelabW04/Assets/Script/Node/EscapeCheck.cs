@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EscapeCheck : MonoBehaviour
 {
@@ -18,14 +19,14 @@ public class EscapeCheck : MonoBehaviour
         GameManager.Instance.OnConfirmAction += IgnoreParamsEscapeCheck;
     }
 
-    public bool CheckEscape()
+    public bool CheckEscape(int food)
     {
         if (GetCurrentPartsCount() < 6)
         {
             return false;
         }
 
-        if (GameManager.Aircraft.Food < 180)
+        if (food < 180)
         {
             return false;
         }
@@ -36,7 +37,7 @@ public class EscapeCheck : MonoBehaviour
     private void IgnoreParamsEscapeCheck(int a, int b, int c, int d, int e, int f, int g, int h, int i)
     {
         AddParts();
-        EscapeEnding();
+        EscapeEnding(f+a);
     }
 
     private void AddParts()
@@ -64,11 +65,11 @@ public class EscapeCheck : MonoBehaviour
         return partsCount;
     }
 
-    private void EscapeEnding()
+    private void EscapeEnding(int food)
     {
-        if(CheckEscape())
+        if(CheckEscape(food))
         {
-            Debug.Log("Escape Success!");
+            SceneManager.LoadScene("EndingScene");
         }
     }
 }
