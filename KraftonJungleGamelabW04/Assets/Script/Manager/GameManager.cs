@@ -89,6 +89,11 @@ public class GameManager : MonoBehaviour
         _isGameStarted = isStart;
     }
 
+    public void ChangeGameTime(float time)
+    {
+        GameTime += time;
+    }
+
     private void Update()
     {
         if (!_isGameStarted)
@@ -105,6 +110,7 @@ public class GameManager : MonoBehaviour
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
         
+        // Get selected node
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
