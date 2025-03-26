@@ -29,6 +29,7 @@ public class SolarController : MonoBehaviour
     //테스트용
     private int _curIdx = 5;
     private int _targetIdx = 10;
+    private int idx = 1;
 
     private void Start()
     {
@@ -38,11 +39,14 @@ public class SolarController : MonoBehaviour
         _sunCylinder = GameObject.Find("LightArea");
         _cameraTransform = _mainCamera.transform;
         _sunLightTransform = _sunLight.transform;
-        _deadZoneTransform = _sunLight.transform.GetChild(0).transform;
+        //_deadZoneTransform = _sunLight.transform.GetChild(0).transform;
         if (_sunCylinder != null)
             _sunCylinderTransform = _sunCylinder.transform;
 
         GameManager.Instance.OnMoveNodeAction += SetRotate;
+
+        for (int i = 1; i <= 22; i++)
+            Debug.Log(NodeManager.NodeDic[i].NodeName);
     }
 
     public void Init()
@@ -56,7 +60,9 @@ public class SolarController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetRotate(8);
+            SetRotate(idx);
+            idx++;
+            if (idx == 23) idx = 1;
         }
         // 입력 처리
         if (!_isFast && Input.GetMouseButtonDown(0))
@@ -135,17 +141,18 @@ public class SolarController : MonoBehaviour
     // 현재 노드에서 해당 노드까지 이동
     private void SetRotate(int targetNodeIdx)
     {
-        Node targetNode = NodeManager.NodeDic[targetNodeIdx];
-        Node curNode = NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex];
-
         //Node targetNode = NodeManager.NodeDic[targetNodeIdx];
-        //Node curNode = NodeManager.NodeDic[4];
+        //Node curNode = NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex];
 
+        Node targetNode = NodeManager.NodeDic[targetNodeIdx];
+        Node curNode = NodeManager.NodeDic[4];
+        Debug.Log(targetNode.name);
+        Debug.Log(curNode.name);
 
         if (targetNode == null) Debug.Log("targetnode null");
         if (curNode == null) Debug.Log("curNode null");
 
-        // 이거 나중에 삭제
+        // 나중에 삭제
         _targetIdx = targetNodeIdx;
 
         // 만약 이전 노드그룹이라면 이동할 수 없음

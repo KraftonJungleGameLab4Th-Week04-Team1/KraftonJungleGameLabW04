@@ -12,7 +12,7 @@ public class NodeManager
         //22개 노드 경로 추가
         for (int i = 1; i <= 22; i++)
         {
-            AddDataToBossInfo(i, "Node/Node" + i.ToString());
+            AddDataToBossInfo(i, "Nodes/Node" + i.ToString());
         }
 
         GameManager.Instance.OnConfirmGainAction += GainResource;
