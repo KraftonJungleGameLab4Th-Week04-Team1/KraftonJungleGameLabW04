@@ -20,16 +20,19 @@ public class AircraftManager
     {
         // 우주정거장건설, 기체수리에 쓰이는 모든 자원을 보고서로부터 한번에 받아옵니다.
         // 따라서 UIManager에서는 Node 객체만들어 담아서 액션을 Invoke해야합니다.
+        _food = 30;
+        _fuel = 50;
+        _currentWeight = 0;
+        _currentAircraftState = 50;
+        _bolt = 0;
+        _nut = 0;
     }
 
     void Start()
     {
         //_food = GameManager.Info.InitialFood; 
         //_fuel = GameManager.Info.InitialFuel;
-        _currentWeight = 0;
-        _currentAircraftState = 50;
-        _bolt = 0;
-        _nut = 0;
+
     }
 
     public void UpdateAircraftResources(int newFood, int newBolt, int newNut, int newFuel)

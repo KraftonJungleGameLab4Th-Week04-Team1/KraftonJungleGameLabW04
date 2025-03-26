@@ -58,12 +58,12 @@ public class ReportManager : MonoBehaviour
     void Start()
     {
         Info = GameManager.Info;
-        currentNode = NodeManager.NodeDic[12];
+        currentNode = NodeManager.NodeDic[3];
         aircraftManager = GameManager.Aircraft;
         _boltToUse = 0;
         _nutToUse = 0;
         _aircraftRepairValue = 0;
-        _currentAircraftWeight = aircraftManager.CurrentWeight;
+        _currentAircraftWeight = Info.CalculateCurrentWeight();
         _currentAircraftFood = aircraftManager.Food;
         _currentAircraftBolt = aircraftManager.Bolt;
         _currentAircraftNut = aircraftManager.Nut;
@@ -152,11 +152,11 @@ public class ReportManager : MonoBehaviour
     public void TakeFood()
     {
         if(_currentNodeFood <= 0) return;
-        if(!Info.IsPossibleWeight(_currentAircraftFood + 1, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel)) return;
+        if(!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food + 1, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel)) return;
 
         _currentNodeFood -= 1;
         _currentAircraftFood += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -165,7 +165,7 @@ public class ReportManager : MonoBehaviour
         if(_currentAircraftFood <= 0) return;
         _currentAircraftFood -= 1;
         _currentNodeFood += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -173,11 +173,11 @@ public class ReportManager : MonoBehaviour
     public void TakeBolt()
     {
         if(_currentNodeBolt <= 0) return;
-        if(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt + 1, _currentAircraftNut, _currentAircraftFuel)) return;
+        if (!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt + 1, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel)) return;
 
         _currentNodeBolt -= 1;
         _currentAircraftBolt += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -186,7 +186,7 @@ public class ReportManager : MonoBehaviour
         if(_currentAircraftBolt <= 0) return;
         _currentAircraftBolt -= 1;
         _currentNodeBolt += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -194,11 +194,11 @@ public class ReportManager : MonoBehaviour
     public void TakeNut()
     {
         if(_currentNodeNut <= 0) return;
-        if(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut + 1, _currentAircraftFuel)) return;
+        if (!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut + 1, _currentAircraftFuel - aircraftManager.Fuel)) return;
 
         _currentNodeNut -= 1;
         _currentAircraftNut += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -207,7 +207,7 @@ public class ReportManager : MonoBehaviour
         if(_currentAircraftNut <= 0) return;
         _currentAircraftNut -= 1;
         _currentNodeNut += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -219,7 +219,7 @@ public class ReportManager : MonoBehaviour
         else if(_currentNodeFuel <= 5)
         {
             finalValue = 5;
-            while(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel + finalValue))
+            while(!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel + finalValue))
             {
                 finalValue--;
             }
@@ -231,7 +231,7 @@ public class ReportManager : MonoBehaviour
         else
         {
             finalValue = 5;
-            while(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel + finalValue))
+            while(!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel + finalValue))
             {
                 finalValue--;
             }
@@ -239,7 +239,7 @@ public class ReportManager : MonoBehaviour
 
         _currentNodeFuel -= finalValue;
         _currentAircraftFuel += finalValue;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -258,7 +258,7 @@ public class ReportManager : MonoBehaviour
 
         _currentAircraftFuel -= finalValue;
         _currentNodeFuel += finalValue;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
+        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -470,6 +470,8 @@ public class ReportManager : MonoBehaviour
     {
         GameManager.Instance.OnConfirmAction?.Invoke(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel,
                 _aircraftRepairValue, _currentNodeFood, _currentNodeBolt, _currentNodeNut, _currentNodeFuel);
+
+        Destroy(gameObject);
     }
 }
  
