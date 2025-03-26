@@ -8,8 +8,21 @@ public class NodeManager : MonoBehaviour
 
     public void Init()
     {
-        GameManager.Instance.OnConfirmNodeAction += GainResource;
-        GameManager.Instance.OnConfirmNodeAction += BuildUpSpaceStation;
+        Node[] foundNodes = FindObjectsByType<Node>(FindObjectsSortMode.None);
+
+        foreach (Node node in foundNodes)
+        {
+            if (!NodeDic.ContainsKey(node.NodeIdx))
+            {
+                NodeDic.Add(node.NodeIdx, node);
+            }
+            else
+            {
+                Debug.LogWarning($"중복된 인덱스: {node.NodeIdx}를 가진 Node가 이미 존재합니다.");
+            }
+        }
+        GameManager.Instance.OnConfirmGainAction += GainResource;
+        GameManager.Instance.OnConfirmUseAction += BuildUpSpaceStation;
         GameManager.Instance.OnMoveNodeAction += GetDamageOnAircraft;
         GameManager.Instance.OnMoveNodeAction += SetNodeRisk;
     }
@@ -17,14 +30,16 @@ public class NodeManager : MonoBehaviour
     // Node 클래스는 구조체처럼 변수 저장용으로 사용합니다.
     public void GainResource(Node report)
     {
+        //현재 AirCraft가 위치한 노드
         int currentIdx = GameManager.Instance.CurrentNodeIndex;
-        Node ToAircraft = new Node();
 
+        //현재 노드에서 자원을 획득하고, 노드의 자원을 감소시킵니다.
+        Node ToAircraft = new Node();
         ToAircraft.Food = report.Food;
         ToAircraft.Bolt = report.Bolt;
         ToAircraft.Fuel = report.Fuel;
         ToAircraft.Nut = report.Nut;
-        //GameManager.Aircraft.AddResources(ToAircraft);
+        GameManager.Aircraft.GainResources(ToAircraft);
 
         NodeDic[currentIdx].Food -= report.Food;
         NodeDic[currentIdx].Bolt -= report.Bolt;
@@ -34,8 +49,7 @@ public class NodeManager : MonoBehaviour
 
     public void GetDamageOnAircraft(int nextNodeIdx)
     {
-        // 에어 크래프트 변수 혹은 함수 나오면 추가
-        // Aircraft.Hp -= NodeDic[nextNodeIdx].Risk;
+        GameManager.Aircraft.DamageAircraft(NodeDic[nextNodeIdx].Risk);
     }
 
     public void BuildUpSpaceStation(Node report)
@@ -46,13 +60,7 @@ public class NodeManager : MonoBehaviour
         {
             return;
         }
-
-        //Aircraft의 자원소모에 대한 기능 구독은 AircraftManager 혹은 InputManager에서 계산하여 추가 구독합니다.
-        //이 함수에서 한번에 처리한다면 아래와 같이 구현합니다.
-        //Node ToAircraft = new Node();
-        //ToAircraft.Bolt = -report.Bolt;
-        //ToAircraft.Nut = -report.Nut;
-        
+        //Aircraft의 자원소모에 대한 기능은 AircraftManager에서 계산하여 추가 구독합니다.
         NodeDic[GameManager.Instance.CurrentNodeIndex].SpaceStationLevel++;
     }
 
