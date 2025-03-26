@@ -13,6 +13,8 @@ public class InfoManager
     public int FuelPerDistance => _fuelPerDistance; private int _fuelPerDistance; //거리당 소모 연료
     public int FoodPerDistance => _foodPerDistance; private int _foodPerDistance; //거리당 소모 식량.
     public int TimePerDistance => _timePerDistance; private int _timePerDistance; //거리당 소요시간.
+    public int BaseRequiredFuel => _baseRequiredFuel; private int _baseRequiredFuel; //기본 소모연료
+    public int BaseRequiredFood => _baseRequiredFood; private int _baseRequiredFood; //기본 소모 식량.
     public int QuotinentByWeight => _quotinentByWeight; private int _quotinentByWeight; //중량이 가득 찼을 때 드는 연료는 몇 배인지 설정.
     public int QuotinentByAircraftState => _quotinentByAircraftState; private int _quotinentByAircraftState; //기체 상태가 0%일 때 드는 연료는 몇 배인지 설정.
     public int BoltRepairValue => _boltRepairValue; private int _boltRepairValue; //볼트 하나당 기체 수리되는 정도.
@@ -22,6 +24,8 @@ public class InfoManager
     public void Init()
     {
         //임시 값.
+        _inititalFood = 20;
+        _inititalFuel = 100;
         _weightPerFood = 2;
         _weightPerBolt = 3;
         _weightPerNut = 4;
@@ -30,6 +34,9 @@ public class InfoManager
         _maxAircraftState = 100;
         _fuelPerDistance = 5;
         _foodPerDistance = 2;
+        _timePerDistance = 30;
+        _baseRequiredFood = 1;
+        _baseRequiredFuel = 5;
         _quotinentByAircraftState = 2;
         _quotinentByWeight = 1;
         _boltRepairValue = 3;
@@ -43,6 +50,8 @@ public class InfoManager
     /// <returns></returns>
     public int GetTimeRequiredBetweenNodes(int xDistance)
     {
+        if(xDistance < 0) xDistance *= -1;
+
         return xDistance * _timePerDistance;
     }
  
@@ -53,11 +62,13 @@ public class InfoManager
     /// <returns></returns>
     public int GetFuelRequiredBetweenNodes(int xDistance)
     {
+        if(xDistance < 0) xDistance *= -1;
+
         AircraftManager aircraftManager = GameManager.Aircraft;
         int baseValue = xDistance * FuelPerDistance; //거리와 거리당 기본 소모연료의 곱.
         int fuelRequired = baseValue * (_maxWeight + aircraftManager.CurrentWeight) * 
             (2 * aircraftManager.MaxAircraftState - aircraftManager.CurrentAircraftState) *
-             _quotinentByAircraftState * _quotinentByWeight / _maxWeight / _maxAircraftState;
+             _quotinentByAircraftState * _quotinentByWeight / _maxWeight / _maxAircraftState + _baseRequiredFuel;
 
         return fuelRequired;
     }
@@ -115,7 +126,7 @@ public class InfoManager
     /// <returns></returns>
     public bool IsPossibleWeight(int addedFood, int addedBolt, int addedNut, int addedFuel)
     {
-        return GetCurrentWeight(addedFood, addedBolt, addedNut, addedFuel) < _maxWeight;
+        return GetCurrentWeight(addedFood, addedBolt, addedNut, addedFuel) <= _maxWeight;
     }
 
     /// <summary>

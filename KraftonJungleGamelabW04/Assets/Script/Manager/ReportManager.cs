@@ -28,6 +28,7 @@ public class ReportManager : MonoBehaviour
     private InfoManager Info;
     
     //UI References.
+    [SerializeField] private TextMeshProUGUI CityNameText;
     [SerializeField] private GameObject RepairBlockPanel;
     [SerializeField] private GameObject CraftBlockPanel;
     [SerializeField] private GameObject RepairPanel;
@@ -88,6 +89,7 @@ public class ReportManager : MonoBehaviour
             RepairBlockPanel.SetActive(true);
         }
 
+        CityNameText.text = currentNode.name;
         UpdateAllUI();
     }
 
@@ -209,20 +211,50 @@ public class ReportManager : MonoBehaviour
         //Resource Functions.
     public void TakeFuel()
     {
+        int finalValue;
         if(_currentNodeFuel <= 0) return;
-        if(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel + 1)) return;
+        else if(_currentNodeFuel <= 5)
+        {
+            finalValue = 5;
+            while(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel + finalValue))
+            {
+                finalValue--;
+            }
+            if(finalValue > _currentNodeFuel)
+            {
+                finalValue = _currentNodeFuel;
+            }
+        }
+        else
+        {
+            finalValue = 5;
+            while(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel + finalValue))
+            {
+                finalValue--;
+            }
+        }
 
-        _currentNodeFuel -= 1;
-        _currentAircraftFuel += 1;
+        _currentNodeFuel -= finalValue;
+        _currentAircraftFuel += finalValue;
         _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
         UpdateAllUI();
     }
 
     public void ReleaseFuel()
     {
+        int finalValue;
         if(_currentAircraftFuel <= 0) return;
-        _currentAircraftFuel -= 1;
-        _currentNodeFuel += 1;
+        else if(_currentAircraftFuel <= 5)
+        {
+            finalValue = _currentAircraftFuel;
+        }
+        else
+        {
+            finalValue = 5;
+        }
+
+        _currentAircraftFuel -= finalValue;
+        _currentNodeFuel += finalValue;
         _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
         UpdateAllUI();
     }
@@ -240,6 +272,6 @@ public class ReportManager : MonoBehaviour
         CurrentNodeFuelText.text = _currentNodeFuel.ToString();
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
-        RepairValueText.text = "Your Aircraft Will Be Repaired : " + _aircraftRepairValue + "%";
+        RepairValueText.text = "Your Aircraft Will Be Repaired : +" + _aircraftRepairValue + "%";
     }
 }

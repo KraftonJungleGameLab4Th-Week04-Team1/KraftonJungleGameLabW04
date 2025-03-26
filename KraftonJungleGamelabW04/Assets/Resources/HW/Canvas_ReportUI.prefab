@@ -1084,6 +1084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75bbc2686523064684beb305e67779c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CityNameText: {fileID: 4210800734953691201}
   RepairBlockPanel: {fileID: 8374916354269012144}
   CraftBlockPanel: {fileID: 7509229184898003199}
   RepairPanel: {fileID: 29445925737278935}
