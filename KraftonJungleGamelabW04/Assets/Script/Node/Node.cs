@@ -17,8 +17,8 @@ public class Node : ScriptableObject
     [SerializeField] private int _risk;
 
     [Header("특수 노드 여부")]
-    private NodeType _nodeType;
-    private int _spaceStationLevel;
+    [SerializeField] private NodeType _nodeType;
+    [SerializeField] private int _spaceStationLevel;
 
     public int NodeIdx => _nodeIdx;
     public string NodeName => _NodeName;

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d891028d2179eeb4386fe58756c1f10f, type: 3}
+  m_Name: Node6
+  m_EditorClassIdentifier: 
+  _NodeName: "\uC0B0 \uC0B4\uBC14\uC2DC\uC628"
+  _nodeIdx: 8
+  _food: 50
+  _bolt: 20
+  _nut: 20
+  _fuel: 150
+  _risk: 5
