@@ -15,14 +15,12 @@ public class SolarController : MonoBehaviour
     private Vector3 _lastMousePosition;
     private Transform _cameraTransform;
     private Transform _sunLightTransform;
+    private Transform _deadZoneTransform;
     private Transform _sunCylinderTransform;
 
     private bool _isFast = false;
     private float _currentLightAngle = 85f;
     [SerializeField] private float _currentCameraAngle = 0f;
-
-    private float _rotationAmount;
-    private Vector3 _dir;
 
     private Vector3 _cameraDir;
 
@@ -30,15 +28,17 @@ public class SolarController : MonoBehaviour
 
     //테스트용
     private int _curIdx = 5;
-    private int _targetIdx;
+    private int _targetIdx = 10;
 
     private void Start()
     {
+
         _mainCamera = Camera.main;
         _sunLight = GameObject.Find("SunLight");
         _sunCylinder = GameObject.Find("LightArea");
         _cameraTransform = _mainCamera.transform;
         _sunLightTransform = _sunLight.transform;
+        _deadZoneTransform = _sunLight.transform.GetChild(0).transform;
         if (_sunCylinder != null)
             _sunCylinderTransform = _sunCylinder.transform;
 
@@ -54,6 +54,10 @@ public class SolarController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SetRotate(8);
+        }
         // 입력 처리
         if (!_isFast && Input.GetMouseButtonDown(0))
         {
@@ -132,8 +136,11 @@ public class SolarController : MonoBehaviour
     private void SetRotate(int targetNodeIdx)
     {
         Node targetNode = NodeManager.NodeDic[targetNodeIdx];
-        //Node curNode = NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex];
-        Node curNode = NodeManager.NodeDic[_curIdx];
+        Node curNode = NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex];
+
+        //Node targetNode = NodeManager.NodeDic[targetNodeIdx];
+        //Node curNode = NodeManager.NodeDic[4];
+
 
         if (targetNode == null) Debug.Log("targetnode null");
         if (curNode == null) Debug.Log("curNode null");
@@ -142,7 +149,7 @@ public class SolarController : MonoBehaviour
         _targetIdx = targetNodeIdx;
 
         // 만약 이전 노드그룹이라면 이동할 수 없음
-        if (curNode.NodeGroup == 1 && targetNode.NodeGroup == 4) return;
+        if (curNode.NodeGroup == 1 && targetNode.NodeGroup == 5) return;
         if (curNode.NodeGroup < 1 && targetNode.NodeGroup - curNode.NodeGroup == 1) return;
 
         // 이동하려는 노드의 각도를 타겟으로 설정
@@ -151,8 +158,8 @@ public class SolarController : MonoBehaviour
         // 만약 같은 그룹 안에 있고 숫자가 나보다 크면 오른쪽으로,
         // 만약 다른 그룹에 있으면 오른쪽으로
         float[] _angles = new float[] { 300, 300, 300, 33, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352 };
-
         _targetAngle = _angles[targetNodeIdx - 1];
+
         if (curNode.NodeGroup == targetNode.NodeGroup && curNode.NodeIdx > targetNodeIdx)
             _cameraDir = Vector3.up; // 왼쪽? 나중에 확인하고 수정
         else

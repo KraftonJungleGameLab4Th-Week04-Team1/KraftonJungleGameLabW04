@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d891028d2179eeb4386fe58756c1f10f, type: 3}
   m_Name: Node7
   m_EditorClassIdentifier: 
+  _nodeGroup: 2
   _NodeName: "\uD3EC\uD2B8\uB791"
   _nodeIdx: 11
   _food: 30
@@ -19,3 +20,5 @@ MonoBehaviour:
   _nut: 15
   _fuel: 100
   _risk: 10
+  _nodeType: 0
+  _spaceStationLevel: 0

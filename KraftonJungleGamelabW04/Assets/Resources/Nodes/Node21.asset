@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d891028d2179eeb4386fe58756c1f10f, type: 3}
   m_Name: Node21
   m_EditorClassIdentifier: 
+  _nodeGroup: 5
   _NodeName: "\uBCA8\uB8E8\uC0AC"
   _nodeIdx: 31
   _food: 100
