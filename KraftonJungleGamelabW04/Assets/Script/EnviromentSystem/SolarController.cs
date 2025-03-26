@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SolarController : MonoBehaviour
@@ -13,108 +15,97 @@ public class SolarController : MonoBehaviour
     private Camera _mainCamera;
     private bool _isDragging = false;
     private Vector3 _lastMousePosition;
-    private Transform _cachedCameraTransform;
-    private Transform _cachedSunLightTransform;
-    private Transform _cachedSunCylinderTransform;
+    private Transform _cameraTransform;
+    private Transform _sunLightTransform;
+    private Transform _sunCylinderTransform;
 
     private bool _isFast = false;
     private float _rotateAngle;
-    private float _currentCameraAngle = 0f;
+    [SerializeField] private float _currentCameraAngle = 0f;
     private float _currentLightAngle = 85f;
 
     private float _rotationAmount;
     private Vector3 _dir;
 
-    private void Start()
-    {
-        Init();
-    }
+    [SerializeField] private float _targetAngle;
 
-    public void Init()
+    // 테스트용
+    private int curNode = 4;
+    private int targetNode;
+
+    private void Start()
     {
         _mainCamera = Camera.main;
         _sunLight = GameObject.Find("SunLight");
         _sunCylinder = GameObject.Find("LightArea");
-        _cachedCameraTransform = _mainCamera.transform;
-        _cachedSunLightTransform = _sunLight.transform;
-        _cachedSunCylinderTransform = _sunCylinder.transform;
+        _cameraTransform = _mainCamera.transform;
+        _sunLightTransform = _sunLight.transform;
+        _sunCylinderTransform = _sunCylinder.transform;
+
+        GameManager.Instance.OnMoveNodeAction += SetRotate;
+    }
+
+    public void Init()
+    {
         _currentLightAngle = 85f;
         _currentCameraAngle = 0f;
+        _targetAngle = 0f;
         _isFast = false;
-        GameManager.Instance.OnMoveNodeAction += SetRotate;
     }
 
     private void Update()
     {
-        // 입력 처리
-        if (!_isFast && Input.GetMouseButtonDown(0))
-        {
-            _isDragging = true;
-            _lastMousePosition = Input.mousePosition;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            _isDragging = false;
-        }
+        float _rotationAmount = 0f;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!_isFast && !_isDragging)
         {
-            SetRotate(1);
+            _rotationAmount = _autoRotationSpeed * Time.deltaTime; // 초당 0.25도
+            
+            _currentCameraAngle += _rotationAmount; // 현재 각도 추적
+            if (_currentCameraAngle >= 360f)
+                _currentCameraAngle %= 360f;
         }
-
-        // 회전량 계산
-        if (_isFast)
+        else if (_isFast)
         {
             _rotationAmount = _rotationSpeed * _fastMult * Time.deltaTime;
             _currentCameraAngle += _rotationAmount;
+            
             _dir = Vector3.down;
-            if (_currentCameraAngle >= _rotateAngle)
+
+            //카메라는 반대 방향으로 갈 수 있음
+            if (Mathf.Abs(_currentCameraAngle - _targetAngle) < 1f)
             {
+                _currentCameraAngle = _targetAngle;
                 _isFast = false;
-                _currentCameraAngle = 0f;
             }
-        }
-        else if (_isDragging)
-        {
-            Vector3 currentMousePosition = Input.mousePosition;
-            float deltaX = currentMousePosition.x - _lastMousePosition.x;
-            _rotationAmount = deltaX * _rotationSpeed * Time.deltaTime;
-            _lastMousePosition = currentMousePosition;
-            _dir = Vector3.up;
-        }
-        else
-        {
-            _rotationAmount = _autoRotationSpeed * Time.deltaTime;
-            _dir = Vector3.down;
+
+            if (_currentCameraAngle >= 360f)
+                _currentCameraAngle %= 360f;
         }
 
-        // 회전 적용
-        _cachedCameraTransform.RotateAround(transform.position, _dir, _rotationAmount);
-        _cachedSunCylinderTransform.RotateAround(transform.position, Vector3.down, _isFast ? _rotationAmount : _autoRotationSpeed * Time.deltaTime);
-
-        // Sun Light 회전
-        _currentLightAngle -= _isFast ? _rotationAmount : _autoRotationSpeed * Time.deltaTime;
-        if (_currentLightAngle <= 85f - 360f)
-        {
-            _currentLightAngle += 360f;
-        }
-        _cachedSunLightTransform.eulerAngles = new Vector3(0, _currentLightAngle, 0);
-
-        // 카메라 크기 조정
-        float targetSize = _isFast ? 4f : 5f;
-        float currentSize = _mainCamera.orthographicSize;
-        if (Mathf.Abs(currentSize - targetSize) > 0.01f)
-        {
-            _mainCamera.orthographicSize = Mathf.Lerp(currentSize, targetSize, Time.deltaTime * _cameraLerpSpeed);
-        }
+        _cameraTransform.RotateAround(transform.position, Vector3.down, _rotationAmount);
+        _sunCylinderTransform.RotateAround(transform.position, Vector3.down, _rotationAmount);
     }
 
     // 현재 노드에서 해당 노드까지 이동
-    private void SetRotate(int rotateAngle)
+    private void SetRotate(int node)
     {
-        //int cur = GameManager.Instance.CurrentNodeIndex;
+        targetNode = node;
+
+        if (targetNode < curNode)
+        {
+
+        }
+        float[] _angles = new float[] { 300, 300, 300, 33, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352 };
+
+        _targetAngle = _angles[node - 1] - _currentCameraAngle;
+        if (_targetAngle < 0f)
+            _targetAngle += 360f;
         _isFast = true;
-        _rotateAngle = 45f;
-        _currentCameraAngle = 0f;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnMoveNodeAction -= SetRotate;
     }
 }
