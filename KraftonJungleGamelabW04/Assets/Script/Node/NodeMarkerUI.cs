@@ -23,11 +23,6 @@ public class NodeMarkerUI : MonoBehaviour
         ActivateNodeMarkerCanvas(false);
     }
 
-    private void OnDestroy()
-    {
-        GameManager.Instance.OnSelectNodeAction -= ActivateNodeMarkerUI;
-    }
-
     // Activate node marker UI
     private void ActivateNodeMarkerUI(int index)
     {
