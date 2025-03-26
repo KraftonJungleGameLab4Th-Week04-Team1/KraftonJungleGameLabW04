@@ -7,6 +7,6 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
-
+        _basicUI.Init();
     }
 }

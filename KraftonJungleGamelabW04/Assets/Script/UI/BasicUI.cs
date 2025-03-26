@@ -20,13 +20,14 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TMP_Text _fuelText;
     [SerializeField] private TMP_Text _currentWeightText;
     [SerializeField] private TMP_Text _currentAircraftStateText;
-    [SerializeField] private Button _panelOnOffBtn;
-
 
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
+    }
 
+    public void Init()
+    {
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmUseAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmGainAction += _ => UpdateBasicUI();
