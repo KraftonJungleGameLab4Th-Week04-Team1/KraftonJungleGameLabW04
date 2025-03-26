@@ -11,8 +11,8 @@ public class InfoManager : MonoBehaviour
     public int MaxWeight => _maxWeight; private int _maxWeight; //기체의 최대 중량
     public int MaxAircraftState => _maxAircraftState; private int _maxAircraftState; //기체의 최대상태. 체력. 100
     public int FuelPerDistance => _fuelPerDistance; private int _fuelPerDistance; //거리당 소모 연료
-    public int DistancePerFuel => _distancePerFuel; private int _distancePerFuel; //연료당 거리. 둘 중에 무엇을 쓸지는 무엇이 더 큰지에 따라 결정
     public int FoodPerDistance => _foodPerDistance; private int _foodPerDistance; //거리당 소모 식량.
+    public int TimePerDistance => _timePerDistance; private int _timePerDistance; //거리당 소요시간.
     public int QuotinentByWeight => _quotinentByWeight; private int _quotinentByWeight; //중량이 가득 찼을 때 드는 연료는 몇 배인지 설정.
     public int QuotinentByAircraftState => _quotinentByAircraftState; private int _quotinentByAircraftState; //기체 상태가 0%일 때 드는 연료는 몇 배인지 설정.
     public int BoltRepairValue => _boltRepairValue; private int _boltRepairValue; //볼트 하나당 기체 수리되는 정도.
@@ -28,9 +28,20 @@ public class InfoManager : MonoBehaviour
         _weightPerFuel = 2;
         _maxWeight = 300;
         _maxAircraftState = 100;
-        _fuelPerDistance = 1;
+        _fuelPerDistance = 5;
+        _foodPerDistance = 2;
         _quotinentByAircraftState = 2;
         _quotinentByWeight = 1;
+    }
+
+    /// <summary>
+    /// 두 지점의 x거리를 이동하는 데에 얼마만큼의 시간이 필요한지 계산합니다. 분 단위로 반환합니다.
+    /// </summary>
+    /// <param name="xDistance"></param>
+    /// <returns></returns>
+    public int GetTimeRequiredBetweenNodes(int xDistance)
+    {
+        return xDistance * _timePerDistance;
     }
  
     /// <summary>
@@ -50,7 +61,7 @@ public class InfoManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 두 지점의 x거리를 이동하는 데에 얼마만큼의 연료가 필요한지 계산합니다. 인수는 거리입니다.
+    /// 두 지점의 x거리를 이동하는 데에 얼마만큼의 식량이 필요한지 계산합니다. 인수는 거리입니다.
     /// </summary>
     /// <param name="xDistance"></param>
     /// <returns></returns>
