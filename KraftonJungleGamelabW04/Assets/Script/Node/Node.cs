@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class Node : MonoBehaviour
+[CreateAssetMenu(menuName = "Node Data")]
+public class Node : ScriptableObject
 {
     [Header("노드 명")]
     [SerializeField] private string _NodeName;
