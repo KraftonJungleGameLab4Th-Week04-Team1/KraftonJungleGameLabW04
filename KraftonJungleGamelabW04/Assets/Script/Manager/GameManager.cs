@@ -41,8 +41,18 @@ public class GameManager : MonoBehaviour
     private float _time;
     
     private bool _isGameStarted = false;
-    
-    public GameState GameState { get; set; }
+
+    private GameState _gameState;
+    public GameState GameState
+    {
+        get => _gameState;
+        set
+        {
+            _gameState = value;
+            _uiManager.ChangeUI(value);
+        }
+    }
+
     #endregion
 
     private void Awake()
@@ -58,14 +68,14 @@ public class GameManager : MonoBehaviour
     // 사실 매니저 빼서 GameManager를 따로 관리해야 했으나, 이번 프로젝트에선 GameManager가 모든 매니저 통하기 때문에 Manager역할을 합니다.
     private void Init()
     {
-        GameStart();
-
         // 객체별 초기화 순서를 정하기 위한 구조 = 각 매니저별로 Awake()를 호출하지 않아도 됩니다.
         NodeManager.Init();
         Aircraft.Init();
         //Solor.Init();
         Info.Init();
         UI.Init();
+        
+        GameStart();
     }
 
     private void OnDestroy()
@@ -90,6 +100,11 @@ public class GameManager : MonoBehaviour
         _isGameStarted = isStart;
     }
 
+    public void ChangeGameTime(float time)
+    {
+        GameTime += time;
+    }
+
     private void Update()
     {
         if (!_isGameStarted)
@@ -106,6 +121,7 @@ public class GameManager : MonoBehaviour
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
         
+        // Get selected node
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
