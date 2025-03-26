@@ -8,6 +8,19 @@ public class NodeManager : MonoBehaviour
 
     public void Init()
     {
+        Node[] foundNodes = FindObjectsByType<Node>(FindObjectsSortMode.None);
+
+        foreach (Node node in foundNodes)
+        {
+            if (!NodeDic.ContainsKey(node.NodeIdx))
+            {
+                NodeDic.Add(node.NodeIdx, node);
+            }
+            else
+            {
+                Debug.LogWarning($"중복된 인덱스: {node.NodeIdx}를 가진 Node가 이미 존재합니다.");
+            }
+        }
         GameManager.Instance.OnConfirmGainAction += GainResource;
         GameManager.Instance.OnConfirmUseAction += BuildUpSpaceStation;
         GameManager.Instance.OnMoveNodeAction += GetDamageOnAircraft;
