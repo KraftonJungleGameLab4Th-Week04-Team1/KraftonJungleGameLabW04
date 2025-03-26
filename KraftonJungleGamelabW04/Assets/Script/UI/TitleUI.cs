@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleCanvas : MonoBehaviour
+public class TitleUI : MonoBehaviour
 {
     private Canvas _canvas;
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
 
-    private void Init()
+    public void Init()
     {
         _canvas = GetComponent<Canvas>();
         
@@ -19,6 +19,7 @@ public class TitleCanvas : MonoBehaviour
     private void OnClickStartBtn()
     {
         _canvas.enabled = false;
+        GameManager.Instance.StartGameTimer(true);
     }
     
     private void OnClickQuitBtn()
