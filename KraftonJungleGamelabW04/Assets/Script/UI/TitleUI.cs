@@ -19,6 +19,7 @@ public class TitleUI : MonoBehaviour
     private void OnClickStartBtn()
     {
         _canvas.enabled = false;
+        GameManager.Instance.GameState = GameState.MainPlay;
         GameManager.Instance.StartGameTimer(true);
     }
     
