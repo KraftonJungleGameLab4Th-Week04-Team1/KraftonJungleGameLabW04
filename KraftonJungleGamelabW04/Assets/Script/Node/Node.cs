@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class Node : MonoBehaviour
+[CreateAssetMenu(menuName = "Node Data")]
+public class Node : ScriptableObject
 {
     [Header("노드 명")]
     [SerializeField] private string _NodeName;
@@ -16,8 +17,8 @@ public class Node : MonoBehaviour
     [SerializeField] private int _risk;
 
     [Header("특수 노드 여부")]
-    private NodeType _nodeType;
-    private int _spaceStationLevel;
+    [SerializeField] private NodeType _nodeType;
+    [SerializeField] private int _spaceStationLevel;
 
     public int NodeIdx => _nodeIdx;
     public string NodeName => _NodeName;
