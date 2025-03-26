@@ -42,8 +42,9 @@ public class GameManager : MonoBehaviour
     
     private bool _isGameStarted = false;
     
+    public GameState GameState { get; private set; }
     #endregion
-    
+
     private void Awake()
     {
         if(_instance == null)

@@ -26,7 +26,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _rectTransform = GetComponent<RectTransform>();
     }
 
-    public void Awake()
+    public void Init()
     {
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmUseAction += _ => UpdateBasicUI();
