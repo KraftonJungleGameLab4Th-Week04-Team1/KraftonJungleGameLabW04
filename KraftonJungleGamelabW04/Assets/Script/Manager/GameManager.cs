@@ -80,15 +80,9 @@ public class GameManager : MonoBehaviour
     private void GameStart()
     {
         _layerMask = LayerMask.GetMask("NodeMarker");
-
-        //OnSelectNodeAction += HandleNodeSelected;
-        //OnMoveNodeAction += HandleNodeMove;
-        //OnConfirmNodeAction += HandleNodeConfirm;
-
-        StartGameTimer(true);
     }
     
-    private void StartGameTimer(bool isStart)
+    public void StartGameTimer(bool isStart)
     {
         _isGameStarted = isStart;
     }
