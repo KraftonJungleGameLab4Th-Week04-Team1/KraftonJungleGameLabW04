@@ -58,7 +58,7 @@ public class ReportManager : MonoBehaviour
     void Start()
     {
         Info = GameManager.Info;
-        currentNode = NodeManager.NodeDic[12];
+        currentNode = NodeManager.NodeDic[3];
         aircraftManager = GameManager.Aircraft;
         _boltToUse = 0;
         _nutToUse = 0;
@@ -93,6 +93,7 @@ public class ReportManager : MonoBehaviour
 
         CityNameText.text = currentNode.NodeName;
         UpdateAllUI();
+        ShowCraftButton();
     }
 
     //Repair functions.
@@ -444,7 +445,7 @@ public class ReportManager : MonoBehaviour
     {
         int i = 0;
 
-        while (!GameManager.NodeManager.spaceStationParts[i])
+        while (GameManager.NodeManager.spaceStationParts[i])
         {
             i++;
         }
@@ -456,5 +457,10 @@ public class ReportManager : MonoBehaviour
         CraftButtons[i].SetActive(true);
 
 
+    }
+
+    public void ConfirmReport()
+    {
+        //aircraftManager.
     }
 }
