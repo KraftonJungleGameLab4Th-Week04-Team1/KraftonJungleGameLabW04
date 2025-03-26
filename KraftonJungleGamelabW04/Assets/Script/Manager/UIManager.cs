@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager
 {
-    public NodeMarkerUI _nodeMarkerUI = new NodeMarkerUI();
-    public BasicUI _basicUI = new BasicUI();
+    private Canvas _basicUI;
 
     public void Init()
     {
-        _basicUI.Init();
+        _basicUI = GameObject.FindAnyObjectByType<BasicUI>().GetComponent<Canvas>();
+        
     }
 }
