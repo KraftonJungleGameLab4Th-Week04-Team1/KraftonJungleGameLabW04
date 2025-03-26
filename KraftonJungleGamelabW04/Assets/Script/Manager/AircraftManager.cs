@@ -28,6 +28,7 @@ public class AircraftManager
     {
         //_food = GameManager.Info.InitialFood; 
         //_fuel = GameManager.Info.InitialFuel;
+        _currentAircraftState = 50;
         _bolt = 0;
         _nut = 0;
     }
