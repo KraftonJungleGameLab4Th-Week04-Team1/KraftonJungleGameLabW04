@@ -468,7 +468,8 @@ public class ReportManager : MonoBehaviour
 
     public void ConfirmReport()
     {
-        //aircraftManager.
+        GameManager.Instance.OnConfirmAction?.Invoke(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel,
+                _aircraftRepairValue, _currentNodeFood, _currentNodeBolt, _currentNodeNut, _currentNodeFuel);
     }
 }
  

@@ -494,29 +494,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 628587351615658141, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Bolt : 200'
-      objectReference: {fileID: 0}
     - target: {fileID: 1305987860897605049, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
       propertyPath: m_Name
       value: Canvas_ReportUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 2346803125178941508, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307632574788234548, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: Craft Part B
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364961797746717922, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Bolt : 100'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4456480530341391398, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: Craft Part E
       objectReference: {fileID: 0}
     - target: {fileID: 4652714064851937196, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
       propertyPath: m_Pivot.x
@@ -597,62 +577,6 @@ PrefabInstance:
     - target: {fileID: 4652714064851937196, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4757942752221770795, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Nut : 50'
-      objectReference: {fileID: 0}
-    - target: {fileID: 5284726983824641226, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: Craft Part D
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121795718895247689, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Bolt : 30'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207263481604520752, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: Craft Part C
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208502689130538377, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Bolt : 50'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6648304813397182671, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Bolt : 50'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868223115931160770, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868303333562728753, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207121006045344227, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Nut : 25'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7564161835277240173, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Nut : 20'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8704468756335669299, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Nut : 80'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8848820654282557227, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: 'Nut : 150'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8968108183212007303, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9027696322386974926, guid: 3aa16df07021f0e44a6a33f80327cce8, type: 3}
-      propertyPath: m_text
-      value: Craft Part F
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
