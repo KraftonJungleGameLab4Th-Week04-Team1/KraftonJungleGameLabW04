@@ -21,6 +21,6 @@ MonoBehaviour:
   _nut: 5
   _fuel: 300
   _isVisited: 0
-  _risk: 10
+  _risk: 3
   _nodeType: 0
   _spaceStationLevel: 0

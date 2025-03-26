@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
     public void ChangeGameTime(float time)
     {
         GameTime += time;
+        //OnChangedGameTimeAction?.Invoke(GameTime);
     }
 
     private void Update()
