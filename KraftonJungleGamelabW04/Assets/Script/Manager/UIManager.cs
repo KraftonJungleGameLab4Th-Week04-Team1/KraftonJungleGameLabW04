@@ -9,13 +9,14 @@ public class UIManager
 
     public void Init()
     {
-        _basicUI = GameObject.FindFirstObjectByType<BasicUI>();
-        _basicUICanvas = _basicUI.GetComponent<Canvas>();
-        _basicUI.Init();
+        ///////씬 세팅하고 주석 풀어주세요. ui는 테스트 진행중입니다
+        //_basicUI = GameObject.FindFirstObjectByType<BasicUI>();
+        //_basicUICanvas = _basicUI.GetComponent<Canvas>();
+        //_basicUI.Init();
 
-        _titleUI = GameObject.FindFirstObjectByType<TitleUI>();
-        _titleUICanvas = _titleUI.GetComponent<Canvas>();
-        _titleUI.Init();
+        //_titleUI = GameObject.FindFirstObjectByType<TitleUI>();
+        //_titleUICanvas = _titleUI.GetComponent<Canvas>();
+        //_titleUI.Init();
     }
 
     public void ChangeUI(GameState state)
