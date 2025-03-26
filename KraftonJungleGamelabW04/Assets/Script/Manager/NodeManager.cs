@@ -5,7 +5,8 @@ public class NodeManager : MonoBehaviour
 {
     // 노드들을 관리하는 딕셔너리
     public Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
-
+    public Node SelectedNode;
+    
     public void Init()
     {
         Node[] foundNodes = FindObjectsByType<Node>(FindObjectsSortMode.None);

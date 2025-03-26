@@ -18,23 +18,40 @@ public class NodeMarkerUI : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
-    }
-
-    public void Init(int index)
-    {
-        _node = GameManager.NodeManager.NodeDic[index];
+        _node = GetComponent<Node>();
+        
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(_node.NodeIdx));
+        GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
+
+        ActivateNodeMarkerCanvas(false);
     }
 
-    // Activate or deactivate node ui
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnSelectNodeAction -= ActivateNodeMarkerUI;
+    }
+
+    // Activate node marker UI
     private void ActivateNodeMarkerUI(int index)
     {
-        _canvas.enabled = true;
-        ChangeNodeMarkerUI(_node);
+        if (_node.NodeIdx != index)
+        {
+            ActivateNodeMarkerCanvas(false);
+        }
+        else
+        {
+            ChangeNodeMarkerUI(_node);
+            ActivateNodeMarkerCanvas(true);
+        }
     }
 
-    // Change node ui data
+    // Activate node marker UI canvas
+    private void ActivateNodeMarkerCanvas(bool isActive)
+    {
+        _canvas.enabled = isActive;
+    }
+
+    // Change node UI data
     private void ChangeNodeMarkerUI(Node node)
     {
         _nameText.text = $"{node.name}";
@@ -46,8 +63,12 @@ public class NodeMarkerUI : MonoBehaviour
         _typeText.text = $"{node.NodeType.ToString()}";
     }
 
+    // Move btn click action
     private void OnClickMoveBtn(int index)
     {
-        GameManager.Instance.OnMoveNodeAction?.Invoke(index);
+        if (_node.NodeIdx == index)
+        {
+            GameManager.Instance.OnMoveNodeAction?.Invoke(index);
+        }
     }
 }
