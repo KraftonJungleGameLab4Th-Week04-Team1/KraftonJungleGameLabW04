@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -45,6 +46,7 @@ public class ReportManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI CurrentBoltsToUseText;
     [SerializeField] private TextMeshProUGUI CurrentNutsToUseText;
     [SerializeField] private TextMeshProUGUI RepairValueText;
+    [SerializeField] private List<GameObject> CraftButtons;
 
 
     void Awake()
@@ -56,7 +58,7 @@ public class ReportManager : MonoBehaviour
     void Start()
     {
         Info = GameManager.Info;
-        currentNode = NodeManager.NodeDic[3];
+        currentNode = NodeManager.NodeDic[12];
         aircraftManager = GameManager.Aircraft;
         _boltToUse = 0;
         _nutToUse = 0;
@@ -89,7 +91,7 @@ public class ReportManager : MonoBehaviour
             RepairBlockPanel.SetActive(true);
         }
 
-        CityNameText.text = currentNode.name;
+        CityNameText.text = currentNode.NodeName;
         UpdateAllUI();
     }
 
@@ -273,5 +275,186 @@ public class ReportManager : MonoBehaviour
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
         RepairValueText.text = "Your Aircraft Will Be Repaired : +" + _aircraftRepairValue + "%";
+    }
+
+    public void CraftPartA() //20, 15
+    {
+        if (_currentNodeBolt + _currentAircraftBolt < 20 || _currentNodeNut + _currentAircraftNut < 15) return;
+
+        GameManager.NodeManager.spaceStationParts[0] = true;
+
+        if (_currentNodeBolt >= 20)
+        {
+            _currentNodeBolt -= 20;
+        }
+        else
+        {
+            _currentAircraftBolt -= (20 - _currentNodeBolt);
+            _currentNodeBolt = 0;
+        }
+
+        if(_currentNodeNut >= 15)
+        {
+            _currentNodeNut -= 15;
+        }
+        else
+        {
+            _currentAircraftNut -= (15 - _currentNodeNut);
+        }
+            
+    }
+
+    public void CraftPartB() //30, 20
+    {
+        if (_currentNodeBolt + _currentAircraftBolt < 30 || _currentNodeNut + _currentAircraftNut < 20) return;
+
+        GameManager.NodeManager.spaceStationParts[1] = true;
+
+        if (_currentNodeBolt >= 30)
+        {
+            _currentNodeBolt -= 30;
+        }
+        else
+        {
+            _currentAircraftBolt -= (30 - _currentNodeBolt);
+            _currentNodeBolt = 0;
+        }
+
+        if (_currentNodeNut >= 20)
+        {
+            _currentNodeNut -= 20;
+        }
+        else
+        {
+            _currentAircraftNut -= (20 - _currentNodeNut);
+        }
+
+    }
+
+    public void CraftPartC() //50, 25
+    {
+        if (_currentNodeBolt + _currentAircraftBolt < 50 || _currentNodeNut + _currentAircraftNut < 25) return;
+
+        GameManager.NodeManager.spaceStationParts[2] = true;
+
+        if (_currentNodeBolt >= 50)
+        {
+            _currentNodeBolt -= 50;
+        }
+        else
+        {
+            _currentAircraftBolt -= (50 - _currentNodeBolt);
+            _currentNodeBolt = 0;
+        }
+
+        if (_currentNodeNut >= 25)
+        {
+            _currentNodeNut -= 25;
+        }
+        else
+        {
+            _currentAircraftNut -= (25 - _currentNodeNut);
+        }
+        ShowCraftButton();
+    }
+
+    public void CraftPartD() //50, 50
+    {
+        if (_currentNodeBolt + _currentAircraftBolt < 50 || _currentNodeNut + _currentAircraftNut < 50) return;
+
+        GameManager.NodeManager.spaceStationParts[3] = true;
+
+        if (_currentNodeBolt >= 50)
+        {
+            _currentNodeBolt -= 50;
+        }
+        else
+        {
+            _currentAircraftBolt -= (50 - _currentNodeBolt);
+            _currentNodeBolt = 0;
+        }
+
+        if (_currentNodeNut >= 50)
+        {
+            _currentNodeNut -= 50;
+        }
+        else
+        {
+            _currentAircraftNut -= (50 - _currentNodeNut);
+        }
+        ShowCraftButton();
+    }
+
+    public void CraftPartE() //100, 80
+    {
+        if (_currentNodeBolt + _currentAircraftBolt < 100 || _currentNodeNut + _currentAircraftNut < 80) return;
+
+        GameManager.NodeManager.spaceStationParts[4] = true;
+
+        if (_currentNodeBolt >= 100)
+        {
+            _currentNodeBolt -= 100;
+        }
+        else
+        {
+            _currentAircraftBolt -= (100 - _currentNodeBolt);
+            _currentNodeBolt = 0;
+        }
+
+        if (_currentNodeNut >= 80)
+        {
+            _currentNodeNut -= 80;
+        }
+        else
+        {
+            _currentAircraftNut -= (80 - _currentNodeNut);
+        }
+
+        ShowCraftButton();
+    }
+
+    public void CraftPartF() //200, 150
+    {
+        if (_currentNodeBolt + _currentAircraftBolt < 200 || _currentNodeNut + _currentAircraftNut < 150) return;
+
+        GameManager.NodeManager.spaceStationParts[5] = true;
+
+        if (_currentNodeBolt >= 200)
+        {
+            _currentNodeBolt -= 200;
+        }
+        else
+        {
+            _currentAircraftBolt -= (200 - _currentNodeBolt);
+            _currentNodeBolt = 0;
+        }
+
+        if (_currentNodeNut >= 150)
+        {
+            _currentNodeNut -= 150;
+        }
+        else
+        {
+            _currentAircraftNut -= (150 - _currentNodeNut);
+        }
+
+        ShowCraftButton();
+    }
+    public void ShowCraftButton()
+    {
+        int i = 0;
+
+        while (!GameManager.NodeManager.spaceStationParts[i])
+        {
+            i++;
+        }
+
+        foreach(GameObject button in CraftButtons)
+        {
+            button.SetActive(false);
+        }
+        CraftButtons[i].SetActive(true);
+
+
     }
 }
