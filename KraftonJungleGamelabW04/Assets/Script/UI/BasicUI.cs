@@ -40,10 +40,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _isPanelOn = !_isPanelOn;
         if (_isPanelOn)
         {
-            //디버그 코드
-            //Node node = new Node();
-            //node.Fuel = 3;
-            //GameManager.Instance.OnConfirmUseAction.Invoke(node);
             _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
         else
@@ -55,7 +51,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     private void UpdateBasicUI()
     {
         AircraftManager aircraft = GameManager.Aircraft;
-
         _foodText.text = $"{aircraft.Food}";
         _boltText.text = $"{aircraft.Bolt}";
         _nutText.text = $"{aircraft.Nut}";

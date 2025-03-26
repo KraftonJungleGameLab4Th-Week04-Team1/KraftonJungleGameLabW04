@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     #region Properties
 
-    public int CurrentNodeIndex { get;}
+    public int CurrentNodeIndex { get; private set; } = 1;
     private LayerMask _layerMask;
     
     public int CurrentTurn { get; private set; } = 0;
@@ -61,11 +61,11 @@ public class GameManager : MonoBehaviour
         GameStart();
 
         // 객체별 초기화 순서를 정하기 위한 구조 = 각 매니저별로 Awake()를 호출하지 않아도 됩니다.
-        UI.Init();
         NodeManager.Init();
         Aircraft.Init();
         //Solor.Init();
         Info.Init();
+        UI.Init();
     }
 
     private void OnDestroy()
@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
     {
         _layerMask = LayerMask.GetMask("NodeMarker");
         GameState = GameState.Title;
+        CurrentNodeIndex = 1;
     }
     
     public void StartGameTimer(bool isStart)
