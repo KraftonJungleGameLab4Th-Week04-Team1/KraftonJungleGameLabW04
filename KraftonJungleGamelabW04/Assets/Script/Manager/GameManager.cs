@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
             {
-                _nodeManager.SelectedNode = hit.collider.GetComponent<Node>();
+                _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
                 Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeIdx);
             }
         }

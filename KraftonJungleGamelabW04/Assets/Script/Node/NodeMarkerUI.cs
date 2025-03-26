@@ -4,8 +4,7 @@ using UnityEngine.UI;
 
 public class NodeMarkerUI : MonoBehaviour
 {
-    private Node _node;
-
+    public Node Node;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _foodText;
@@ -18,9 +17,7 @@ public class NodeMarkerUI : MonoBehaviour
 
     private void Start()
     {
-        _node = GetComponent<Node>();
-        
-        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(_node.NodeIdx));
+        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeIdx));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
 
         ActivateNodeMarkerCanvas(false);
@@ -34,13 +31,13 @@ public class NodeMarkerUI : MonoBehaviour
     // Activate node marker UI
     private void ActivateNodeMarkerUI(int index)
     {
-        if (_node.NodeIdx != index)
+        if (Node.NodeIdx != index)
         {
             ActivateNodeMarkerCanvas(false);
         }
         else
         {
-            ChangeNodeMarkerUI(_node);
+            ChangeNodeMarkerUI(Node);
             ActivateNodeMarkerCanvas(true);
         }
     }
@@ -66,7 +63,7 @@ public class NodeMarkerUI : MonoBehaviour
     // Move btn click action
     private void OnClickMoveBtn(int index)
     {
-        if (_node.NodeIdx == index)
+        if (Node.NodeIdx == index)
         {
             GameManager.Instance.OnMoveNodeAction?.Invoke(index);
         }
