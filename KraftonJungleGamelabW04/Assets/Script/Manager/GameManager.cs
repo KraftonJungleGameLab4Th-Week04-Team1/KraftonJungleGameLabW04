@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
     #region Managers
     public static UIManager UI { get { return Instance._uiManager; } }
     public static AircraftManager Aircraft { get { return Instance._aircraftManager; } }
-    public static SolarController Solor { get { return Instance._solarController; } }
+    //public static SolarController Solor { get { return Instance._solarController; } }
     public static NodeManager NodeManager { get { return Instance._nodeManager; } }
     public static InfoManager Info { get { return Instance._infoManager; } }
 
     private UIManager _uiManager = new UIManager();
     private AircraftManager _aircraftManager = new AircraftManager();
-    private SolarController _solarController = new SolarController();
+    //private SolarController _solarController = new SolarController();
     private NodeManager _nodeManager = new NodeManager();
     private InfoManager _infoManager = new InfoManager();
     #endregion
@@ -63,16 +63,26 @@ public class GameManager : MonoBehaviour
         UI.Init();
         NodeManager.Init();
         Aircraft.Init();
-        Solor.Init();
+        //Solor.Init();
         Info.Init();
+    }
+
+    private void OnDestroy()
+    {
+        //액션 해제
+        OnChangedGameTimeAction = null;
+        OnSelectNodeAction = null;
+        OnMoveNodeAction = null;
+        OnConfirmUseAction = null;
+        OnConfirmGainAction = null;
     }
 
     private void GameStart()
     {
         _layerMask = LayerMask.GetMask("NodeMarker");
 
-        OnSelectNodeAction += HandleNodeSelected;
-        OnMoveNodeAction += HandleNodeMove;
+        //OnSelectNodeAction += HandleNodeSelected;
+        //OnMoveNodeAction += HandleNodeMove;
         //OnConfirmNodeAction += HandleNodeConfirm;
 
         StartGameTimer(true);
@@ -110,22 +120,5 @@ public class GameManager : MonoBehaviour
                 Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeIdx);
             }
         }
-    }
-
-    
-    private void HandleNodeSelected(int nodeIndex)
-    {
-        // When selected node
-    }
-
-    
-    private void HandleNodeMove(int nodeIndex)
-    {
-        // When decided to move
-    }
-    
-    private void HandleNodeConfirm(Node node)
-    {
-        // When selected confirm btn
     }
 }

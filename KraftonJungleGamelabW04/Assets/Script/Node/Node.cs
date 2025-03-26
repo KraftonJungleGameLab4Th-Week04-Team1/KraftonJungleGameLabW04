@@ -17,6 +17,7 @@ public class Node : ScriptableObject
     [SerializeField] private int _fuel;
 
     [Header("가변 변수")]
+    [SerializeField] private bool _isVisited;
     [SerializeField] private int _risk;
 
     [Header("특수 노드 여부")]
@@ -31,6 +32,7 @@ public class Node : ScriptableObject
     public int Bolt { get => _bolt; set => _bolt = value; }
     public int Nut { get => _nut; set => _nut = value; }
     public int Fuel { get => _fuel; set => _fuel = value; }
+    public bool IsVisited { get => _isVisited; set => _isVisited = value; }
     public int Risk { get => _risk; set => _risk = value; }
     public int SpaceStationLevel { get => _spaceStationLevel; set => _spaceStationLevel = value; }
 }
