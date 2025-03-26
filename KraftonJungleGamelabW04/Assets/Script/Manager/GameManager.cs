@@ -66,6 +66,9 @@ public class GameManager : MonoBehaviour
         Aircraft.Init();
         //Solor.Init();
         Info.Init();
+        
+        //TestCode
+        StartGameTimer(true);
     }
 
     private void OnDestroy()
@@ -87,6 +90,11 @@ public class GameManager : MonoBehaviour
     public void StartGameTimer(bool isStart)
     {
         _isGameStarted = isStart;
+    }
+
+    public void ChangeGameTime(float time)
+    {
+        GameTime += time;
     }
 
     private void Update()
