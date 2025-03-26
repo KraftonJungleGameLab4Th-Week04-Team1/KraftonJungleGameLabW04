@@ -37,7 +37,7 @@ public class InfoManager
         _timePerDistance = 30;
         _baseRequiredFood = 1;
         _baseRequiredFuel = 5;
-        _quotinentByAircraftState = 2;
+        _quotinentByAircraftState = 1;
         _quotinentByWeight = 1;
         _boltRepairValue = 3;
         _nutRepairValue = 5;
@@ -80,13 +80,19 @@ public class InfoManager
     /// <returns></returns>
     public int GetFoodRequiredBetweenNodes(int xDistance)
     {
-        AircraftManager aircraftManager = GameManager.Aircraft;
-        int baseValue = xDistance * _foodPerDistance; //거리와 거리당 기본 소모식량의 곱.
-        int foodRequired = baseValue * (_maxWeight + aircraftManager.CurrentWeight) * 
-            (2 * aircraftManager.MaxAircraftState - aircraftManager.CurrentAircraftState) /
-             _maxWeight / _maxAircraftState;
+        if (xDistance < 0) xDistance *= -1;
 
-        return foodRequired;
+        AircraftManager aircraftManager = GameManager.Aircraft;
+        int baseValue = xDistance * _foodPerDistance;
+        int stateFactor = 2 * aircraftManager.MaxAircraftState - aircraftManager.CurrentAircraftState;
+        int foodRequired = baseValue * (_maxWeight + aircraftManager.CurrentWeight) * stateFactor /
+            _maxWeight / _maxAircraftState;
+
+        Debug.Log($"xDistance: {xDistance}, baseValue: {baseValue}, CurrentWeight: {aircraftManager.CurrentWeight}, " +
+                  $"MaxState: {aircraftManager.MaxAircraftState}, CurrentState: {aircraftManager.CurrentAircraftState}, " +
+                  $"stateFactor: {stateFactor}, foodRequired: {foodRequired}");
+
+        return Mathf.Max(foodRequired, 0);
     }
 
     /// <summary>

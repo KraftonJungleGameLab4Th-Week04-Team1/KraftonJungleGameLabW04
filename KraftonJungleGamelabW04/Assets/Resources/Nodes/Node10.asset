@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node10
   m_EditorClassIdentifier: 
   _nodeGroup: 2
-  _NodeName: "\uC720\uD06C\uD1A0\uBC14\uB2C8\uC544"
+  _NodeName: Euktovania
   _nodeNum: 10
   _nodeIdx: 14
   _food: 100
@@ -21,6 +21,6 @@ MonoBehaviour:
   _nut: 5
   _fuel: 200
   _isVisited: 0
-  _risk: 3
+  _risk: 20
   _nodeType: 0
   _spaceStationLevel: 0

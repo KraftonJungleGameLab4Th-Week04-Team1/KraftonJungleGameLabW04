@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node4
   m_EditorClassIdentifier: 
   _nodeGroup: 1
-  _NodeName: "\uC544\uC6B0\uB810\uB9AC\uC544"
+  _NodeName: Aurelia
   _nodeNum: 4
   _nodeIdx: 5
   _food: 15
@@ -21,6 +21,6 @@ MonoBehaviour:
   _nut: 40
   _fuel: 50
   _isVisited: 0
-  _risk: 2
+  _risk: 0
   _nodeType: 0
   _spaceStationLevel: 0

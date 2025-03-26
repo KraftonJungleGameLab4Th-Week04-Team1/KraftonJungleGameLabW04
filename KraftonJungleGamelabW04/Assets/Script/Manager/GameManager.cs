@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     
     private bool _isGameStarted = false;
     public bool IsEscapable { get; set; } = false;
+    public bool IsMoving;
+    public float moveDuration = 5f;
 
     private GameState _gameState;
     public GameState GameState
@@ -97,6 +99,7 @@ public class GameManager : MonoBehaviour
         CurrentNodeIndex = 1;
 
         //무빙 확인시 현재 노드 인덱스 변경.
+
         OnArriveAction += ChangeCurrentNodeIndex;
     }
     
@@ -146,7 +149,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentNodeIndex = index;
         Debug.Log("currentNode : " + index);
-        SpawnReport();
+        Invoke("SpawnReport", 0.5f);
     }
 
     void SpawnReport()

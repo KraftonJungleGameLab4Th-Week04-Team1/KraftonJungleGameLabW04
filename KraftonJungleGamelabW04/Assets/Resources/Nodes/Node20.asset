@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node20
   m_EditorClassIdentifier: 
   _nodeGroup: 5
-  _NodeName: "\uB178\uB974\uB374"
+  _NodeName: Norden
   _nodeNum: 20
   _nodeIdx: 30
   _food: 0
@@ -21,6 +21,6 @@ MonoBehaviour:
   _nut: 40
   _fuel: 200
   _isVisited: 0
-  _risk: 2
+  _risk: 10
   _nodeType: 0
   _spaceStationLevel: 0

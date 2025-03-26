@@ -24,15 +24,18 @@ public class AircraftManager
         _fuel = 50;
         _currentWeight = 0;
         _currentAircraftState = 100;
+        _maxAircraftState = 100;
+        _maxWeight = 300;
         _bolt = 0;
         _nut = 0;
+
     }
 
     void Start()
     {
         //_food = GameManager.Info.InitialFood; 
         //_fuel = GameManager.Info.InitialFuel;
-
+        
     }
 
     public void UpdateAircraftResources(int newFood, int newBolt, int newNut, int newFuel)
@@ -48,7 +51,8 @@ public class AircraftManager
 
     public void RepairAircraftByInputValue(int value)
     {
-        _currentAircraftState = Mathf.Max(_currentAircraftState + value, _maxAircraftState);
+        _currentAircraftState += value;
+        if (_currentAircraftState > 100) _currentAircraftState = 100;
     }
 
     
@@ -87,6 +91,54 @@ public class AircraftManager
 
     public void DamageAircraft(int damage)
     {
-        _currentAircraftState -= damage;
+        Debug.Log(_currentAircraftState);
+        if(_currentAircraftState >= damage)
+        {
+            _currentAircraftState -= damage;
+        }
+        else
+        {
+            _currentAircraftState = 0;
+        }
+        Debug.Log(_currentAircraftState);
+    }
+
+    public void UseResourceForFly(int destinationIndex)
+    {
+        Debug.Log("CurrentState : " + _currentAircraftState);
+        bool foodLack = false;
+        bool fuelLack = false;
+
+        int xDistance = Mathf.Abs(NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx - NodeManager.NodeDic[destinationIndex].NodeIdx);
+        int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
+        int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
+        //int damage = NodeManager.NodeDic[destinationIndex].Risk;
+        //DamageAircraft(damage);
+
+        if(foodToUse > _food)
+        {
+            _food = 0;
+            foodLack = true;
+        }
+        else
+        {
+            _food -= foodToUse;
+        }
+
+        if(fuelToUse > _fuel)
+        {
+            _fuel = 0;
+            fuelLack = true;
+        }
+        else
+        {
+            _fuel -= fuelToUse;
+        }
+
+        if(fuelLack || foodLack)
+        {
+            _currentAircraftState -= 10;
+            //GameManager.Instance.MakeEvent();
+        }
     }
 }

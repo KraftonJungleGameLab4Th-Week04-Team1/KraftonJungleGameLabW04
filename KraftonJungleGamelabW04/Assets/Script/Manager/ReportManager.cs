@@ -47,6 +47,7 @@ public class ReportManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI CurrentNutsToUseText;
     [SerializeField] private TextMeshProUGUI RepairValueText;
     [SerializeField] private List<GameObject> CraftButtons;
+    [SerializeField] private GameObject ConfirmButton;
 
 
     void Awake()
@@ -470,7 +471,7 @@ public class ReportManager : MonoBehaviour
     {
         GameManager.Instance.OnConfirmAction?.Invoke(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel,
                 _aircraftRepairValue, _currentNodeFood, _currentNodeBolt, _currentNodeNut, _currentNodeFuel);
-
+        Debug.Log("after repair : " + GameManager.Aircraft.CurrentAircraftState);
         Destroy(gameObject);
     }
 }

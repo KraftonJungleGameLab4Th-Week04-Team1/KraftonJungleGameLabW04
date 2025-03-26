@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node14
   m_EditorClassIdentifier: 
   _nodeGroup: 4
-  _NodeName: "\uB77C\uD2F0\uC624"
+  _NodeName: Ratio
   _nodeNum: 14
   _nodeIdx: 20
   _food: 25
@@ -21,6 +21,6 @@ MonoBehaviour:
   _nut: 15
   _fuel: 100
   _isVisited: 0
-  _risk: 3
+  _risk: 5
   _nodeType: 0
   _spaceStationLevel: 0
