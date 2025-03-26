@@ -28,6 +28,8 @@ public class ReportManager : MonoBehaviour
     private InfoManager Info;
     
     //UI References.
+    [SerializeField] private GameObject RepairBlockPanel;
+    [SerializeField] private GameObject CraftBlockPanel;
     [SerializeField] private GameObject RepairPanel;
     [SerializeField] private GameObject CraftPanel;
     [SerializeField] private TextMeshProUGUI CurrentWeightText;
@@ -53,7 +55,7 @@ public class ReportManager : MonoBehaviour
     void Start()
     {
         Info = GameManager.Info;
-        currentNode = GameManager.NodeManager.SelectedNode;
+        currentNode = NodeManager.NodeDic[3];
         aircraftManager = GameManager.Aircraft;
         _boltToUse = 0;
         _nutToUse = 0;
@@ -72,21 +74,25 @@ public class ReportManager : MonoBehaviour
         {
             RepairPanel.SetActive(false);
             CraftPanel.SetActive(false);
+            RepairBlockPanel.SetActive(true);
+            CraftBlockPanel.SetActive(true);
         }
         else if(currentNode.NodeType == NodeType.RepairNode)
         {
             CraftPanel.SetActive(false);
+            CraftBlockPanel.SetActive(true);
         }
         else if(currentNode.NodeType == NodeType.SpaceNode)
         {
             RepairPanel.SetActive(false);
+            RepairBlockPanel.SetActive(true);
         }
 
         UpdateAllUI();
     }
 
     //Repair functions.
-    private void AddBoltToUse()
+    public void AddBoltToUse()
     {
         if(_currentAircraftBolt == 0 && _currentNodeBolt == 0) return;
         if(_currentNodeBolt <= 0)
@@ -102,7 +108,7 @@ public class ReportManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    private void DecreaseBoltToUse()
+    public void DecreaseBoltToUse()
     {
         if(_boltToUse <= 0) return;
         _boltToUse -= 1;
@@ -111,7 +117,7 @@ public class ReportManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    private void AddNutToUse()
+    public void AddNutToUse()
     {
         if(_currentAircraftNut == 0 && _currentNodeNut == 0) return;
         if(_currentNodeNut <= 0)
@@ -127,7 +133,7 @@ public class ReportManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    private void DecreaseNutToUse()
+    public void DecreaseNutToUse()
     {
         if(_nutToUse <= 0) return;
         _nutToUse -= 1;
@@ -138,7 +144,7 @@ public class ReportManager : MonoBehaviour
     }
 
     //Resource Functions.
-    private void TakeFood()
+    public void TakeFood()
     {
         if(_currentNodeFood <= 0) return;
         if(!Info.IsPossibleWeight(_currentAircraftFood + 1, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel)) return;
@@ -149,7 +155,7 @@ public class ReportManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    private void ReleaseFood()
+    public void ReleaseFood()
     {
         if(_currentAircraftFood <= 0) return;
         _currentAircraftFood -= 1;
@@ -159,9 +165,9 @@ public class ReportManager : MonoBehaviour
     }
 
     //Resource Functions.
-    private void TakeBolt()
+    public void TakeBolt()
     {
-        if(_currentNodeFood <= 0) return;
+        if(_currentNodeBolt <= 0) return;
         if(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt + 1, _currentAircraftNut, _currentAircraftFuel)) return;
 
         _currentNodeBolt -= 1;
@@ -170,7 +176,7 @@ public class ReportManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    private void ReleaseBolt()
+    public void ReleaseBolt()
     {
         if(_currentAircraftBolt <= 0) return;
         _currentAircraftBolt -= 1;
@@ -180,7 +186,7 @@ public class ReportManager : MonoBehaviour
     }
 
         //Resource Functions.
-    private void TakeNut()
+    public void TakeNut()
     {
         if(_currentNodeNut <= 0) return;
         if(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut + 1, _currentAircraftFuel)) return;
@@ -191,7 +197,7 @@ public class ReportManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    private void ReleaseNut()
+    public void ReleaseNut()
     {
         if(_currentAircraftNut <= 0) return;
         _currentAircraftNut -= 1;
@@ -201,22 +207,22 @@ public class ReportManager : MonoBehaviour
     }
 
         //Resource Functions.
-    private void TakeFuel()
+    public void TakeFuel()
     {
         if(_currentNodeFuel <= 0) return;
         if(!Info.IsPossibleWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel + 1)) return;
 
-        _currentNodeFood -= 1;
-        _currentAircraftFood += 1;
+        _currentNodeFuel -= 1;
+        _currentAircraftFuel += 1;
         _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
         UpdateAllUI();
     }
 
-    private void ReleaseFuel()
+    public void ReleaseFuel()
     {
-        if(_currentAircraftFood <= 0) return;
-        _currentAircraftFood -= 1;
-        _currentNodeFood += 1;
+        if(_currentAircraftFuel <= 0) return;
+        _currentAircraftFuel -= 1;
+        _currentNodeFuel += 1;
         _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel);
         UpdateAllUI();
     }

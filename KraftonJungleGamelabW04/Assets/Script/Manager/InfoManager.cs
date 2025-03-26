@@ -22,16 +22,18 @@ public class InfoManager
     public void Init()
     {
         //임시 값.
-        _weightPerFood = 1;
-        _weightPerBolt = 2;
-        _weightPerNut = 3;
-        _weightPerFuel = 2;
+        _weightPerFood = 2;
+        _weightPerBolt = 3;
+        _weightPerNut = 4;
+        _weightPerFuel = 1;
         _maxWeight = 300;
         _maxAircraftState = 100;
         _fuelPerDistance = 5;
         _foodPerDistance = 2;
         _quotinentByAircraftState = 2;
         _quotinentByWeight = 1;
+        _boltRepairValue = 3;
+        _nutRepairValue = 5;
     }
 
     /// <summary>
