@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AircraftManager : MonoBehaviour
+public class AircraftManager
 {
     //변수
     public int Food => _food; private int _food;
