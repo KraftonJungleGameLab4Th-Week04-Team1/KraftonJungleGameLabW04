@@ -1557,6 +1557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4745862580542220755}
+  - component: {fileID: 1452229482586171772}
   m_Layer: 0
   m_Name: RocketInEndingScene
   m_TagString: Untagged
@@ -1574,7 +1575,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.43301275, y: -0.75000006, z: 0.24999999, w: 0.43301266}
   m_LocalPosition: {x: -69.6, y: -0, z: 118.2}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 225808853105270130}
@@ -1588,6 +1589,19 @@ Transform:
   - {fileID: 7675629800091021757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -120, z: 60}
+--- !u!114 &1452229482586171772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7441136299966332599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba40bf49e7d7ce4c96bc53805d7b4d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
 --- !u!1 &8601688550403574416
 GameObject:
   m_ObjectHideFlags: 0
