@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AircraftManager : MonoBehaviour
+public class AircraftManager
 {
     //변수
     public int Food => _food; private int _food;
@@ -28,6 +28,7 @@ public class AircraftManager : MonoBehaviour
     {
         //_food = GameManager.Info.InitialFood; 
         //_fuel = GameManager.Info.InitialFuel;
+        _currentAircraftState = 50;
         _bolt = 0;
         _nut = 0;
     }

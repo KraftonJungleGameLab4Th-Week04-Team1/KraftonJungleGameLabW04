@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
     #region Managers
     public static UIManager UI { get { return Instance._uiManager; } }
     public static AircraftManager Aircraft { get { return Instance._aircraftManager; } }
-    public static SolarController Solor { get { return Instance._solarController; } }
+    //public static SolarController Solor { get { return Instance._solarController; } }
     public static NodeManager NodeManager { get { return Instance._nodeManager; } }
     public static InfoManager Info { get { return Instance._infoManager; } }
 
     private UIManager _uiManager = new UIManager();
     private AircraftManager _aircraftManager = new AircraftManager();
-    private SolarController _solarController = new SolarController();
+    //private SolarController _solarController = new SolarController();
     private NodeManager _nodeManager = new NodeManager();
     private InfoManager _infoManager = new InfoManager();
     #endregion
@@ -42,8 +42,9 @@ public class GameManager : MonoBehaviour
     
     private bool _isGameStarted = false;
     
+    public GameState GameState { get; set; }
     #endregion
-    
+
     private void Awake()
     {
         if(_instance == null)
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
         UI.Init();
         NodeManager.Init();
         Aircraft.Init();
-        Solor.Init();
+        //Solor.Init();
         Info.Init();
     }
 
@@ -80,15 +81,10 @@ public class GameManager : MonoBehaviour
     private void GameStart()
     {
         _layerMask = LayerMask.GetMask("NodeMarker");
-
-        //OnSelectNodeAction += HandleNodeSelected;
-        //OnMoveNodeAction += HandleNodeMove;
-        //OnConfirmNodeAction += HandleNodeConfirm;
-
-        StartGameTimer(true);
+        GameState = GameState.Title;
     }
     
-    private void StartGameTimer(bool isStart)
+    public void StartGameTimer(bool isStart)
     {
         _isGameStarted = isStart;
     }

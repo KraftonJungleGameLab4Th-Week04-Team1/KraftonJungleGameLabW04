@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeManager : MonoBehaviour
+public class NodeManager
 {
     // 노드들을 관리하는 딕셔너리
     public static Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
@@ -12,13 +12,14 @@ public class NodeManager : MonoBehaviour
         //22개 노드 경로 추가
         for (int i = 1; i <= 22; i++)
         {
-            AddDataToBossInfo(i, "Node/Node" + i.ToString());
+            AddDataToBossInfo(i, "Nodes/Node" + i.ToString());
         }
 
         GameManager.Instance.OnConfirmGainAction += GainResource;
         GameManager.Instance.OnConfirmUseAction += BuildUpSpaceStation;
         GameManager.Instance.OnMoveNodeAction += GetDamageOnAircraft;
         GameManager.Instance.OnMoveNodeAction += SetNodeRisk;
+        GameManager.Instance.OnMoveNodeAction += VisitNodeFirstTime;
     }
 
     private void AddDataToBossInfo(int key, string scriptableObjectPath)
@@ -51,6 +52,16 @@ public class NodeManager : MonoBehaviour
         NodeDic[currentIdx].Bolt -= report.Bolt;
         NodeDic[currentIdx].Fuel -= report.Fuel;
         NodeDic[currentIdx].Nut -= report.Nut;
+    }
+
+    public void VisitNodeFirstTime(int nextNodeIdx)
+    {
+        if(NodeDic[nextNodeIdx].IsVisited)
+        {
+            return;
+        }
+        // 노드 방문 시 처음 방문했을 때의 이벤트를 적용합니다.
+        NodeDic[nextNodeIdx].IsVisited = true;
     }
 
     public void GetDamageOnAircraft(int nextNodeIdx)

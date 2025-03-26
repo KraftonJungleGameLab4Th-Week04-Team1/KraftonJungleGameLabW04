@@ -8,6 +8,12 @@ public enum NodeType
     RepairNode
 }
 
+public enum GameState
+{
+    Title,
+    MainPlay
+}
+
 public class Define
 {
     
