@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: Node18
   m_EditorClassIdentifier: 
   _nodeGroup: 5
+  _xPos: 25
   _NodeName: "\uB378\uB77C\uB8E8\uC2A4"
   _nodeIdx: 25
   _food: 5
   _bolt: 5
   _nut: 5
   _fuel: 500
+  _isVisited: 0
   _risk: 10
   _nodeType: 0
   _spaceStationLevel: 0
