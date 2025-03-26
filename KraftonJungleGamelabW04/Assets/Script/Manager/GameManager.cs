@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     #region Properties
 
     public int CurrentNodeIndex { get;}
+    private LayerMask _layerMask;
+    
     public int CurrentTurn { get; private set; } = 0;
     public float GameTime { get; private set; }
     private readonly float _timeInterval = 2f;
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
     private bool _isGameStarted = false;
     
     #endregion
-
+    
     private void Awake()
     {
         if(_instance == null)
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
             Init();
         }
     }
-
+    
     // 사실 매니저 빼서 GameManager를 따로 관리해야 했으나, 이번 프로젝트에선 GameManager가 모든 매니저 통하기 때문에 Manager역할을 합니다.
     private void Init()
     {
@@ -67,10 +69,12 @@ public class GameManager : MonoBehaviour
 
     private void GameStart()
     {
+        _layerMask = LayerMask.GetMask("NodeMarker");
+
         OnSelectNodeAction += HandleNodeSelected;
         OnMoveNodeAction += HandleNodeMove;
         //OnConfirmNodeAction += HandleNodeConfirm;
-        
+
         StartGameTimer(true);
     }
     
@@ -93,6 +97,18 @@ public class GameManager : MonoBehaviour
             _time -= _timeInterval;
             GameTime++;
             OnChangedGameTimeAction?.Invoke(GameTime);
+        }
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
+            {
+                _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
+                Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeIdx);
+            }
         }
     }
 
