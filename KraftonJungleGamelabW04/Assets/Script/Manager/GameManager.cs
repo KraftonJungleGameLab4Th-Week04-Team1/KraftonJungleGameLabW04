@@ -42,8 +42,9 @@ public class GameManager : MonoBehaviour
     
     private bool _isGameStarted = false;
     
+    public GameState GameState { get; set; }
     #endregion
-    
+
     private void Awake()
     {
         if(_instance == null)
@@ -80,15 +81,10 @@ public class GameManager : MonoBehaviour
     private void GameStart()
     {
         _layerMask = LayerMask.GetMask("NodeMarker");
-
-        //OnSelectNodeAction += HandleNodeSelected;
-        //OnMoveNodeAction += HandleNodeMove;
-        //OnConfirmNodeAction += HandleNodeConfirm;
-
-        StartGameTimer(true);
+        GameState = GameState.Title;
     }
     
-    private void StartGameTimer(bool isStart)
+    public void StartGameTimer(bool isStart)
     {
         _isGameStarted = isStart;
     }
