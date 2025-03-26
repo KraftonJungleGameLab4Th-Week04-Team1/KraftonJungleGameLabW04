@@ -5,6 +5,7 @@ public class NodeManager : MonoBehaviour
 {
     // 노드들을 관리하는 딕셔너리
     public static Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
+    public Node SelectedNode;
 
     public void Init()
     {
