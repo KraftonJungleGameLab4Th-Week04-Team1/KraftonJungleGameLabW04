@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class BasicUI : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private Canvas _canvas;
     private RectTransform _rectTransform;
 
     [Header("Panel State")]
@@ -23,7 +22,8 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        // 자식 오브젝트의 RectTransform을 가져옵니다.
+        _rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
     }
 
     public void Init()
