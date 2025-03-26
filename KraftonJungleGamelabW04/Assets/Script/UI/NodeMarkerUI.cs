@@ -59,12 +59,19 @@ public class NodeMarkerUI : MonoBehaviour
     private void ChangeNodeMarkerUI(Node node)
     {
         _nameText.text = $"{node.name}";
-        _foodText.text = $"{node.Food}";
-        _boltText.text = $"{node.Bolt}";
-        _nutText.text = $"{node.Nut}";
+        _foodText.text = node.IsVisited ? $"{node.Food}" : "??";
+        _boltText.text = node.IsVisited ? $"{node.Bolt}" : "??";
+        _nutText.text = node.IsVisited ? $"{node.Nut}" : "??";
         _fuelText.text = $"{node.Fuel}";
         _riskText.text = $"{node.Risk}";
-        _typeText.text = node.NodeType == NodeType.RepairNode ? "ABLE TO REPAIR" : "";
+        if (node.IsVisited)
+        {
+            _typeText.text = node.NodeType == NodeType.RepairNode ? $"ABLE TO REPAIR" : "";
+        }
+        else
+        {
+            _typeText.text = "??";
+        }
     }
 
     // Move btn click action
