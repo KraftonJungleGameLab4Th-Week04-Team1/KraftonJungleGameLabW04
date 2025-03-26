@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private float _time;
     
     private bool _isGameStarted = false;
+    public bool IsEscapable { get; set; } = false;
 
     private GameState _gameState;
     public GameState GameState
