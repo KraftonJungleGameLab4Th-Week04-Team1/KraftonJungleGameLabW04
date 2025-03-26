@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Node Data")]
 public class Node : ScriptableObject
 {
+    [Header("시스템 변수")]
+    [SerializeField] private int _nodeGroup;
+
     [Header("노드 명")]
     [SerializeField] private string _NodeName;
     [SerializeField] private int _nodeIdx;
@@ -20,6 +23,7 @@ public class Node : ScriptableObject
     [SerializeField] private NodeType _nodeType;
     [SerializeField] private int _spaceStationLevel;
 
+    public int NodeGroup => _nodeGroup;
     public int NodeIdx => _nodeIdx;
     public string NodeName => _NodeName;
     public NodeType NodeType => _nodeType;
