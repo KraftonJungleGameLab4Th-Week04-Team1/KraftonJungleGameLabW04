@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
         
+        // Get selected node
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
