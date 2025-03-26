@@ -41,8 +41,18 @@ public class GameManager : MonoBehaviour
     private float _time;
     
     private bool _isGameStarted = false;
-    
-    public GameState GameState { get; set; }
+
+    private GameState _gameState;
+    public GameState GameState
+    {
+        get => _gameState;
+        set
+        {
+            _gameState = value;
+            _uiManager.ChangeUI(value);
+        }
+    }
+
     #endregion
 
     private void Awake()
