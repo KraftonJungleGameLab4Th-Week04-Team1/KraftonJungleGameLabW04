@@ -12,17 +12,9 @@ public class EscapeCheck : MonoBehaviour
         PartPrefabs[3] = gameObject.transform.GetChild(3).gameObject;
         PartPrefabs[4] = gameObject.transform.GetChild(4).gameObject;
         PartPrefabs[5] = gameObject.transform.GetChild(5).gameObject;
-    }
-
-    private void Awake()
-    {
-        //GameManager.Instance.OnConfirmUseAction += _ => AddParts();
-        //GameManager.Instance.OnConfirmUseAction += _ => EscapeEnding();
-        //GameManager.Instance.OnConfirmGainAction += _ => EscapeEnding();
 
         //이건 개오바라 이그노어메서드로 뺐어요
         //GameManager.Instance.OnConfirmAction += (_, __, ___, ____, _____, ______, _______, ________, _________) => AddParts();
-
         GameManager.Instance.OnConfirmAction += IgnoreParamsEscapeCheck;
     }
 
