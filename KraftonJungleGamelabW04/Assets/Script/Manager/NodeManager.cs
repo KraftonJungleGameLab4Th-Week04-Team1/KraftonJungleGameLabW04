@@ -4,27 +4,32 @@ using UnityEngine;
 public class NodeManager : MonoBehaviour
 {
     // 노드들을 관리하는 딕셔너리
-    public Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
+    public static Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
 
     public void Init()
     {
-        Node[] foundNodes = FindObjectsByType<Node>(FindObjectsSortMode.None);
-
-        foreach (Node node in foundNodes)
+        //22개 노드 경로 추가
+        for (int i = 1; i <= 22; i++)
         {
-            if (!NodeDic.ContainsKey(node.NodeIdx))
-            {
-                NodeDic.Add(node.NodeIdx, node);
-            }
-            else
-            {
-                Debug.LogWarning($"중복된 인덱스: {node.NodeIdx}를 가진 Node가 이미 존재합니다.");
-            }
+            AddDataToBossInfo(i, "Node/Node" + i.ToString());
         }
+
         GameManager.Instance.OnConfirmGainAction += GainResource;
         GameManager.Instance.OnConfirmUseAction += BuildUpSpaceStation;
         GameManager.Instance.OnMoveNodeAction += GetDamageOnAircraft;
         GameManager.Instance.OnMoveNodeAction += SetNodeRisk;
+    }
+
+    private void AddDataToBossInfo(int key, string scriptableObjectPath)
+    {
+        if (!NodeDic.ContainsKey(key))
+        {
+            NodeDic.Add(key, (Node)Resources.Load(scriptableObjectPath));
+        }
+        else
+        {
+            return;
+        }
     }
 
     // Node 클래스는 구조체처럼 변수 저장용으로 사용합니다.
