@@ -67,12 +67,22 @@ public class GameManager : MonoBehaviour
         Info.Init();
     }
 
+    private void OnDestroy()
+    {
+        //액션 해제
+        OnChangedGameTimeAction = null;
+        OnSelectNodeAction = null;
+        OnMoveNodeAction = null;
+        OnConfirmUseAction = null;
+        OnConfirmGainAction = null;
+    }
+
     private void GameStart()
     {
         _layerMask = LayerMask.GetMask("NodeMarker");
 
-        OnSelectNodeAction += HandleNodeSelected;
-        OnMoveNodeAction += HandleNodeMove;
+        //OnSelectNodeAction += HandleNodeSelected;
+        //OnMoveNodeAction += HandleNodeMove;
         //OnConfirmNodeAction += HandleNodeConfirm;
 
         StartGameTimer(true);
@@ -110,22 +120,5 @@ public class GameManager : MonoBehaviour
                 Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeIdx);
             }
         }
-    }
-
-    
-    private void HandleNodeSelected(int nodeIndex)
-    {
-        // When selected node
-    }
-
-    
-    private void HandleNodeMove(int nodeIndex)
-    {
-        // When decided to move
-    }
-    
-    private void HandleNodeConfirm(Node node)
-    {
-        // When selected confirm btn
     }
 }
