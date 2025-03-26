@@ -39,7 +39,8 @@ public class SolarController : MonoBehaviour
         _sunCylinder = GameObject.Find("LightArea");
         _cameraTransform = _mainCamera.transform;
         _sunLightTransform = _sunLight.transform;
-        _sunCylinderTransform = _sunCylinder.transform;
+        if (_sunCylinder != null)
+            _sunCylinderTransform = _sunCylinder.transform;
 
         GameManager.Instance.OnMoveNodeAction += SetRotate;
     }
@@ -110,7 +111,8 @@ public class SolarController : MonoBehaviour
 
         // 태양 실린더는 항상 같은 방향으로 회전
         _cameraTransform.RotateAround(transform.position, _cameraDir, _cameraRotationAmount);
-        _sunCylinderTransform.RotateAround(transform.position, Vector3.down, _cylinderRotationAmount);
+        if (_sunCylinderTransform != null)
+            _sunCylinderTransform.RotateAround(transform.position, Vector3.down, _cylinderRotationAmount);
 
         // 빛은 태양 실린더와 동일하게 회전
         _currentLightAngle -= _cylinderRotationAmount;
