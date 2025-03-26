@@ -16,9 +16,14 @@ public class EscapeCheck : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.OnConfirmUseAction += _ => AddParts();
-        GameManager.Instance.OnConfirmUseAction += _ => EscapeEnding();
-        GameManager.Instance.OnConfirmGainAction += _ => EscapeEnding();
+        //GameManager.Instance.OnConfirmUseAction += _ => AddParts();
+        //GameManager.Instance.OnConfirmUseAction += _ => EscapeEnding();
+        //GameManager.Instance.OnConfirmGainAction += _ => EscapeEnding();
+
+        //이건 개오바라 이그노어메서드로 뺐어요
+        //GameManager.Instance.OnConfirmAction += (_, __, ___, ____, _____, ______, _______, ________, _________) => AddParts();
+
+        GameManager.Instance.OnConfirmAction += IgnoreParamsEscapeCheck;
     }
 
     public bool CheckEscape()
@@ -34,6 +39,12 @@ public class EscapeCheck : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void IgnoreParamsEscapeCheck(int a, int b, int c, int d, int e, int f, int g, int h, int i)
+    {
+        AddParts();
+        EscapeEnding();
     }
 
     private void AddParts()
