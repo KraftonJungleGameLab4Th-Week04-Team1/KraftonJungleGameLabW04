@@ -19,7 +19,7 @@ public class InfoManager : MonoBehaviour
     public int NutRepairValue => _nutRepairValue; private int _nutRepairValue; //너트 하나당 기체가 수리되는 정도.
 
 
-    void Init()
+    public void Init()
     {
         //임시 값.
         _weightPerFood = 1;

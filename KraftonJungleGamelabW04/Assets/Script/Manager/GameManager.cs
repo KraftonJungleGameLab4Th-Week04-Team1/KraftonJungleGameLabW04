@@ -11,27 +11,25 @@ public class GameManager : MonoBehaviour
     public static AircraftManager Aircraft { get { return Instance._aircraftManager; } }
     public static SolarController Solor { get { return Instance._solarController; } }
     public static NodeManager NodeManager { get { return Instance._nodeManager; } }
+    public static InfoManager Info { get { return Instance._infoManager; } }
 
     private UIManager _uiManager = new UIManager();
     private AircraftManager _aircraftManager = new AircraftManager();
     private SolarController _solarController = new SolarController();
     private NodeManager _nodeManager = new NodeManager();
+    private InfoManager _infoManager = new InfoManager();
     #endregion
     
     #region Actions
 
     public Action<float> OnChangedGameTimeAction;
     
-    // Node index
     public Action<int> OnSelectNodeAction;
-    
-    // Fuel count
     public Action<int> OnMoveNodeAction;
-    
-    // Food count, Bolt count, Nut count
-    public Action<Node> OnConfirmNodeAction;
+    public Action<Node> OnConfirmUseAction;
+    public Action<Node> OnConfirmGainAction;
     #endregion
-    
+
     #region Properties
 
     public int CurrentNodeIndex { get;}
@@ -64,13 +62,14 @@ public class GameManager : MonoBehaviour
         NodeManager.Init();
         Aircraft.Init();
         Solor.Init();
+        Info.Init();
     }
 
     private void GameStart()
     {
         OnSelectNodeAction += HandleNodeSelected;
         OnMoveNodeAction += HandleNodeMove;
-        OnConfirmNodeAction += HandleNodeConfirm;
+        //OnConfirmNodeAction += HandleNodeConfirm;
         
         StartGameTimer(true);
     }
