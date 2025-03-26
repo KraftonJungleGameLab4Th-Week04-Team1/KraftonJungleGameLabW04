@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     
     public Action<int> OnSelectNodeAction;
     public Action<int> OnMoveNodeAction;
-    public Action<Node> OnConfirmUseAction;
-    public Action<Node> OnConfirmGainAction;
+    //aircraftFood, aircraftBolt, aircraftNut, aircraftFuel, repairValue, nodeFood, nodeBolt, nodeNut, nodeFuel
+    public Action<int, int, int, int, int, int, int, int, int> OnConfirmAction;
     #endregion
 
     #region Properties
@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         Aircraft.Init();
         //Solor.Init();
         Info.Init();
+        //반드시 UI가 가장 마지막에 초기화되어야 합니다.
         UI.Init();
         
         GameStart();
@@ -85,8 +86,7 @@ public class GameManager : MonoBehaviour
         OnChangedGameTimeAction = null;
         OnSelectNodeAction = null;
         OnMoveNodeAction = null;
-        OnConfirmUseAction = null;
-        OnConfirmGainAction = null;
+        OnConfirmAction = null;
     }
 
     private void GameStart()

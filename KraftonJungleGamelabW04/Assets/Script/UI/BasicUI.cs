@@ -29,9 +29,8 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     public void Init()
     {
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
-        GameManager.Instance.OnConfirmUseAction += _ => UpdateBasicUI();
-        GameManager.Instance.OnConfirmGainAction += _ => UpdateBasicUI();
         GameManager.Instance.OnMoveNodeAction += _ => UpdateBasicUI();
+        GameManager.Instance.OnConfirmAction += IgnoreParamsUpdateBasicUI;
     }
 
     // 애니메이션 만들어서 위아래 이동하게 만들기
@@ -46,6 +45,11 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         {
             _rectTransform.DOAnchorPosY(-220, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
+    }
+
+    private void IgnoreParamsUpdateBasicUI(int a, int b, int c, int d, int e, int f, int g, int h, int i)
+    {
+        UpdateBasicUI();
     }
 
     private void UpdateBasicUI()

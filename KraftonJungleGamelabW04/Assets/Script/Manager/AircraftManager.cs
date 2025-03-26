@@ -20,8 +20,6 @@ public class AircraftManager
     {
         // 우주정거장건설, 기체수리에 쓰이는 모든 자원을 보고서로부터 한번에 받아옵니다.
         // 따라서 UIManager에서는 Node 객체만들어 담아서 액션을 Invoke해야합니다.
-        GameManager.Instance.OnConfirmUseAction += UseResources;
-        GameManager.Instance.OnConfirmUseAction += RepairAircraft;
     }
 
     void Start()
@@ -33,6 +31,23 @@ public class AircraftManager
         _nut = 0;
     }
 
+    public void UpdateAircraftResources(int newFood, int newBolt, int newNut, int newFuel)
+    {
+        _food = newFood;
+        _bolt = newBolt;
+        _nut = newNut;
+        _fuel = newFuel;
+
+        // 무게 갱신까지 자동으로.
+        _currentWeight = GameManager.Info.CalculateCurrentWeight();
+    }
+
+    public void RepiarAircraftByInputValue(int value)
+    {
+        _currentAircraftState = Mathf.Max(_currentAircraftState + value, _maxAircraftState)
+    }
+
+    /* [Legacy] 격차가 컨펌일때 사용하던 메서드들
     //////////자원 업데이트 함수. GameManager의 Action에 등록해야함.
     public void GainResources(Node toAircraft)
     {
@@ -53,12 +68,7 @@ public class AircraftManager
 
         _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
     }
-
-    public void DamageAircraft(int damage)
-    {
-        _currentAircraftState -= damage;
-    }
-
+    
     // 우주정거장이랑 기체수리정비소랑 같은 노드가 아니라는 전제로 코드를 짰습니다.
     public void RepairAircraft(Node fromAircraft)
     {
@@ -67,5 +77,11 @@ public class AircraftManager
         {
             _currentAircraftState = _maxAircraftState;
         }
+    }
+    */
+
+    public void DamageAircraft(int damage)
+    {
+        _currentAircraftState -= damage;
     }
 }
