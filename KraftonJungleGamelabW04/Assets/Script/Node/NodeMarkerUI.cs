@@ -57,7 +57,7 @@ public class NodeMarkerUI : MonoBehaviour
         _nutText.text = $"{node.Nut}";
         _fuelText.text = $"{node.Fuel}";
         _riskText.text = $"{node.Risk}";
-        _typeText.text = $"{node.NodeType.ToString()}";
+        _typeText.text = node.NodeType == NodeType.RepairNode ? "ABLE TO REPAIR" : "";
     }
 
     // Move btn click action
