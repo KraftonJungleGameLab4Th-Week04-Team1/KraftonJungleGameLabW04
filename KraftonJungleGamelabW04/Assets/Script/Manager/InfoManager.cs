@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InfoManager : MonoBehaviour
+public class InfoManager
 {
     public int InitialFood => _inititalFood; private int _inititalFood; //시작시 가질 음식의 양
     public int InitialFuel => _inititalFuel; private int _inititalFuel; //시작시 가질 연료의 양
