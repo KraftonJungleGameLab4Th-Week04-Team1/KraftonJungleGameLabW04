@@ -58,7 +58,7 @@ public class ReportManager : MonoBehaviour
     void Start()
     {
         Info = GameManager.Info;
-        currentNode = NodeManager.NodeDic[3];
+        currentNode = NodeManager.NodeDic[12];
         aircraftManager = GameManager.Aircraft;
         _boltToUse = 0;
         _nutToUse = 0;
@@ -302,7 +302,8 @@ public class ReportManager : MonoBehaviour
         {
             _currentAircraftNut -= (15 - _currentNodeNut);
         }
-            
+        ShowCraftButton();
+        UpdateAllUI();
     }
 
     public void CraftPartB() //30, 20
@@ -329,7 +330,8 @@ public class ReportManager : MonoBehaviour
         {
             _currentAircraftNut -= (20 - _currentNodeNut);
         }
-
+        ShowCraftButton();
+        UpdateAllUI();
     }
 
     public void CraftPartC() //50, 25
@@ -357,6 +359,7 @@ public class ReportManager : MonoBehaviour
             _currentAircraftNut -= (25 - _currentNodeNut);
         }
         ShowCraftButton();
+        UpdateAllUI();
     }
 
     public void CraftPartD() //50, 50
@@ -384,6 +387,7 @@ public class ReportManager : MonoBehaviour
             _currentAircraftNut -= (50 - _currentNodeNut);
         }
         ShowCraftButton();
+        UpdateAllUI();
     }
 
     public void CraftPartE() //100, 80
@@ -412,6 +416,7 @@ public class ReportManager : MonoBehaviour
         }
 
         ShowCraftButton();
+        UpdateAllUI();
     }
 
     public void CraftPartF() //200, 150
@@ -440,6 +445,7 @@ public class ReportManager : MonoBehaviour
         }
 
         ShowCraftButton();
+        UpdateAllUI();
     }
     public void ShowCraftButton()
     {
@@ -448,6 +454,7 @@ public class ReportManager : MonoBehaviour
         while (GameManager.NodeManager.spaceStationParts[i])
         {
             i++;
+            if (i == 6) break;
         }
 
         foreach(GameObject button in CraftButtons)
@@ -464,3 +471,4 @@ public class ReportManager : MonoBehaviour
         //aircraftManager.
     }
 }
+ 
