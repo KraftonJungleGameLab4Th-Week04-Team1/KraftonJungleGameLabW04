@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Node20
   m_EditorClassIdentifier: 
   _nodeGroup: 5
-  _xPos: 30
   _NodeName: "\uB178\uB974\uB374"
+  _nodeNum: 20
   _nodeIdx: 30
   _food: 0
   _bolt: 45
