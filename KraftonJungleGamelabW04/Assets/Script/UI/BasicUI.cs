@@ -32,7 +32,11 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnMoveNodeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmAction += IgnoreParamsUpdateBasicUI;
+        
+
+        // 시작할 때 UI 한 번 업데이트
         UpdateBasicUI();
+        GameManager.Instance.OnArriveAction += _ => UpdateBasicUI();
     }
 
     // 애니메이션 만들어서 위아래 이동하게 만들기
@@ -57,6 +61,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     private void UpdateBasicUI()
     {
         AircraftManager aircraft = GameManager.Aircraft;
+        Debug.Log($"aircraft : {aircraft.Food}, {aircraft.Bolt}, {aircraft.Nut}, {aircraft.Fuel}, {aircraft.CurrentWeight}");
         _foodText.text = $"{aircraft.Food}";
         _boltText.text = $"{aircraft.Bolt}";
         _nutText.text = $"{aircraft.Nut}";
