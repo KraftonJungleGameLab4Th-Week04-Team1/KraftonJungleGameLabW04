@@ -29,6 +29,8 @@ public class NodeMarkerUI : MonoBehaviour
         
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
+        GameManager.Instance.OnMoveNodeAction += ChangeNodeMarkerUI;
+
         GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);
@@ -43,7 +45,7 @@ public class NodeMarkerUI : MonoBehaviour
         }
         else
         {
-            ChangeNodeMarkerUI(Node);
+            ChangeNodeMarkerUI(Node.NodeNum);
             ActivateNodeMarkerCanvas(true);
         }
     }
@@ -61,13 +63,14 @@ public class NodeMarkerUI : MonoBehaviour
     }
 
     // Change node UI data
-    private void ChangeNodeMarkerUI(Node node)
+    private void ChangeNodeMarkerUI(int index)
     {
+        var node = NodeManager.NodeDic[index]; 
         _nameText.text = $"{node.NodeName}";
         _foodText.text = node.IsVisited ? $"{node.Food}" : "??";
         _boltText.text = node.IsVisited ? $"{node.Bolt}" : "??";
         _nutText.text = node.IsVisited ? $"{node.Nut}" : "??";
-        _fuelText.text = $"{node.Fuel}";
+        _fuelText.text = node.IsVisited ? $"{node.Fuel}" : "??";
         _riskText.text = $"{node.Risk}";
 
         if(node.NodeType == NodeType.RepairNode)
