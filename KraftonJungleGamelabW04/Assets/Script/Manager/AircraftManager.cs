@@ -25,7 +25,7 @@ public class AircraftManager
         // 따라서 UIManager에서는 Node 객체만들어 담아서 액션을 Invoke해야합니다.
         _food = 30;
         _fuel = 50;
-        _currentWeight = 0;
+        _currentWeight = _food * 2 + _fuel;
         _currentAircraftState = 100;
         _maxAircraftState = 100;
         _maxWeight = 300;
