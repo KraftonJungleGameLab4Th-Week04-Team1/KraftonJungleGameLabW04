@@ -57,9 +57,6 @@ public class FadeOutPanel : MonoBehaviour
             if(Input.anyKeyDown)
             {
                 Application.Quit();
-
-                // 에디터에서는 Play 모드 중지
-                UnityEditor.EditorApplication.isPlaying = false;
             }
         }
     }
