@@ -25,6 +25,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     {
         // 자식 오브젝트의 RectTransform을 가져옵니다.
         _rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
+        UpdateBasicUI();
     }
 
     public void Init()
@@ -40,11 +41,11 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _isPanelOn = !_isPanelOn;
         if (_isPanelOn)
         {
-            _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
+            _rectTransform.DOAnchorPosY(-220, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
         else
         {
-            _rectTransform.DOAnchorPosY(-220, _panelMoveSpeed).SetEase(Ease.OutExpo);
+            _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
     }
 
