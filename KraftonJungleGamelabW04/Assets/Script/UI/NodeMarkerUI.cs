@@ -100,9 +100,19 @@ public class NodeMarkerUI : MonoBehaviour
 
         if (Node.NodeNum == index)
         {
-            GameManager.Aircraft.UseResourceForFly(index);
-            GameManager.Instance.OnMoveNodeAction?.Invoke(index);
-            GameManager.Instance.IsMoving = true;
+            int xDistance = Mathf.Abs(NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx - NodeManager.NodeDic[index].NodeIdx);
+            int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
+            int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
+
+            Debug.Log(foodToUse + " " + fuelToUse);
+            if (GameManager.Aircraft.Fuel >= fuelToUse && GameManager.Aircraft.Food >= foodToUse)
+            {
+                GameManager.Aircraft.UseResourceForFly(index);
+                GameManager.Instance.OnMoveNodeAction?.Invoke(index);
+                GameManager.Instance.IsMoving = true;
+            }
+
+            return;
         }
     }
 
