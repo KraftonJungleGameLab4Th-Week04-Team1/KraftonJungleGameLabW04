@@ -10070,6 +10070,10 @@ PrefabInstance:
       value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -3191260080303070782, guid: 79307f501eb267b44be9d7ca808a3dfb, type: 2}
