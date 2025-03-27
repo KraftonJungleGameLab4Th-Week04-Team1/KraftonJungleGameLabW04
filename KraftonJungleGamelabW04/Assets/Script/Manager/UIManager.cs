@@ -4,8 +4,10 @@ public class UIManager
 {
     private BasicUI _basicUI;
     private TitleUI _titleUI;
+    private GameOverUI _gameOverUI;
     private Canvas _titleUICanvas;
     private Canvas _basicUICanvas;
+    private Canvas _gameOverUICanvas;
 
     public void Init()
     {
@@ -16,6 +18,10 @@ public class UIManager
         _titleUI = GameObject.FindFirstObjectByType<TitleUI>();
         _titleUICanvas = _titleUI.GetComponent<Canvas>();
         _titleUI.Init();
+
+        _gameOverUI = GameObject.FindFirstObjectByType<GameOverUI>();
+        _gameOverUICanvas = _gameOverUI.GetComponent<Canvas>();
+        //_gameOverUI.Init();
     }
 
     public void ChangeUI(GameState state)
@@ -30,6 +36,10 @@ public class UIManager
             case GameState.MainPlay:
                 _basicUICanvas.enabled = true;
                 break;
+            case GameState.GameOver:
+                _gameOverUICanvas.enabled = true;
+                _gameOverUI.Show();
+                break;
         }
     }
 
@@ -37,5 +47,6 @@ public class UIManager
     {
         _titleUICanvas.enabled = false;
         _basicUICanvas.enabled = false;
+        _gameOverUICanvas.enabled = false;
     }
 }
