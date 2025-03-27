@@ -19,7 +19,7 @@ MonoBehaviour:
   _food: 0
   _bolt: 5
   _nut: 5
-  _fuel: 300
+  _fuel: 500
   _isVisited: 0
   _risk: 10
   _nodeType: 0

@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Euktovania
   _nodeNum: 10
   _nodeIdx: 14
-  _food: 100
+  _food: 200
   _bolt: 5
   _nut: 5
-  _fuel: 200
+  _fuel: 400
   _isVisited: 0
   _risk: 20
   _nodeType: 0

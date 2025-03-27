@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Emeria
   _nodeNum: 9
   _nodeIdx: 13
-  _food: 20
+  _food: 40
   _bolt: 20
   _nut: 20
-  _fuel: 100
+  _fuel: 200
   _isVisited: 0
   _risk: 5
   _nodeType: 2

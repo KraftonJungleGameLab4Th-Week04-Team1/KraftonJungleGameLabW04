@@ -2949,15 +2949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afe93639febee842887ebb7544dbf50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 0.25
-  _sunLight: {fileID: 0}
-  _sunCylinder: {fileID: 0}
-  _sunLightTransform: {fileID: 0}
-  _deadZoneTransform: {fileID: 0}
-  _sunCylinderTransform: {fileID: 0}
-  _currentRotationAngle: 0
-  _isFast: 0
-  _cameraDir: {x: 0, y: 0, z: 0}
 --- !u!23 &793260200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6516,7 +6507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc76ce77a4b7f1047919b11802610646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isPanelOn: 1
+  _isPanelOn: 0
   _panelMoveSpeed: 0.3
 --- !u!1001 &1392037642
 PrefabInstance:
@@ -11953,7 +11944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2274757175961318972, guid: befd4014da03b1f44a3025d711ac5542, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 140
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2274757175961318972, guid: befd4014da03b1f44a3025d711ac5542, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

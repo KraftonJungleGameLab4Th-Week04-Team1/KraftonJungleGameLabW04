@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Fortran
   _nodeNum: 7
   _nodeIdx: 11
-  _food: 30
+  _food: 60
   _bolt: 5
   _nut: 15
-  _fuel: 100
+  _fuel: 200
   _isVisited: 0
   _risk: 10
   _nodeType: 0

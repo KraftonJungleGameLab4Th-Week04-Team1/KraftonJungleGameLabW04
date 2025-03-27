@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Ostgaroa
   _nodeNum: 16
   _nodeIdx: 23
-  _food: 120
+  _food: 240
   _bolt: 5
   _nut: 5
-  _fuel: 50
+  _fuel: 100
   _isVisited: 0
   _risk: 10
   _nodeType: 2

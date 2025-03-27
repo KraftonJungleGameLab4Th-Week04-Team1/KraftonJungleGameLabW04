@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Erusia
   _nodeNum: 5
   _nodeIdx: 6
-  _food: 80
+  _food: 160
   _bolt: 20
   _nut: 10
-  _fuel: 150
+  _fuel: 300
   _isVisited: 0
   _risk: 5
   _nodeType: 0

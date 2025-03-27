@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: usea
   _nodeNum: 8
   _nodeIdx: 13
-  _food: 25
+  _food: 50
   _bolt: 25
   _nut: 25
-  _fuel: 150
+  _fuel: 300
   _isVisited: 0
   _risk: 15
   _nodeType: 0

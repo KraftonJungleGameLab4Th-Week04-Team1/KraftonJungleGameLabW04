@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: San salvasion
   _nodeNum: 6
   _nodeIdx: 8
-  _food: 50
+  _food: 100
   _bolt: 20
   _nut: 20
-  _fuel: 150
+  _fuel: 300
   _isVisited: 0
   _risk: 10
   _nodeType: 0

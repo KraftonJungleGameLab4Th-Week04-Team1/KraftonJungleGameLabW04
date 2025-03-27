@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Faraway
   _nodeNum: 17
   _nodeIdx: 23
-  _food: 5
+  _food: 10
   _bolt: 120
   _nut: 5
-  _fuel: 50
+  _fuel: 100
   _isVisited: 0
   _risk: 10
   _nodeType: 0
