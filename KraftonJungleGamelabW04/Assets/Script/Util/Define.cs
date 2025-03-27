@@ -11,7 +11,8 @@ public enum NodeType
 public enum GameState
 {
     Title,
-    MainPlay
+    MainPlay,
+    GameOver
 }
 
 public class Define
