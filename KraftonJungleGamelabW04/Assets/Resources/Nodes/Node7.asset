@@ -16,7 +16,7 @@ MonoBehaviour:
   _NodeName: Fortran
   _nodeNum: 7
   _nodeIdx: 11
-  _food: 60
+  _food: 100
   _bolt: 5
   _nut: 15
   _fuel: 200

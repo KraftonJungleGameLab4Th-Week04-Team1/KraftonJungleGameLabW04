@@ -16,7 +16,7 @@ MonoBehaviour:
   _NodeName: Resus
   _nodeNum: 13
   _nodeIdx: 18
-  _food: 60
+  _food: 100
   _bolt: 30
   _nut: 30
   _fuel: 400

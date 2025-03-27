@@ -16,7 +16,7 @@ MonoBehaviour:
   _NodeName: Osea
   _nodeNum: 2
   _nodeIdx: 2
-  _food: 80
+  _food: 100
   _bolt: 40
   _nut: 30
   _fuel: 300

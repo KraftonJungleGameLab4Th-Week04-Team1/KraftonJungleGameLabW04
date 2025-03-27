@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Iceland
   _nodeNum: 1
   _nodeIdx: 1
-  _food: 40
+  _food: 120
   _bolt: 40
   _nut: 30
-  _fuel: 400
+  _fuel: 500
   _isVisited: 1
   _risk: 10
   _nodeType: 0

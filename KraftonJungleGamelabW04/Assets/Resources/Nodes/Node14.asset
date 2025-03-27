@@ -16,7 +16,7 @@ MonoBehaviour:
   _NodeName: Ratio
   _nodeNum: 14
   _nodeIdx: 20
-  _food: 50
+  _food: 70
   _bolt: 20
   _nut: 15
   _fuel: 200

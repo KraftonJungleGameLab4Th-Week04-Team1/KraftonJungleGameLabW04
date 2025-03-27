@@ -16,8 +16,8 @@ MonoBehaviour:
   _NodeName: Wellow
   _nodeNum: 3
   _nodeIdx: 3
-  _food: 20
-  _bolt: 60
+  _food: 40
+  _bolt: 100
   _nut: 0
   _fuel: 200
   _isVisited: 0

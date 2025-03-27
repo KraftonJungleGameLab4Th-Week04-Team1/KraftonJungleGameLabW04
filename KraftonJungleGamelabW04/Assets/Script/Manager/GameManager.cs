@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     
     public int CurrentTurn { get; private set; } = 0;
     [SerializeField] public float GameTime { get; private set; }
-    private readonly float _timeInterval = 2f; //2초당 인게임 시간 1분 증가.
+    private readonly float _timeInterval = 0.5f; //2초당 인게임 시간 1분 증가.
     private float _time;
     
     private bool _isGameStarted = false;
