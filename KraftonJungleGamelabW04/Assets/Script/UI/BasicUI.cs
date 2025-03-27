@@ -43,7 +43,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _isPanelOn = !_isPanelOn;
         if (_isPanelOn)
         {
-            _rectTransform.DOAnchorPosY(-200, _panelMoveSpeed).SetEase(Ease.OutExpo);
+            _rectTransform.DOAnchorPosY(-160, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
         else
         {
