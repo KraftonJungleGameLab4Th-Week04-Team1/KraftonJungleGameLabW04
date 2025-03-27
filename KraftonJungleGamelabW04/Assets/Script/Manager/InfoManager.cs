@@ -32,7 +32,7 @@ public class InfoManager
         _weightPerFuel = 1;
         _maxWeight = 300;
         _maxAircraftState = 100;
-        _fuelPerDistance = 5;
+        _fuelPerDistance = 3;
         _foodPerDistance = 2;
         _timePerDistance = 30;
         _baseRequiredFood = 1;
