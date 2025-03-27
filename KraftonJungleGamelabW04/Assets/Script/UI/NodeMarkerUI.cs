@@ -29,7 +29,6 @@ public class NodeMarkerUI : MonoBehaviour
         
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
-
         GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);
