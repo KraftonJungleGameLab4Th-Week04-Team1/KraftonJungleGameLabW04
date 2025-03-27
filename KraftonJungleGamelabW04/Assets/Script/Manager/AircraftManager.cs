@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AircraftManager
@@ -118,13 +119,26 @@ public class AircraftManager
         bool foodLack = false;
         bool fuelLack = false;
 
-        int xDistance = Mathf.Abs(NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx - NodeManager.NodeDic[destinationIndex].NodeIdx);
+
+
+
+
+        int xDistance = (NodeManager.NodeDic[destinationIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
+
+        if (xDistance < 0)
+        {
+
+            int distance1 = 32 + xDistance;
+            int distance2 = -xDistance;
+            xDistance = Mathf.Min(distance1, distance2);
+        }
+
         int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
         int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
         //int damage = NodeManager.NodeDic[destinationIndex].Risk;
         //DamageAircraft(damage);
 
-        if(foodToUse > _food)
+        if (foodToUse > _food)
         {
             _food = 0;
             foodLack = true;

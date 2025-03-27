@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,7 +87,16 @@ public class NodeMarkerUI : MonoBehaviour
             _typeText.text = "";
         }
 
-        int xDistance = Mathf.Abs(node.NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
+        int xDistance = (node.NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
+
+        if(xDistance < 0)
+        {
+
+            int distance1 = 32 + xDistance;
+            int distance2 = -xDistance;
+            xDistance = Mathf.Min(distance1, distance2);
+        }
+
         int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
         int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
         _foodToGoText.text = foodToUse.ToString();
@@ -102,7 +112,17 @@ public class NodeMarkerUI : MonoBehaviour
 
         if (Node.NodeNum == index)
         {
-            int xDistance = Mathf.Abs(NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx - NodeManager.NodeDic[index].NodeIdx);
+            int xDistance = (NodeManager.NodeDic[index].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
+
+            if (xDistance < 0)
+            {
+
+                int distance1 = 32 + xDistance;
+                int distance2 = -xDistance;
+                xDistance = Mathf.Min(distance1, distance2);
+            }
+
+
             int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
             int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
 
