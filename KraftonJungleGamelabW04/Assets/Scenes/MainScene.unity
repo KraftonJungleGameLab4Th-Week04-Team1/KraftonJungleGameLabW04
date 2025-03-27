@@ -9971,7 +9971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4066123513778339077, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -33
       objectReference: {fileID: 0}
     - target: {fileID: 4066123513778339077, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10061,6 +10061,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: LogCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8259189239998230341, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8259189239998230341, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -10068,6 +10080,22 @@ PrefabInstance:
     - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_fontStyle
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.2783019
+      objectReference: {fileID: 0}
+    - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.501092
+      objectReference: {fileID: 0}
+    - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8285008015390211947, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_sharedMaterial
