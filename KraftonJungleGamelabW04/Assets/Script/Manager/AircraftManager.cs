@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class AircraftManager
@@ -147,6 +148,12 @@ public class AircraftManager
         {
             _currentAircraftState -= 10;
             //GameManager.Instance.MakeEvent();
+
+            
         }
+
+        GameObject ResourceLog = GameObject.Find("ResourceLog");
+        ResourceLog.GetComponent<TextMeshProUGUI>().text = "Lost " + foodToUse + " Foods. " + _food + " Left.\n" +
+            "Lost " + fuelToUse + " Fuels. " + _fuel + " Left.";
     }
 }

@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: GrisWall
   _nodeNum: 12
   _nodeIdx: 16
-  _food: 2000
-  _bolt: 2000
-  _nut: 2000
-  _fuel: 2000
+  _food: 0
+  _bolt: 0
+  _nut: 0
+  _fuel: 50
   _isVisited: 1
   _risk: 0
   _nodeType: 1
