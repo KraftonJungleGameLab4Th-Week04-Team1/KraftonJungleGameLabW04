@@ -32,10 +32,11 @@ public class SolarController_DE : MonoBehaviour
         if (block < 0)
         {
             block += 32;
+            block = 32 - block;
         }
 
         // StartCoroutine(IncreaseTime(block));
-        GameManager.Instance.ChangeGameTime(block * 30);
+        GameManager.Instance.ChangeGameTime(Mathf.Abs(block) * 30);
             
         Debug.Log($"@@DE ---> {block}칸 이동 / {block * 30}분 지남");
     }

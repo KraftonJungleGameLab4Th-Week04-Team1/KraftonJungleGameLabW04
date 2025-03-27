@@ -139,8 +139,21 @@ public class GameManager : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
             {
+
                 _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
-                Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
+                
+                if(_nodeManager.SelectedNode.NodeNum != Instance.CurrentNodeIndex)
+                {
+                    Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
+                }
+                else
+                {
+                    Instance.OnArriveAction?.Invoke(Instance.CurrentNodeIndex);
+                }
+
+
+
+
             }
         }
     }
@@ -149,7 +162,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentNodeIndex = index;
         Debug.Log("currentNode : " + index);
-        Invoke("SpawnReport", 0.5f);
+        Invoke("SpawnReport", 0.1f);
     }
 
     void SpawnReport()
