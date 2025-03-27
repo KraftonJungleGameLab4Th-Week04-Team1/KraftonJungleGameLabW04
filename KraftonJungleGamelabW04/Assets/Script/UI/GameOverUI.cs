@@ -59,9 +59,9 @@ public class GameOverUI : MonoBehaviour
                 if (Input.anyKeyDown)
                 {
                     //재로드시 솔라시스템 초기화되는지 몰라서 일단 끕니다.
-                    //SceneManager.LoadScene("MainScene");
-                    Application.Quit();
-                    UnityEditor.EditorApplication.isPlaying = false;
+                    SceneManager.LoadScene("MainScene");
+                    /*Application.Quit();
+                    UnityEditor.EditorApplication.isPlaying = false;*/
                 }
             }
         }
