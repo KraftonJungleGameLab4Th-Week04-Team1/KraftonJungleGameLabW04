@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node11
   m_EditorClassIdentifier: 
   _nodeGroup: 2
-  _NodeName: "\uC2A4\uB178\uC6B0\uD5E4\uC774\uBE10"
+  _NodeName: SnowHaven
   _nodeNum: 11
   _nodeIdx: 15
   _food: 0
@@ -21,6 +21,6 @@ MonoBehaviour:
   _nut: 5
   _fuel: 300
   _isVisited: 0
-  _risk: 3
+  _risk: 10
   _nodeType: 0
   _spaceStationLevel: 0

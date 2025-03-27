@@ -16,7 +16,12 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private TMP_Text _typeText;
     [SerializeField] private Button _moveBtn;
 
+    [SerializeField] private TMP_Text _foodToGoText;
+    [SerializeField] private TMP_Text _fuelToGoText;
+    [SerializeField] private TMP_Text _etaText;
+
     private RectTransform _canvasRect;
+    private bool _isMoving; //비행기 움직이면 Move 입력을 막는 변수.
 
     private void Start()
     {
@@ -24,6 +29,8 @@ public class NodeMarkerUI : MonoBehaviour
         
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
+
+        GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);
     }
@@ -57,29 +64,51 @@ public class NodeMarkerUI : MonoBehaviour
     // Change node UI data
     private void ChangeNodeMarkerUI(Node node)
     {
-        _nameText.text = $"{node.name}";
+        _nameText.text = $"{node.NodeName}";
         _foodText.text = node.IsVisited ? $"{node.Food}" : "??";
         _boltText.text = node.IsVisited ? $"{node.Bolt}" : "??";
         _nutText.text = node.IsVisited ? $"{node.Nut}" : "??";
         _fuelText.text = $"{node.Fuel}";
         _riskText.text = $"{node.Risk}";
-        if (node.IsVisited)
+
+        if(node.NodeType == NodeType.RepairNode)
         {
-            _typeText.text = node.NodeType == NodeType.RepairNode ? $"ABLE TO REPAIR" : "";
+            _typeText.text = $"ABLE TO REPAIR";
+        }
+        else if(node.NodeType == NodeType.SpaceNode)
+        {
+            _typeText.text = $"Escape Point";
         }
         else
         {
-            _typeText.text = "??";
+            _typeText.text = "";
         }
+
+        int xDistance = Mathf.Abs(node.NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
+        int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
+        int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
+        _foodToGoText.text = foodToUse.ToString();
+        _fuelToGoText.text = fuelToUse.ToString();
+        _etaText.text = "ETA : " + GameManager.Info.GetTimeRequiredBetweenNodes(xDistance);
+
     }
 
     // Move btn click action
     private void OnClickMoveBtn(int index)
     {
+        if (GameManager.Instance.IsMoving) return;
+
         if (Node.NodeNum == index)
         {
+            GameManager.Aircraft.UseResourceForFly(index);
             GameManager.Instance.OnMoveNodeAction?.Invoke(index);
+            GameManager.Instance.IsMoving = true;
         }
+    }
+
+    private void OnNotMove(int newIndex)
+    {
+        GameManager.Instance.IsMoving = false;
     }
     
     // Check canvas in camera view

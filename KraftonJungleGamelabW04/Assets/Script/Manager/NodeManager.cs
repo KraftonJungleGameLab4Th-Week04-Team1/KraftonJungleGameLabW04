@@ -28,11 +28,9 @@ public class NodeManager
     {
         if (!NodeDic.ContainsKey(key))
         {
-            NodeDic.Add(key, (Node)Resources.Load(scriptableObjectPath));
-        }
-        else
-        {
-            return;
+            Node original = (Node)Resources.Load(scriptableObjectPath);
+            Node copy = Object.Instantiate(original); // 원본 복사
+            NodeDic.Add(key, copy);
         }
     }
 
@@ -97,6 +95,7 @@ public class NodeManager
 
     public void GetDamageOnAircraft(int nextNodeIdx)
     {
+        Debug.Log("GetDamageOnAircraft : " + NodeDic[nextNodeIdx].Risk);
         GameManager.Aircraft.DamageAircraft(NodeDic[nextNodeIdx].Risk);
     }
 
