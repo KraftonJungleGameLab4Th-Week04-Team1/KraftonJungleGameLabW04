@@ -25,6 +25,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     {
         // 자식 오브젝트의 RectTransform을 가져옵니다.
         _rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
+        UpdateBasicUI();
     }
 
     public void Init()
@@ -32,6 +33,8 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnMoveNodeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmAction += IgnoreParamsUpdateBasicUI;
+        
+        GameManager.Instance.OnArriveAction += _ => UpdateBasicUI();
     }
 
     // 애니메이션 만들어서 위아래 이동하게 만들기
@@ -40,11 +43,11 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _isPanelOn = !_isPanelOn;
         if (_isPanelOn)
         {
-            _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
+            _rectTransform.DOAnchorPosY(-220, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
         else
         {
-            _rectTransform.DOAnchorPosY(-220, _panelMoveSpeed).SetEase(Ease.OutExpo);
+            _rectTransform.DOAnchorPosY(-40, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
     }
 
@@ -56,6 +59,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     private void UpdateBasicUI()
     {
         AircraftManager aircraft = GameManager.Aircraft;
+        Debug.Log($"aircraft : {aircraft.Food}, {aircraft.Bolt}, {aircraft.Nut}, {aircraft.Fuel}, {aircraft.CurrentWeight}");
         _foodText.text = $"{aircraft.Food}";
         _boltText.text = $"{aircraft.Bolt}";
         _nutText.text = $"{aircraft.Nut}";

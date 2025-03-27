@@ -19,6 +19,8 @@ public class AircraftManager
     /// </summary>
     public void Init()
     {
+        // 추가
+        GameManager.Instance.OnArriveAction += _ => UpdateAircraftWeight();
         // 우주정거장건설, 기체수리에 쓰이는 모든 자원을 보고서로부터 한번에 받아옵니다.
         // 따라서 UIManager에서는 Node 객체만들어 담아서 액션을 Invoke해야합니다.
         _food = 30;
@@ -47,6 +49,12 @@ public class AircraftManager
         _fuel = newFuel;
 
         // 무게 갱신까지 자동으로.
+        _currentWeight = GameManager.Info.CalculateCurrentWeight();
+    }
+
+    // 추가
+    public void UpdateAircraftWeight()
+    {
         _currentWeight = GameManager.Info.CalculateCurrentWeight();
     }
 
