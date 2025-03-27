@@ -31,8 +31,10 @@ public class SolarController_DE : MonoBehaviour
         int block = NodeManager.NodeDic[targetIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
         if (block < 0)
         {
-            block += 32;
-            block = 32 - block;
+            int b1 = -block;
+            int b2 = 32 + block;
+
+            block = Mathf.Min(b1, b2);
         }
 
         // StartCoroutine(IncreaseTime(block));
@@ -54,7 +56,7 @@ public class SolarController_DE : MonoBehaviour
             //float t = Mathf.Clamp01(elapsed / duration);
 
             //currentValue = Mathf.Lerp(0f, targetValue, t);
-            GameManager.Instance.ChangeGameTime(elapsed * 2);
+            //GameManager.Instance.ChangeGameTime(elapsed * 2);
 
             yield return null;
         }
