@@ -134,6 +134,13 @@ public class GameManager : MonoBehaviour
         // Get selected node
         if (Input.GetMouseButtonDown(0))
         {
+            // Check if UI is activated
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+            
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
@@ -150,10 +157,6 @@ public class GameManager : MonoBehaviour
                 {
                     Instance.OnArriveAction?.Invoke(Instance.CurrentNodeIndex);
                 }
-
-
-
-
             }
         }
     }
