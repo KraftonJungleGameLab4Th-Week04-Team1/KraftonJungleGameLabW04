@@ -15,11 +15,11 @@ MonoBehaviour:
   _nodeGroup: 2
   _NodeName: "\uC2A4\uB178\uC6B0\uD5E4\uC774\uBE10"
   _nodeNum: 11
-  _nodeIdx: 15
+  _nodeIdx: 14
   _food: 0
-  _bolt: 15
-  _nut: 15
-  _fuel: 500
+  _bolt: 10
+  _nut: 20
+  _fuel: 1200
   _isVisited: 0
   _risk: 10
   _nodeType: 0

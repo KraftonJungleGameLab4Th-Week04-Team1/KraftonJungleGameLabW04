@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: "\uC624\uC2DC\uC544"
   _nodeNum: 2
   _nodeIdx: 2
-  _food: 100
-  _bolt: 40
-  _nut: 30
-  _fuel: 300
+  _food: 260
+  _bolt: 20
+  _nut: 20
+  _fuel: 200
   _isVisited: 0
   _risk: 5
   _nodeType: 0
