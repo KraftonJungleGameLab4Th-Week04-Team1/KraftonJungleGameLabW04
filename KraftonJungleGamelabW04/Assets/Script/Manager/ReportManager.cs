@@ -469,8 +469,24 @@ public class ReportManager : MonoBehaviour
 
     public void ConfirmReport()
     {
-        GameManager.Instance.OnConfirmAction?.Invoke(_currentAircraftFood, _currentAircraftBolt, _currentAircraftNut, _currentAircraftFuel,
-                _aircraftRepairValue, _currentNodeFood, _currentNodeBolt, _currentNodeNut, _currentNodeFuel);
+        // 일단 임시로 여기서 초기화하는데 dto를 reportManager에서 변수로 하나 만들어서 함수 각각이 넣어주고 마지막에 invoke할때 주는게 맞을듯싶어요.
+        ResourceDto aircraftValue = new ResourceDto(
+            food : _currentAircraftFood,
+            bolt : _currentAircraftBolt, 
+            nut : _currentAircraftNut, 
+            fuel : _currentAircraftFuel, 
+            repairValue : _aircraftRepairValue
+            //stateValue : ???
+            );
+
+        ResourceDto nodeValue = new ResourceDto(
+            food: _currentNodeFood,
+            bolt: _currentNodeBolt,
+            nut: _currentNodeNut,
+            fuel: _currentNodeFuel
+            );
+
+        GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
         Debug.Log("after repair : " + GameManager.Aircraft.CurrentAircraftState);
         Destroy(gameObject);
     }

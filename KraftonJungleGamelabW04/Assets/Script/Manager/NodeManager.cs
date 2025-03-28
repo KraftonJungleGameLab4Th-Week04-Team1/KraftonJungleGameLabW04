@@ -16,7 +16,7 @@ public class NodeManager
             AddDataToBossInfo(i, "Nodes/Node" + i.ToString());
         }
 
-        GameManager.Instance.OnConfirmAction += UpdateCurrentNodeAndAircraft;
+        GameManager.Instance.OnConfirmAction += (nodeResources, _) => UpdateCurrentNodeAndAircraft(nodeResources);
         GameManager.Instance.OnMoveNodeAction += GetDamageOnAircraft;
         GameManager.Instance.OnMoveNodeAction += VisitNodeFirstTime;
 
@@ -35,17 +35,16 @@ public class NodeManager
     }
 
     //컨펌 메서드
-    private void UpdateCurrentNodeAndAircraft(int aircraftFood, int aircraftBolt, int aircraftNut, int aircraftFuel, int repairValue,
-                                                int nodeFood, int nodeBolt, int nodeNut, int nodeFuel)
+    private void UpdateCurrentNodeAndAircraft(ResourceDto changedValue)
     {
         int idx = GameManager.Instance.CurrentNodeIndex;
-        NodeDic[idx].Food = nodeFood;
-        NodeDic[idx].Bolt = nodeBolt;
-        NodeDic[idx].Nut = nodeNut;
-        NodeDic[idx].Fuel = nodeFuel;
+        NodeDic[idx].Food = changedValue.food;
+        NodeDic[idx].Bolt = changedValue.bolt;
+        NodeDic[idx].Nut = changedValue.nut;
+        NodeDic[idx].Fuel = changedValue.fuel;
 
-        GameManager.Aircraft.UpdateAircraftResources(aircraftFood, aircraftBolt, aircraftNut, aircraftFuel);
-        GameManager.Aircraft.RepairAircraftByInputValue(repairValue);
+        //GameManager.Aircraft.UpdateAircraftResources(aircraftFood, aircraftBolt, aircraftNut, aircraftFuel);
+        //GameManager.Aircraft.RepairAircraftByInputValue(repairValue);
     }
 
     /* [Legacy] 격차가 컨펌일때 사용하던 메서드들

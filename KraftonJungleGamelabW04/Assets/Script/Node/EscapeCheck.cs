@@ -34,10 +34,10 @@ public class EscapeCheck : MonoBehaviour
         return true;
     }
 
-    private void IgnoreParamsEscapeCheck(int a, int b, int c, int d, int e, int f, int g, int h, int i)
+    private void IgnoreParamsEscapeCheck(ResourceDto nodeValue, ResourceDto aircraftValue)
     {
         AddParts();
-        EscapeEnding(f+a);
+        EscapeEnding(nodeValue.food + aircraftValue.food);
     }
 
     private void AddParts()
