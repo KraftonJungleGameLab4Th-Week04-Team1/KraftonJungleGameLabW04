@@ -5,7 +5,6 @@ public class NodeManager
 {
     // 노드들을 관리하는 딕셔너리
     public static Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
-    public Node SelectedNode;
     public bool[] spaceStationParts = new bool[6];
 
     public void Init()
@@ -42,45 +41,7 @@ public class NodeManager
         NodeDic[idx].Bolt = changedValue.bolt;
         NodeDic[idx].Nut = changedValue.nut;
         NodeDic[idx].Fuel = changedValue.fuel;
-
-        //GameManager.Aircraft.UpdateAircraftResources(aircraftFood, aircraftBolt, aircraftNut, aircraftFuel);
-        //GameManager.Aircraft.RepairAircraftByInputValue(repairValue);
     }
-
-    /* [Legacy] 격차가 컨펌일때 사용하던 메서드들
-    // Node 클래스는 구조체처럼 변수 저장용으로 사용합니다.
-    public void GainResource(Node report)
-    {
-        //현재 AirCraft가 위치한 노드
-        int currentIdx = GameManager.Instance.CurrentNodeIndex;
-
-        //현재 노드에서 자원을 획득하고, 노드의 자원을 감소시킵니다.
-        Node ToAircraft = new Node();
-        ToAircraft.Food = report.Food;
-        ToAircraft.Bolt = report.Bolt;
-        ToAircraft.Fuel = report.Fuel;
-        ToAircraft.Nut = report.Nut;
-        GameManager.Aircraft.GainResources(ToAircraft);
-
-        NodeDic[currentIdx].Food -= report.Food;
-        NodeDic[currentIdx].Bolt -= report.Bolt;
-        NodeDic[currentIdx].Fuel -= report.Fuel;
-        NodeDic[currentIdx].Nut -= report.Nut;
-    }
-
-    public void BuildUpSpaceStation(Node report)
-    {
-        // 원래는 UI단에서 해야하는 예외처리를 일단 여기서 처리합니다.
-        int currentIdx = GameManager.Instance.CurrentNodeIndex;
-        if (NodeDic[currentIdx].NodeType == NodeType.SpaceNode)
-        {
-            return;
-        }
-        //Aircraft의 자원소모에 대한 기능은 AircraftManager에서 계산하여 추가 구독합니다.
-        NodeDic[GameManager.Instance.CurrentNodeIndex].SpaceStationLevel++;
-    }
-    
-    */
 
     public void VisitNodeFirstTime(int nextNodeIdx)
     {

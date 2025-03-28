@@ -20,9 +20,8 @@ public class GameManager : MonoBehaviour
     #endregion
     
     #region Actions
-
     public Action<float> OnChangedGameTimeAction; //GameTime이 인터벌마다 업데이트 되면 실행.
-    public Action<int> OnSelectNodeAction; //다른 노드를 눌렀을 때 창 띄우기 등.
+    public Action<int, int> OnSelectNodeAction; //다른 노드를 눌렀을 때 창 띄우기 등.
     public Action<int> OnMoveNodeAction; //다른 노드로의 움직임을 시작했을 때.
     public Action<int> OnArriveAction; //현재 노드를 클릭하거나, 다른 노드에 도착 했을 때의 액션.
     
@@ -34,20 +33,20 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Properties
-
-    public int CurrentNodeIndex { get;  set; } = 1;
-    private LayerMask _layerMask;
-    
-    public int CurrentTurn { get; private set; } = 0;
-    [SerializeField] public float GameTime { get; private set; }
-    private readonly float _timeInterval = 0.5f; //2초당 인게임 시간 1분 증가.
+    [Header("시간 관련")]
+    private float _gameTime;
+    public float GameTime => _gameTime;
+    private readonly float _timeInterval = 0.5f; //_timeInterval당 인게임 시간 1분 증가.
     private float _time;
-    
-    private bool _isGameStarted = false;
-    public bool IsEscapable { get; set; } = false;
-    public bool IsMoving;
-    public float moveDuration = 5f;
 
+    [Header("노드 관련")]
+    private int _currentNodeIndex;
+    public int CurrentNodeIndex => _currentNodeIndex;
+    private Node _selectedNextNode;
+
+    [Header("게임 상태")]
+    private bool _isGameStarted = false;
+    public bool IsMoving;
     private GameState _gameState;
     public GameState GameState
     {
@@ -58,7 +57,6 @@ public class GameManager : MonoBehaviour
             _uiManager.ChangeUI(value);
         }
     }
-
     #endregion
 
     private void Awake()
@@ -71,7 +69,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    // 사실 매니저 빼서 GameManager를 따로 관리해야 했으나, 이번 프로젝트에선 GameManager가 모든 매니저 통하기 때문에 Manager역할을 합니다.
     private void Init()
     {
         // 객체별 초기화 순서를 정하기 위한 구조 = 각 매니저별로 Awake()를 호출하지 않아도 됩니다.
@@ -95,12 +92,10 @@ public class GameManager : MonoBehaviour
 
     private void GameStart()
     {
-        _layerMask = LayerMask.GetMask("NodeMarker");
         GameState = GameState.Title;
-        CurrentNodeIndex = 1;
+        _currentNodeIndex = 1;
 
         //무빙 확인시 현재 노드 인덱스 변경.
-
         OnArriveAction += ChangeCurrentNodeIndex; //현재 노드인덱스는 도착시 변경.
     }
     
@@ -111,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeGameTime(float time)
     {
-        GameTime += time;
+        _gameTime += time;
         OnChangedGameTimeAction?.Invoke(GameTime);
     }
 
@@ -130,7 +125,7 @@ public class GameManager : MonoBehaviour
         if (_time >= _timeInterval)
         {
             _time -= _timeInterval;
-            GameTime++;
+            _gameTime++;
             Debug.Log(GameTime);
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
@@ -144,22 +139,20 @@ public class GameManager : MonoBehaviour
                 return;
             }
             
-            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(nameof(LayerName.NodeMarker))))
             {
-
-                _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
+                _selectedNextNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
                 
-                if(_nodeManager.SelectedNode.NodeNum != Instance.CurrentNodeIndex)
+                if(_selectedNextNode.NodeNum != _currentNodeIndex)
                 {
-                    Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
+                    OnSelectNodeAction?.Invoke(_currentNodeIndex ,_selectedNextNode.NodeNum);
                 }
                 else
                 {
-                    Instance.OnArriveAction?.Invoke(Instance.CurrentNodeIndex);
+                    OnArriveAction?.Invoke(_currentNodeIndex);
                 }
             }
         }
@@ -167,7 +160,7 @@ public class GameManager : MonoBehaviour
 
     void ChangeCurrentNodeIndex(int index)
     {
-        CurrentNodeIndex = index;
+        _currentNodeIndex = index;
         Debug.Log("currentNode : " + index);
         Invoke("SpawnReport", 0.1f);
     }

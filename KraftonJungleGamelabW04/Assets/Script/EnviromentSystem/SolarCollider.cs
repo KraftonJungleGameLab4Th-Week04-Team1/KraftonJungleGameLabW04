@@ -12,7 +12,7 @@ public class SolarCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 레이어 Plane이면
-        if(other.gameObject.layer == LayerMask.NameToLayer("Plane"))
+        if(other.gameObject.layer == LayerMask.NameToLayer(nameof(LayerName.Plane)))
         {
             Debug.Log("게임오버");
             GameManager.Instance.GameState = GameState.GameOver;
