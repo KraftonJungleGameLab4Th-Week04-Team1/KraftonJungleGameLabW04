@@ -5,7 +5,7 @@ public class NodeManager
 {
     // 노드들을 관리하는 딕셔너리
     public static Dictionary<int, Node> NodeDic = new Dictionary<int, Node>();
-    public bool[] spaceStationParts = new bool[6];
+    public bool[] spaceStationParts = new bool[5]; //6 -> 5
 
     public void Init()
     {
