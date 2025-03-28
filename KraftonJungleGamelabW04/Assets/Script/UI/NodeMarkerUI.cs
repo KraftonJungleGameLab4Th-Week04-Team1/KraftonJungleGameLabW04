@@ -7,6 +7,7 @@ public class NodeMarkerUI : MonoBehaviour
 {
     public Node Node;
     
+    //주 패널.
     [SerializeField] private Canvas _canvas;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _foodText;
@@ -17,6 +18,7 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private TMP_Text _typeText;
     [SerializeField] private Button _moveBtn;
 
+    //서브패널.
     [SerializeField] private TMP_Text _foodToGoText;
     [SerializeField] private TMP_Text _fuelToGoText;
     [SerializeField] private TMP_Text _etaText;
@@ -31,7 +33,6 @@ public class NodeMarkerUI : MonoBehaviour
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
         GameManager.Instance.OnMoveNodeAction += ChangeNodeMarkerUI;
-
         GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);

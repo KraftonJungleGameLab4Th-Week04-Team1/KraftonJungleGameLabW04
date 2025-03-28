@@ -88,10 +88,6 @@ public class InfoManager
         int foodRequired = baseValue * (_maxWeight + aircraftManager.CurrentWeight) * stateFactor /
             _maxWeight / _maxAircraftState;
 
-        Debug.Log($"xDistance: {xDistance}, baseValue: {baseValue}, CurrentWeight: {aircraftManager.CurrentWeight}, " +
-                  $"MaxState: {aircraftManager.MaxAircraftState}, CurrentState: {aircraftManager.CurrentAircraftState}, " +
-                  $"stateFactor: {stateFactor}, foodRequired: {foodRequired}");
-
         return Mathf.Max(foodRequired, 0);
     }
 
@@ -103,7 +99,7 @@ public class InfoManager
     /// <param name="nut"></param>
     /// <param name="fuel"></param>
     /// <returns></returns>
-    public int GetCurrentWeight(int addedFood, int addedBolt, int addedNut, int addedFuel)
+    public int GetWeightByAddResource(int addedFood, int addedBolt, int addedNut, int addedFuel)
     {
         AircraftManager aircraftManager;
         aircraftManager = GameManager.Aircraft;
@@ -115,11 +111,16 @@ public class InfoManager
     /// "현재 플레이어의 무게 계산값"을 정수형으로 반환합니다.
     /// </summary>
     /// <returns></returns>
-    public int CalculateCurrentWeight()
+    public int GetCurrentWeight()
     {
         AircraftManager aircraftManager;
         aircraftManager = GameManager.Aircraft;
         return aircraftManager.Food * _weightPerFood + aircraftManager.Bolt * _weightPerBolt + aircraftManager.Nut * _weightPerNut + aircraftManager.Fuel * _weightPerFuel;
+    }
+
+    public int GetWeightByResource(int food, int bolt, int nut, int fuel)
+    {
+        return food * _weightPerFood + bolt * _weightPerBolt + nut * _weightPerNut + fuel * _weightPerFuel;
     }
 
     /// <summary>
@@ -132,7 +133,7 @@ public class InfoManager
     /// <returns></returns>
     public bool IsPossibleWeight(int addedFood, int addedBolt, int addedNut, int addedFuel)
     {
-        return GetCurrentWeight(addedFood, addedBolt, addedNut, addedFuel) <= _maxWeight;
+        return GetWeightByAddResource(addedFood, addedBolt, addedNut, addedFuel) <= _maxWeight;
     }
 
     /// <summary>
@@ -141,7 +142,7 @@ public class InfoManager
     /// <returns></returns>
     public bool IsPossibleWeight()
     {
-        return CalculateCurrentWeight() < _maxWeight;
+        return GetCurrentWeight() < _maxWeight;
     }
 
     /// <summary>

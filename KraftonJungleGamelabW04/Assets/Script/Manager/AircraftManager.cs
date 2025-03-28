@@ -49,13 +49,13 @@ public class AircraftManager
         _fuel = newFuel;
 
         // 무게 갱신까지 자동으로.
-        _currentWeight = GameManager.Info.CalculateCurrentWeight();
+        _currentWeight = GameManager.Info.GetCurrentWeight();
     }
 
     // 추가
     public void UpdateAircraftWeight()
     {
-        _currentWeight = GameManager.Info.CalculateCurrentWeight();
+        _currentWeight = GameManager.Info.GetCurrentWeight();
     }
 
     public void RepairAircraftByInputValue(int value)
@@ -73,7 +73,7 @@ public class AircraftManager
         _nut += toAircraft.Nut;
         _fuel += toAircraft.Fuel;
         
-        _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
+        _currentWeight = GameManager.Info.GetWeightByAddResource(_food, _bolt, _nut, _fuel);
     }
 
     public void UseResources(Node fromAircraft)
@@ -83,7 +83,7 @@ public class AircraftManager
         _nut -= fromAircraft.Nut;
         _fuel -= fromAircraft.Fuel;
 
-        _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
+        _currentWeight = GameManager.Info.GetWeightByAddResource(_food, _bolt, _nut, _fuel);
     }
 
     /* [Legacy] 격차가 컨펌일때 사용하던 메서드들

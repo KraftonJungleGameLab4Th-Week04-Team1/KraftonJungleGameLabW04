@@ -10,9 +10,9 @@ public class SolarSystem : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.OnChangedGameTimeAction += SolarRotation;
-        // 초기 회전 설정
-        transform.rotation = Quaternion.Euler(0, 90, 0);
+        GameManager.Instance.OnChangedGameTimeAction += SolarRotation;     // 초기 회전 설정
+
+        transform.rotation = Quaternion.Euler(0, 90, 0); //시작 태양위치.
     }
 
     void Update()

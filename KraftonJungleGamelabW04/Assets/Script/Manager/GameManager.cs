@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     #region Managers
     public static UIManager UI { get { return Instance._uiManager; } }
     public static AircraftManager Aircraft { get { return Instance._aircraftManager; } }
-    //public static SolarController Solor { get { return Instance._solarController; } }
     public static NodeManager NodeManager { get { return Instance._nodeManager; } }
     public static InfoManager Info { get { return Instance._infoManager; } }
 
@@ -22,11 +21,10 @@ public class GameManager : MonoBehaviour
     
     #region Actions
 
-    public Action<float> OnChangedGameTimeAction;
-    
-    public Action<int> OnSelectNodeAction;
-    public Action<int> OnMoveNodeAction;
-    public Action<int> OnArriveAction; //선택 노드 도착시 시행할 액션.
+    public Action<float> OnChangedGameTimeAction; //GameTime이 인터벌마다 업데이트 되면 실행.
+    public Action<int> OnSelectNodeAction; //다른 노드를 눌렀을 때 창 띄우기 등.
+    public Action<int> OnMoveNodeAction; //다른 노드로의 움직임을 시작했을 때.
+    public Action<int> OnArriveAction; //현재 노드를 클릭하거나, 다른 노드에 도착 했을 때의 액션.
     //aircraftFood, aircraftBolt, aircraftNut, aircraftFuel, repairValue, nodeFood, nodeBolt, nodeNut, nodeFuel
     public Action<int, int, int, int, int, int, int, int, int> OnConfirmAction;
     #endregion
@@ -77,7 +75,6 @@ public class GameManager : MonoBehaviour
         Aircraft.Init();
         //Solor.Init();
         Info.Init();
-        //반드시 UI가 가장 마지막에 초기화되어야 합니다.
         UI.Init();
         
         GameStart();
@@ -86,6 +83,7 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         //액션 해제
+        OnArriveAction = null;
         OnChangedGameTimeAction = null;
         OnSelectNodeAction = null;
         OnMoveNodeAction = null;
@@ -114,6 +112,9 @@ public class GameManager : MonoBehaviour
         OnChangedGameTimeAction?.Invoke(GameTime);
     }
 
+    /// <summary>
+    /// 게임 시간 업데이트하고, 업데이트마다 뿌리는 중.
+    /// </summary>
     private void Update()
     {
         if (!_isGameStarted)

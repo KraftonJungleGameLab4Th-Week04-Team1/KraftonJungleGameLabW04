@@ -64,7 +64,7 @@ public class ReportManager : MonoBehaviour
         _boltToUse = 0;
         _nutToUse = 0;
         _aircraftRepairValue = 0;
-        _currentAircraftWeight = Info.CalculateCurrentWeight();
+        _currentAircraftWeight = Info.GetCurrentWeight();
         _currentAircraftFood = aircraftManager.Food;
         _currentAircraftBolt = aircraftManager.Bolt;
         _currentAircraftNut = aircraftManager.Nut;
@@ -157,7 +157,7 @@ public class ReportManager : MonoBehaviour
 
         _currentNodeFood -= 1;
         _currentAircraftFood += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -166,7 +166,7 @@ public class ReportManager : MonoBehaviour
         if(_currentAircraftFood <= 0) return;
         _currentAircraftFood -= 1;
         _currentNodeFood += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -178,7 +178,7 @@ public class ReportManager : MonoBehaviour
 
         _currentNodeBolt -= 1;
         _currentAircraftBolt += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -187,7 +187,7 @@ public class ReportManager : MonoBehaviour
         if(_currentAircraftBolt <= 0) return;
         _currentAircraftBolt -= 1;
         _currentNodeBolt += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -199,7 +199,7 @@ public class ReportManager : MonoBehaviour
 
         _currentNodeNut -= 1;
         _currentAircraftNut += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -208,7 +208,7 @@ public class ReportManager : MonoBehaviour
         if(_currentAircraftNut <= 0) return;
         _currentAircraftNut -= 1;
         _currentNodeNut += 1;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -240,7 +240,7 @@ public class ReportManager : MonoBehaviour
 
         _currentNodeFuel -= finalValue;
         _currentAircraftFuel += finalValue;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
@@ -259,7 +259,7 @@ public class ReportManager : MonoBehaviour
 
         _currentAircraftFuel -= finalValue;
         _currentNodeFuel += finalValue;
-        _currentAircraftWeight = Info.GetCurrentWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
+        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
         UpdateAllUI();
     }
 
