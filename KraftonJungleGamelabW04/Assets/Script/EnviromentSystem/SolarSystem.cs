@@ -8,14 +8,16 @@ public class SolarSystem : MonoBehaviour
     private float _rotationTime = 0f;        // 현재 회전 시간
     private float _rotationDuration = 2.5f;    // 회전 지속 시간 (3초)
 
-    void Start()
+
+    public void Init()
     {
-        GameManager.Instance.OnChangedGameTimeAction += SolarRotation;
-        // 초기 회전 설정
-        transform.rotation = Quaternion.Euler(0, 90, 0);
+        GameManager.Instance.OnChangedGameTimeAction += SolarRotation;     // 초기 회전 설정
+        GameManager.Instance.OnArriveAction += HandleSolarMovement;
+
+        transform.rotation = Quaternion.Euler(0, 90, 0); //시작 태양위치.
     }
 
-    void Update()
+    private void Update()
     {
         if (!_isRotating) return;
 
@@ -35,7 +37,7 @@ public class SolarSystem : MonoBehaviour
         transform.rotation = Quaternion.Lerp(_startRotation, _targetRotation, t);
     }
 
-    void SolarRotation(float addedGameTime)
+    private void SolarRotation(float addedGameTime)
     {
         // 1440 주기로 회전 각도를 계산 (0~360도 반복)
         float cycleTime = addedGameTime % 1440; // 1440마다 리셋
@@ -50,5 +52,14 @@ public class SolarSystem : MonoBehaviour
         // 회전 시작
         _isRotating = true;
         _rotationTime = 0f;
+    }
+
+    private void HandleSolarMovement(int targetIndex)
+    {
+        int moveDistance = GameManager.Info.GetDistanceFromCurrentIndex(targetIndex);
+
+        GameManager.Instance.ChangeGameTime(Mathf.Abs(moveDistance) * 30);
+
+        Debug.Log($"@@DE ---> {moveDistance}칸 이동 / {moveDistance * 30}분 지남");
     }
 }

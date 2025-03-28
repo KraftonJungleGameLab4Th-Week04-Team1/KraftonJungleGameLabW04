@@ -21,9 +21,12 @@ public class AircraftManager
     {
         // 추가
         GameManager.Instance.OnArriveAction += _ => UpdateAircraftWeight();
+
+        GameManager.Instance.OnConfirmAction += (_, aircraftResources) => UpdateAircraftResources(aircraftResources);
+
         // 우주정거장건설, 기체수리에 쓰이는 모든 자원을 보고서로부터 한번에 받아옵니다.
         // 따라서 UIManager에서는 Node 객체만들어 담아서 액션을 Invoke해야합니다.
-        _food = 30;
+        _food = 25;
         _fuel = 50;
         _currentWeight = _food * 2 + _fuel;
         _currentAircraftState = 100;
@@ -36,26 +39,26 @@ public class AircraftManager
 
     void Start()
     {
-        //_food = GameManager.Info.InitialFood; 
-        //_fuel = GameManager.Info.InitialFuel;
         
     }
 
-    public void UpdateAircraftResources(int newFood, int newBolt, int newNut, int newFuel)
+    public void UpdateAircraftResources(ResourceDto changedValue)
     {
-        _food = newFood;
-        _bolt = newBolt;
-        _nut = newNut;
-        _fuel = newFuel;
+        _food = changedValue.food;
+        _bolt = changedValue.bolt;
+        _nut = changedValue.nut;
+        _fuel = changedValue.fuel;
+
+        RepairAircraftByInputValue(changedValue.repairValue);
 
         // 무게 갱신까지 자동으로.
-        _currentWeight = GameManager.Info.CalculateCurrentWeight();
+        _currentWeight = GameManager.Info.GetCurrentWeight();
     }
 
     // 추가
     public void UpdateAircraftWeight()
     {
-        _currentWeight = GameManager.Info.CalculateCurrentWeight();
+        _currentWeight = GameManager.Info.GetCurrentWeight();
     }
 
     public void RepairAircraftByInputValue(int value)
@@ -73,7 +76,7 @@ public class AircraftManager
         _nut += toAircraft.Nut;
         _fuel += toAircraft.Fuel;
         
-        _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
+        _currentWeight = GameManager.Info.GetWeightByAddResource(_food, _bolt, _nut, _fuel);
     }
 
     public void UseResources(Node fromAircraft)
@@ -83,7 +86,7 @@ public class AircraftManager
         _nut -= fromAircraft.Nut;
         _fuel -= fromAircraft.Fuel;
 
-        _currentWeight = GameManager.Info.GetCurrentWeight(_food, _bolt, _nut, _fuel);
+        _currentWeight = GameManager.Info.GetWeightByAddResource(_food, _bolt, _nut, _fuel);
     }
 
     /* [Legacy] 격차가 컨펌일때 사용하던 메서드들
@@ -118,24 +121,11 @@ public class AircraftManager
         bool foodLack = false;
         bool fuelLack = false;
 
-
-
-
-
-        int xDistance = (NodeManager.NodeDic[destinationIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
-
-        if (xDistance < 0)
-        {
-
-            int distance1 = 32 + xDistance;
-            int distance2 = -xDistance;
-            xDistance = Mathf.Min(distance1, distance2);
-        }
+        int xDistance = GameManager.Info.GetDistanceFromCurrentIndex(destinationIndex);
 
         int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
         int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
-        //int damage = NodeManager.NodeDic[destinationIndex].Risk;
-        //DamageAircraft(damage);
+
 
         if (foodToUse > _food)
         {
@@ -166,7 +156,7 @@ public class AircraftManager
         }
 
         GameObject ResourceLog = GameObject.Find("ResourceLog");
-        ResourceLog.GetComponent<TextMeshProUGUI>().text = "Lost " + foodToUse + " Foods. " + _food + " Left.\n" +
-            "Lost " + fuelToUse + " Fuels. " + _fuel + " Left.";
+        ResourceLog.GetComponent<TextMeshProUGUI>().text = "식량 " + foodToUse + " 잃음. " + _food + " 남음.\n" +
+            "연료 " + fuelToUse + " 잃음. " + _fuel + " 남음.";
     }
 }

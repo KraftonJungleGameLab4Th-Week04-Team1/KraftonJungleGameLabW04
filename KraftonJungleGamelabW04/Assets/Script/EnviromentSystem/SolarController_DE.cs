@@ -7,64 +7,17 @@ using UnityEngine;
 public class SolarController_DE : MonoBehaviour
 {
     public float rotationSpeed = 0.2f;
-
     private Vector2 _lastMousePos;
     private bool _isDragging = false;
 
-    private int _targetNodeIndex = 2;
-
     void Start()
     {
-        GameManager.Instance.OnChangedGameTimeAction += RotateEarth;
-        GameManager.Instance.OnMoveNodeAction += HandleSolarMovement;
-    }
-
-    // 시간 변화에 따른 지구 회전
-    private void RotateEarth(float gameTime)
-    {
-        //지구가 회전할 필요는 없는 듯.
-        //transform.eulerAngles = Vector3.up * gameTime * 0.25f;
-    }
-
-    private void HandleSolarMovement(int targetIndex)
-    {
-        int block = NodeManager.NodeDic[targetIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
-        if (block < 0)
-        {
-            int b1 = -block;
-            int b2 = 32 + block;
-
-            block = Mathf.Min(b1, b2);
-        }
-
-        // StartCoroutine(IncreaseTime(block));
-        GameManager.Instance.ChangeGameTime(Mathf.Abs(block) * 30);
-            
-        Debug.Log($"@@DE ---> {block}칸 이동 / {block * 30}분 지남");
-    }
-
-    IEnumerator IncreaseTime(int block)
-    {
-        float duration = 3f;
-        float targetValue = block * 45f;
-        float currentValue = 0f;
-        float elapsed = 0f;
         
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            //float t = Mathf.Clamp01(elapsed / duration);
-
-            //currentValue = Mathf.Lerp(0f, targetValue, t);
-            //GameManager.Instance.ChangeGameTime(elapsed * 2);
-
-            yield return null;
-        }
-
-        //// 마지막에 정확히 targetValue로 고정
-        //GameManager.Instance.ChangeGameTime(targetValue);
     }
     
+    /// <summary>
+    /// 마우스 맵 입력 처리.
+    /// </summary>
     void Update()
     {
         // 드래그에 따른 카메라 회전 

@@ -8,7 +8,9 @@ public class Node : ScriptableObject
 
     [Header("노드 명")]
     [SerializeField] private string _NodeName;
+    // 노드 인덱스
     [SerializeField] private int _nodeNum;
+    // 노드 거리
     [SerializeField] private int _nodeIdx;
 
     [Header("노드 자원")]

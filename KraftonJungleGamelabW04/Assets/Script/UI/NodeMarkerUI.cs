@@ -1,12 +1,17 @@
+using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NodeMarkerUI : MonoBehaviour
 {
+    // 드래그 앤 드롭으로 정보 가져오고 있음.
     public Node Node;
-    
+    // 결국 select할때만 필요. 따라서 코드에는 사용하지 않게. 그래야 액션을 글로벌하게 활용할 수 있음.
+    private int _thisNodeNum;
+
+    #region
+    //주 패널.
     [SerializeField] private Canvas _canvas;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _foodText;
@@ -17,36 +22,39 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private TMP_Text _typeText;
     [SerializeField] private Button _moveBtn;
 
+    //서브패널.
     [SerializeField] private TMP_Text _foodToGoText;
     [SerializeField] private TMP_Text _fuelToGoText;
     [SerializeField] private TMP_Text _etaText;
+    #endregion
 
     private RectTransform _canvasRect;
-    private bool _isMoving; //비행기 움직이면 Move 입력을 막는 변수.
 
     private void Start()
     {
         _canvasRect = _canvas.GetComponent<RectTransform>();
-        
-        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(Node.NodeNum));
-        GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
-        GameManager.Instance.OnMoveNodeAction += ChangeNodeMarkerUI;
+        _thisNodeNum = Node.NodeNum;
 
+        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(GameManager.Instance.CurrentNodeIndex,_thisNodeNum));
+        GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
+        //GameManager.Instance.OnMoveNodeAction += ChangeNodeMarkerUI;
         GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);
     }
     
     // Activate node marker UI
-    private void ActivateNodeMarkerUI(int index)
+    private void ActivateNodeMarkerUI(int currentIdx, int selectedIdx)
     {
-        if (Node.NodeNum != index)
+        // 고른 노드가 자기 자신이라면
+        if (_thisNodeNum != selectedIdx)
         {
             ActivateNodeMarkerCanvas(false);
         }
         else
         {
-            ChangeNodeMarkerUI(Node.NodeNum);
+            Debug.Log("셀렉액션");
+            ChangeNodeMarkerUI(currentIdx, selectedIdx);
             ActivateNodeMarkerCanvas(true);
         }
     }
@@ -64,34 +72,41 @@ public class NodeMarkerUI : MonoBehaviour
     }
 
     // Change node UI data
-    private void ChangeNodeMarkerUI(int index)
+    private void ChangeNodeMarkerUI(int currentIdx, int selectedIdx)
     {
-        var node = NodeManager.NodeDic[index]; 
-        _nameText.text = $"{node.NodeName}";
-        _foodText.text = node.IsVisited ? $"{node.Food}" : "??";
-        _boltText.text = node.IsVisited ? $"{node.Bolt}" : "??";
-        _nutText.text = node.IsVisited ? $"{node.Nut}" : "??";
-        _fuelText.text = node.IsVisited ? $"{node.Fuel}" : "??";
-        _riskText.text = $"{node.Risk}";
+        var thisNode = NodeManager.NodeDic[selectedIdx]; 
+        _nameText.text = $"{thisNode.NodeName}";
+        _foodText.text = thisNode.IsVisited ? $"{thisNode.Food}" : "??";
+        _boltText.text = thisNode.IsVisited ? $"{thisNode.Bolt}" : "??";
+        _nutText.text = thisNode.IsVisited ? $"{thisNode.Nut}" : "??";
+        _fuelText.text = thisNode.IsVisited ? $"{thisNode.Fuel}" : "??";
+        _riskText.text = $"{thisNode.Risk}";
 
-        if(node.NodeType == NodeType.RepairNode)
+        if(thisNode.NodeType == NodeType.RepairNode)
         {
-            _typeText.text = $"ABLE TO REPAIR";
+            _typeText.text = $"수리 가능 지역";
         }
-        else if(node.NodeType == NodeType.SpaceNode)
+        else if(thisNode.NodeType == NodeType.SpaceNode)
         {
-            _typeText.text = $"Escape Point";
+            _typeText.text = $"탈출 가능 지역";
         }
         else
         {
             _typeText.text = "";
         }
 
-        int xDistance = (node.NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
+        Tuple<int, int, int> distanceResource = CalculateResource(currentIdx, selectedIdx);
+        _foodToGoText.text = distanceResource.Item1.ToString();
+        _fuelToGoText.text = distanceResource.Item2.ToString();
+        _etaText.text = "ETA : " + distanceResource.Item3;
+    }
 
-        if(xDistance < 0)
+    private Tuple<int,int,int> CalculateResource(int currentIdx, int selectedIdx)
+    {
+        int xDistance = (selectedIdx - currentIdx);
+
+        if (xDistance < 0)
         {
-
             int distance1 = 32 + xDistance;
             int distance2 = -xDistance;
             xDistance = Mathf.Min(distance1, distance2);
@@ -99,43 +114,29 @@ public class NodeMarkerUI : MonoBehaviour
 
         int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
         int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
-        _foodToGoText.text = foodToUse.ToString();
-        _fuelToGoText.text = fuelToUse.ToString();
-        _etaText.text = "ETA : " + GameManager.Info.GetTimeRequiredBetweenNodes(xDistance);
+        int eta = GameManager.Info.GetTimeRequiredBetweenNodes(xDistance);
 
+        return new Tuple<int, int, int>(foodToUse, fuelToUse, eta);
     }
 
     // Move btn click action
-    private void OnClickMoveBtn(int index)
+    private void OnClickMoveBtn(int currentIdx, int selectedIdx)
     {
         if (GameManager.Instance.IsMoving) return;
+        // if(_thisNodeNum != index) return;
 
-        if (Node.NodeNum == index)
+        Tuple<int, int, int> distanceResource = CalculateResource(currentIdx, selectedIdx);
+        int foodToUse = distanceResource.Item1;
+        int fuelToUse = distanceResource.Item2;
+        if (GameManager.Aircraft.Fuel >= fuelToUse && GameManager.Aircraft.Food >= foodToUse)
         {
-            int xDistance = (NodeManager.NodeDic[index].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
-
-            if (xDistance < 0)
-            {
-
-                int distance1 = 32 + xDistance;
-                int distance2 = -xDistance;
-                xDistance = Mathf.Min(distance1, distance2);
-            }
-
-
-            int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
-            int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
-
-            Debug.Log(foodToUse + " " + fuelToUse);
-            if (GameManager.Aircraft.Fuel >= fuelToUse && GameManager.Aircraft.Food >= foodToUse)
-            {
-                GameManager.Aircraft.UseResourceForFly(index);
-                GameManager.Instance.OnMoveNodeAction?.Invoke(index);
-                GameManager.Instance.IsMoving = true;
-            }
-
-            return;
+            // UseResourceForFly 액션 순서 파악하고 넣는거로 리팩토링 예정
+            GameManager.Aircraft.UseResourceForFly(selectedIdx);
+            GameManager.Instance.OnMoveNodeAction?.Invoke(selectedIdx);
+            GameManager.Instance.IsMoving = true;
         }
+
+        return;
     }
 
     private void OnNotMove(int newIndex)
@@ -164,5 +165,10 @@ public class NodeMarkerUI : MonoBehaviour
         }
 
         return isVisible;
+    }
+
+    public void OnButtonExit()
+    {
+        _canvas.enabled = false;
     }
 }

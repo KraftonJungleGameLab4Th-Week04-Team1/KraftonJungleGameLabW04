@@ -23,7 +23,6 @@ public class InfoManager
 
     public void Init()
     {
-        //임시 값.
         _inititalFood = 20;
         _inititalFuel = 100;
         _weightPerFood = 2;
@@ -42,6 +41,48 @@ public class InfoManager
         _boltRepairValue = 3;
         _nutRepairValue = 5;
     }
+
+    /// <summary>
+    /// 노드의 인덱스를 넣어 두 노드간 거리를 계산합니다.
+    /// </summary>
+    /// <param name="startNodeIndex"></param>
+    /// <param name="destinationNodeIndex"></param>
+    /// <returns></returns>
+    public int GetDistance(int startNodeIndex, int destinationNodeIndex)
+    {
+        int xDistance = NodeManager.NodeDic[destinationNodeIndex].NodeIdx - NodeManager.NodeDic[startNodeIndex].NodeIdx;
+        if(xDistance < 0) // 음수 처리..
+        {
+            int possibleDistance1 = -xDistance;
+            int possibleDistance2 = 32 + xDistance;
+
+            xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
+        }
+
+        return xDistance;
+    }
+
+    /// <summary>
+    /// GameManager의 CurrentIndex를 기준으로 거리를 계산합니다.
+    /// </summary>
+    /// <param name="destinationNodeIndex"></param>
+    /// <returns></returns>
+    public int GetDistanceFromCurrentIndex(int destinationNodeIndex)
+    {
+        int xDistance = NodeManager.NodeDic[destinationNodeIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
+        if (xDistance < 0) // 음수 처리..
+        {
+            int possibleDistance1 = -xDistance;
+            int possibleDistance2 = 32 + xDistance;
+
+            xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
+        }
+
+        return xDistance;
+    }
+
+
+
 
     /// <summary>
     /// 두 지점의 x거리를 이동하는 데에 얼마만큼의 시간이 필요한지 계산합니다. 분 단위로 반환합니다.
@@ -88,10 +129,6 @@ public class InfoManager
         int foodRequired = baseValue * (_maxWeight + aircraftManager.CurrentWeight) * stateFactor /
             _maxWeight / _maxAircraftState;
 
-        Debug.Log($"xDistance: {xDistance}, baseValue: {baseValue}, CurrentWeight: {aircraftManager.CurrentWeight}, " +
-                  $"MaxState: {aircraftManager.MaxAircraftState}, CurrentState: {aircraftManager.CurrentAircraftState}, " +
-                  $"stateFactor: {stateFactor}, foodRequired: {foodRequired}");
-
         return Mathf.Max(foodRequired, 0);
     }
 
@@ -103,7 +140,7 @@ public class InfoManager
     /// <param name="nut"></param>
     /// <param name="fuel"></param>
     /// <returns></returns>
-    public int GetCurrentWeight(int addedFood, int addedBolt, int addedNut, int addedFuel)
+    public int GetWeightByAddResource(int addedFood, int addedBolt, int addedNut, int addedFuel)
     {
         AircraftManager aircraftManager;
         aircraftManager = GameManager.Aircraft;
@@ -115,11 +152,16 @@ public class InfoManager
     /// "현재 플레이어의 무게 계산값"을 정수형으로 반환합니다.
     /// </summary>
     /// <returns></returns>
-    public int CalculateCurrentWeight()
+    public int GetCurrentWeight()
     {
         AircraftManager aircraftManager;
         aircraftManager = GameManager.Aircraft;
         return aircraftManager.Food * _weightPerFood + aircraftManager.Bolt * _weightPerBolt + aircraftManager.Nut * _weightPerNut + aircraftManager.Fuel * _weightPerFuel;
+    }
+
+    public int GetWeightByResource(int food, int bolt, int nut, int fuel)
+    {
+        return food * _weightPerFood + bolt * _weightPerBolt + nut * _weightPerNut + fuel * _weightPerFuel;
     }
 
     /// <summary>
@@ -132,7 +174,20 @@ public class InfoManager
     /// <returns></returns>
     public bool IsPossibleWeight(int addedFood, int addedBolt, int addedNut, int addedFuel)
     {
-        return GetCurrentWeight(addedFood, addedBolt, addedNut, addedFuel) <= _maxWeight;
+        return GetWeightByAddResource(addedFood, addedBolt, addedNut, addedFuel) <= _maxWeight;
+    }
+
+    /// <summary>
+    /// 자원을 입력해 소지 가능한지 검사합니다.
+    /// </summary>
+    /// <param name="food"></param>
+    /// <param name="bolt"></param>
+    /// <param name="nut"></param>
+    /// <param name="fuel"></param>
+    /// <returns></returns>
+    public bool IsPossibleWeightByResource(int food, int bolt, int nut, int fuel)
+    {
+        return GetWeightByResource(food, bolt, nut, fuel) <= _maxWeight;
     }
 
     /// <summary>
@@ -141,7 +196,7 @@ public class InfoManager
     /// <returns></returns>
     public bool IsPossibleWeight()
     {
-        return CalculateCurrentWeight() < _maxWeight;
+        return GetCurrentWeight() < _maxWeight;
     }
 
     /// <summary>

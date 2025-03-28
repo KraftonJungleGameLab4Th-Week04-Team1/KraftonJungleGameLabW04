@@ -22,6 +22,13 @@ public class PlaneController : MonoBehaviour
 
     void Start()
     {
+        FindAllNodesTransform();
+
+        GameManager.Instance.OnMoveNodeAction += MovePlayer; //이동시작.
+    }
+
+    private void FindAllNodesTransform()
+    {
         GameObject nodes = GameObject.Find("Nodes");
         if (nodes != null)
         {
@@ -48,8 +55,6 @@ public class PlaneController : MonoBehaviour
                 }
             }
         }
-
-        GameManager.Instance.OnMoveNodeAction += MovePlayer;
     }
 
     private void Update()

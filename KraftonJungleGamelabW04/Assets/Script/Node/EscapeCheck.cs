@@ -3,16 +3,18 @@ using UnityEngine.SceneManagement;
 
 public class EscapeCheck : MonoBehaviour
 {
-    public GameObject[] PartPrefabs = new GameObject[6];
+    public int EscapeFoodCount = 180;
+    public int PartCount = 5;
+    private GameObject[] _partPrefabs;
 
     private void Start()
     {
-        PartPrefabs[0] = gameObject.transform.GetChild(0).gameObject;
-        PartPrefabs[1] = gameObject.transform.GetChild(1).gameObject;
-        PartPrefabs[2] = gameObject.transform.GetChild(2).gameObject;
-        PartPrefabs[3] = gameObject.transform.GetChild(3).gameObject;
-        PartPrefabs[4] = gameObject.transform.GetChild(4).gameObject;
-        PartPrefabs[5] = gameObject.transform.GetChild(5).gameObject;
+        _partPrefabs = new GameObject[PartCount];
+
+        for (int i = 0; i < PartCount - 1; i++)
+        {
+            _partPrefabs[i] = gameObject.transform.GetChild(i).gameObject;
+        }
 
         //이건 개오바라 이그노어메서드로 뺐어요
         //GameManager.Instance.OnConfirmAction += (_, __, ___, ____, _____, ______, _______, ________, _________) => AddParts();
@@ -21,12 +23,12 @@ public class EscapeCheck : MonoBehaviour
 
     public bool CheckEscape(int food)
     {
-        if (GetCurrentPartsCount() < 6)
+        if (GetCurrentPartsCount() < PartCount)
         {
             return false;
         }
 
-        if (food < 180)
+        if (food < EscapeFoodCount)
         {
             return false;
         }
@@ -34,10 +36,10 @@ public class EscapeCheck : MonoBehaviour
         return true;
     }
 
-    private void IgnoreParamsEscapeCheck(int a, int b, int c, int d, int e, int f, int g, int h, int i)
+    private void IgnoreParamsEscapeCheck(ResourceDto nodeValue, ResourceDto aircraftValue)
     {
         AddParts();
-        EscapeEnding(f+a);
+        EscapeEnding(nodeValue.food + aircraftValue.food);
     }
 
     private void AddParts()
@@ -45,9 +47,9 @@ public class EscapeCheck : MonoBehaviour
         int partsCount = GetCurrentPartsCount();
         for (int i = 0; i < partsCount; i++)
         {
-            if (PartPrefabs[i].activeSelf == false)
+            if (_partPrefabs[i].activeSelf == false)
             {
-                PartPrefabs[i].SetActive(true);
+                _partPrefabs[i].SetActive(true);
             }
         }
     }

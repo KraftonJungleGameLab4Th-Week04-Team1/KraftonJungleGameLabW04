@@ -33,7 +33,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnMoveNodeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmAction += IgnoreParamsUpdateBasicUI;
-        
         GameManager.Instance.OnArriveAction += _ => UpdateBasicUI();
     }
 
@@ -51,7 +50,7 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    private void IgnoreParamsUpdateBasicUI(int a, int b, int c, int d, int e, int f, int g, int h, int i)
+    private void IgnoreParamsUpdateBasicUI(ResourceDto nodeValue, ResourceDto aircraftValue)
     {
         UpdateBasicUI();
     }
@@ -59,7 +58,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     private void UpdateBasicUI()
     {
         AircraftManager aircraft = GameManager.Aircraft;
-        Debug.Log($"aircraft : {aircraft.Food}, {aircraft.Bolt}, {aircraft.Nut}, {aircraft.Fuel}, {aircraft.CurrentWeight}");
         _foodText.text = $"{aircraft.Food}";
         _boltText.text = $"{aircraft.Bolt}";
         _nutText.text = $"{aircraft.Nut}";

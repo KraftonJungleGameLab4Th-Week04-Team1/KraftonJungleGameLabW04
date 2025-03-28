@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Node15
   m_EditorClassIdentifier: 
   _nodeGroup: 4
-  _NodeName: Velkha
+  _NodeName: "\uBCA8\uCE74"
   _nodeNum: 15
-  _nodeIdx: 21
-  _food: 1
-  _bolt: 0
-  _nut: 80
-  _fuel: 300
+  _nodeIdx: 22
+  _food: 20
+  _bolt: 50
+  _nut: 20
+  _fuel: 150
   _isVisited: 0
   _risk: 10
   _nodeType: 0
