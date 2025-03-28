@@ -8427,7 +8427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD0DC\uC591\uC5D0 \uC0BC\uCF1C\uC84C\uB2E4..."
+  m_text: You are burned...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3493b83c33ad62a44b255a421af9ba10, type: 2}
   m_sharedMaterial: {fileID: -6635396582649785395, guid: 3493b83c33ad62a44b255a421af9ba10, type: 2}
