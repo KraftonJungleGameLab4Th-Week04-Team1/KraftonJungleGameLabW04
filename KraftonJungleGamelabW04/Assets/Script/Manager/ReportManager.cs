@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 생성시 자동으로 지역의 정보와 플레이어의 정보를 모두 가져옵니다. Instantiate 해주세요.
@@ -58,6 +59,7 @@ public class ReportManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI RepairValueText;
     [SerializeField] private List<GameObject> CraftButtons;
     [SerializeField] private GameObject ConfirmButton;
+    [SerializeField] private Slider weightSlider;
 
 
     void Awake()
@@ -354,7 +356,8 @@ public class ReportManager : MonoBehaviour
 
     private void UpdateInfoUI()
     {
-        CurrentWeightText.text = "Current Weight : " + _currentAircraftWeight + " / " + Info.MaxWeight;
+        CurrentWeightText.text = "무게 : " + _currentAircraftWeight + " / " + Info.MaxWeight;
+        weightSlider.value = _currentAircraftWeight;
         CurrentAircraftFoodText.text = aircraftValue.food.ToString();
         CurrentAircraftBoltText.text = aircraftValue.bolt.ToString();
         CurrentAircraftNutText.text = aircraftValue.nut.ToString();
@@ -365,7 +368,7 @@ public class ReportManager : MonoBehaviour
         CurrentNodeFuelText.text = nodeValue.fuel.ToString();
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
-        RepairValueText.text = "Your Aircraft Will Be Repaired : +" + _aircraftRepairValue + "%";
+        RepairValueText.text = "항공기가 " + _aircraftRepairValue + "% 만큼 수리됩니다.";
     }
 
     public void ConfirmReport()
@@ -376,6 +379,11 @@ public class ReportManager : MonoBehaviour
 
         GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
         Debug.Log("after repair : " + GameManager.Aircraft.CurrentAircraftState);
+        Destroy(gameObject);
+    }
+
+    public void CancelReport()
+    {
         Destroy(gameObject);
     }
 }

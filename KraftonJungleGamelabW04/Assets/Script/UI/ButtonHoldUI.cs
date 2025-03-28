@@ -21,12 +21,12 @@ public class ButtonHoldHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
     [SerializeField] private bool _isBoltToUse;
     [SerializeField] private bool _isNutToUse;
 
-    private ReportSliderUI _reportSliderUI;
+    private ReportManager _reportSliderUI;
  
     void Start()
     {
         _button = GetComponent<Button>();
-        _reportSliderUI = FindAnyObjectByType<ReportSliderUI>();
+        _reportSliderUI = FindAnyObjectByType<ReportManager>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
