@@ -260,7 +260,7 @@ public class ReportSliderUI : MonoBehaviour
 
     private void UpdateAllUI()
     {
-        CurrentWeightText.text = "Weight : " + _currentAircraftWeight + " / " + Info.MaxWeight;
+        CurrentWeightText.text = "무게 : " + _currentAircraftWeight + " / " + Info.MaxWeight;
         weightSlider.value = _currentAircraftWeight;
         CurrentAircraftFoodText.text = _currentAircraftFood.ToString();
         CurrentAircraftBoltText.text = _currentAircraftBolt.ToString();
@@ -272,7 +272,7 @@ public class ReportSliderUI : MonoBehaviour
         CurrentNodeFuelText.text = _currentNodeFuel.ToString();
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
-        RepairValueText.text = "Your Aircraft Will Be Repaired : +" + _aircraftRepairValue + "%";
+        RepairValueText.text = "항공기가 +" + _aircraftRepairValue + "% 만큼 수리됩니다.";
     }
 
     public void CraftPartA() //20, 15

@@ -166,7 +166,7 @@ public class AircraftManager
         }
 
         GameObject ResourceLog = GameObject.Find("ResourceLog");
-        ResourceLog.GetComponent<TextMeshProUGUI>().text = "Lost " + foodToUse + " Foods. " + _food + " Left.\n" +
-            "Lost " + fuelToUse + " Fuels. " + _fuel + " Left.";
+        ResourceLog.GetComponent<TextMeshProUGUI>().text = "식량 " + foodToUse + " 잃음. " + _food + " 남음.\n" +
+            "연료 " + fuelToUse + " 잃음. " + _fuel + " 남음.";
     }
 }

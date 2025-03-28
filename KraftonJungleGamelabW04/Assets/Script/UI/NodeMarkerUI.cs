@@ -76,11 +76,11 @@ public class NodeMarkerUI : MonoBehaviour
 
         if(node.NodeType == NodeType.RepairNode)
         {
-            _typeText.text = $"ABLE TO REPAIR";
+            _typeText.text = $"수리 가능 지역";
         }
         else if(node.NodeType == NodeType.SpaceNode)
         {
-            _typeText.text = $"Escape Point";
+            _typeText.text = $"탈출 가능 지역";
         }
         else
         {

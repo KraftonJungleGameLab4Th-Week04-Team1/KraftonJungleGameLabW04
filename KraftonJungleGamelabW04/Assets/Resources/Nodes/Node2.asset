@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node2
   m_EditorClassIdentifier: 
   _nodeGroup: 1
-  _NodeName: Osea
+  _NodeName: "\uC624\uC2DC\uC544"
   _nodeNum: 2
   _nodeIdx: 2
   _food: 100
