@@ -132,6 +132,7 @@ public class NodeMarkerUI : MonoBehaviour
         int fuelToUse = distanceResource.Item2;
         if (GameManager.Aircraft.Fuel >= fuelToUse && GameManager.Aircraft.Food >= foodToUse)
         {
+            // UseResourceForFly 액션 순서 파악하고 넣는거로 리팩토링 예정
             GameManager.Aircraft.UseResourceForFly(selectedIdx);
             GameManager.Instance.OnMoveNodeAction?.Invoke(selectedIdx);
             GameManager.Instance.IsMoving = true;
