@@ -303,19 +303,19 @@ public class ReportSliderUI : MonoBehaviour
         UpdateAllUI();
     }
 
-    public void CraftPartB() //30, 20
+    public void CraftPartB() //25, 20
     {
-        if (_currentNodeBolt + _currentAircraftBolt < 30 || _currentNodeNut + _currentAircraftNut < 20) return;
+        if (_currentNodeBolt + _currentAircraftBolt < 25 || _currentNodeNut + _currentAircraftNut < 20) return;
 
         GameManager.NodeManager.spaceStationParts[1] = true;
 
-        if (_currentNodeBolt >= 30)
+        if (_currentNodeBolt >= 25)
         {
-            _currentNodeBolt -= 30;
+            _currentNodeBolt -= 25;
         }
         else
         {
-            _currentAircraftBolt -= (30 - _currentNodeBolt);
+            _currentAircraftBolt -= (25 - _currentNodeBolt);
             _currentNodeBolt = 0;
         }
 
@@ -361,17 +361,17 @@ public class ReportSliderUI : MonoBehaviour
 
     public void CraftPartD() //50, 50
     {
-        if (_currentNodeBolt + _currentAircraftBolt < 50 || _currentNodeNut + _currentAircraftNut < 50) return;
+        if (_currentNodeBolt + _currentAircraftBolt < 65 || _currentNodeNut + _currentAircraftNut < 50) return;
 
         GameManager.NodeManager.spaceStationParts[3] = true;
 
-        if (_currentNodeBolt >= 50)
+        if (_currentNodeBolt >= 65)
         {
-            _currentNodeBolt -= 50;
+            _currentNodeBolt -= 65;
         }
         else
         {
-            _currentAircraftBolt -= (50 - _currentNodeBolt);
+            _currentAircraftBolt -= (65 - _currentNodeBolt);
             _currentNodeBolt = 0;
         }
 
@@ -387,19 +387,19 @@ public class ReportSliderUI : MonoBehaviour
         UpdateAllUI();
     }
 
-    public void CraftPartE() //100, 80
+    public void CraftPartE() //80, 80
     {
-        if (_currentNodeBolt + _currentAircraftBolt < 100 || _currentNodeNut + _currentAircraftNut < 80) return;
+        if (_currentNodeBolt + _currentAircraftBolt < 80 || _currentNodeNut + _currentAircraftNut < 80) return;
 
         GameManager.NodeManager.spaceStationParts[4] = true;
 
-        if (_currentNodeBolt >= 100)
+        if (_currentNodeBolt >= 80)
         {
-            _currentNodeBolt -= 100;
+            _currentNodeBolt -= 80;
         }
         else
         {
-            _currentAircraftBolt -= (100 - _currentNodeBolt);
+            _currentAircraftBolt -= (80 - _currentNodeBolt);
             _currentNodeBolt = 0;
         }
 
@@ -451,7 +451,7 @@ public class ReportSliderUI : MonoBehaviour
         while (GameManager.NodeManager.spaceStationParts[i])
         {
             i++;
-            if (i == 6) break;
+            if (i == 5) break;
         }
 
         foreach (GameObject button in CraftButtons)
