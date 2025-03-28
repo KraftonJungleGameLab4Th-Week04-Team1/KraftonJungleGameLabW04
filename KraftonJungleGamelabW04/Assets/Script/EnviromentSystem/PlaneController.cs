@@ -49,7 +49,7 @@ public class PlaneController : MonoBehaviour
             }
         }
 
-        GameManager.Instance.OnMoveNodeAction += MovePlayer;
+        GameManager.Instance.OnMoveNodeAction += MovePlayer; //이동시작.
     }
 
     private void Update()

@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
         // 객체별 초기화 순서를 정하기 위한 구조 = 각 매니저별로 Awake()를 호출하지 않아도 됩니다.
         NodeManager.Init();
         Aircraft.Init();
-        //Solor.Init();
         Info.Init();
         UI.Init();
         
@@ -98,7 +97,7 @@ public class GameManager : MonoBehaviour
 
         //무빙 확인시 현재 노드 인덱스 변경.
 
-        OnArriveAction += ChangeCurrentNodeIndex;
+        OnArriveAction += ChangeCurrentNodeIndex; //현재 노드인덱스는 도착시 변경.
     }
     
     public void StartGameTimer(bool isStart)

@@ -43,6 +43,23 @@ public class InfoManager
         _nutRepairValue = 5;
     }
 
+    public int GetDistance(int startNodeIndex, int destinationNodeIndex)
+    {
+        int xDistance = NodeManager.NodeDic[destinationNodeIndex].NodeIdx - NodeManager.NodeDic[startNodeIndex].NodeIdx;
+        if(xDistance < 0) // 음수 처리..
+        {
+            int possibleDistance1 = -xDistance;
+            int possibleDistance2 = 32 + xDistance;
+
+            xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
+        }
+
+        return xDistance;
+    }
+
+
+
+
     /// <summary>
     /// 두 지점의 x거리를 이동하는 데에 얼마만큼의 시간이 필요한지 계산합니다. 분 단위로 반환합니다.
     /// </summary>

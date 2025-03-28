@@ -7,7 +7,6 @@ using UnityEngine;
 public class SolarController_DE : MonoBehaviour
 {
     public float rotationSpeed = 0.2f;
-
     private Vector2 _lastMousePos;
     private bool _isDragging = false;
 
