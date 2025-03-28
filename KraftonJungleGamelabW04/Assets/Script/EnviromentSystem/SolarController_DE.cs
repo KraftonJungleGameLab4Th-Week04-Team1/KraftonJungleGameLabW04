@@ -12,25 +12,8 @@ public class SolarController_DE : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.OnMoveNodeAction += HandleSolarMovement;
+        
     }
-
-    private void HandleSolarMovement(int targetIndex)
-    {
-        int block = NodeManager.NodeDic[targetIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
-        if (block < 0)
-        {
-            int b1 = -block;
-            int b2 = 32 + block;
-
-            block = Mathf.Min(b1, b2);
-        }
-
-        GameManager.Instance.ChangeGameTime(Mathf.Abs(block) * 30);
-            
-        Debug.Log($"@@DE ---> {block}칸 이동 / {block * 30}분 지남");
-    }
-
     
     /// <summary>
     /// 마우스 맵 입력 처리.

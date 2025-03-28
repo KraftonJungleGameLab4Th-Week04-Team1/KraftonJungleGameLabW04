@@ -23,7 +23,6 @@ public class InfoManager
 
     public void Init()
     {
-        //임시 값.
         _inititalFood = 20;
         _inititalFuel = 100;
         _weightPerFood = 2;
@@ -43,10 +42,35 @@ public class InfoManager
         _nutRepairValue = 5;
     }
 
+    /// <summary>
+    /// 노드의 인덱스를 넣어 두 노드간 거리를 계산합니다.
+    /// </summary>
+    /// <param name="startNodeIndex"></param>
+    /// <param name="destinationNodeIndex"></param>
+    /// <returns></returns>
     public int GetDistance(int startNodeIndex, int destinationNodeIndex)
     {
         int xDistance = NodeManager.NodeDic[destinationNodeIndex].NodeIdx - NodeManager.NodeDic[startNodeIndex].NodeIdx;
         if(xDistance < 0) // 음수 처리..
+        {
+            int possibleDistance1 = -xDistance;
+            int possibleDistance2 = 32 + xDistance;
+
+            xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
+        }
+
+        return xDistance;
+    }
+
+    /// <summary>
+    /// GameManager의 CurrentIndex를 기준으로 거리를 계산합니다.
+    /// </summary>
+    /// <param name="destinationNodeIndex"></param>
+    /// <returns></returns>
+    public int GetDistanceFromCurrentIndex(int destinationNodeIndex)
+    {
+        int xDistance = NodeManager.NodeDic[destinationNodeIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
+        if (xDistance < 0) // 음수 처리..
         {
             int possibleDistance1 = -xDistance;
             int possibleDistance2 = 32 + xDistance;

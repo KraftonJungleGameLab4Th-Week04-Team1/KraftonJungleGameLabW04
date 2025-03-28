@@ -11,6 +11,7 @@ public class SolarSystem : MonoBehaviour
     void Start()
     {
         GameManager.Instance.OnChangedGameTimeAction += SolarRotation;     // 초기 회전 설정
+        GameManager.Instance.OnMoveNodeAction += HandleSolarMovement;
 
         transform.rotation = Quaternion.Euler(0, 90, 0); //시작 태양위치.
     }
@@ -50,5 +51,14 @@ public class SolarSystem : MonoBehaviour
         // 회전 시작
         _isRotating = true;
         _rotationTime = 0f;
+    }
+
+    private void HandleSolarMovement(int targetIndex)
+    {
+        int moveDistance = GameManager.Info.GetDistanceFromCurrentIndex(targetIndex);
+
+        GameManager.Instance.ChangeGameTime(Mathf.Abs(moveDistance) * 30);
+
+        Debug.Log($"@@DE ---> {moveDistance}칸 이동 / {moveDistance * 30}분 지남");
     }
 }
