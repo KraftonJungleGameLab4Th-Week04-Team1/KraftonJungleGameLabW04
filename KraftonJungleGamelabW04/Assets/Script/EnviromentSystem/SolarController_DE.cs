@@ -20,6 +20,8 @@ public class SolarController_DE : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (GameManager.Instance.GameTime < 0.01f) return;
+
         // 드래그에 따른 카메라 회전 
         if (Input.GetMouseButtonDown(0))
         {
