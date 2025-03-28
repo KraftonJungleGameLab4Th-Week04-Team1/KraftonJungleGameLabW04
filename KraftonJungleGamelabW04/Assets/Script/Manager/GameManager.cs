@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     
     #region Actions
     public Action<float> OnChangedGameTimeAction; //GameTime이 인터벌마다 업데이트 되면 실행.
-    public Action<int> OnSelectNodeAction; //다른 노드를 눌렀을 때 창 띄우기 등.
+    public Action<int, int> OnSelectNodeAction; //다른 노드를 눌렀을 때 창 띄우기 등.
     public Action<int> OnMoveNodeAction; //다른 노드로의 움직임을 시작했을 때.
     public Action<int> OnArriveAction; //현재 노드를 클릭하거나, 다른 노드에 도착 했을 때의 액션.
     
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     [Header("노드 관련")]
     private int _currentNodeIndex;
     public int CurrentNodeIndex => _currentNodeIndex;
+    private Node _selectedNextNode;
 
     [Header("게임 상태")]
     private bool _isGameStarted = false;
@@ -141,14 +142,13 @@ public class GameManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.NameToLayer(nameof(LayerName.NodeMarker))))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(nameof(LayerName.NodeMarker))))
             {
-
-                _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
+                _selectedNextNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
                 
-                if(_nodeManager.SelectedNode.NodeNum != _currentNodeIndex)
+                if(_selectedNextNode.NodeNum != _currentNodeIndex)
                 {
-                    OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
+                    OnSelectNodeAction?.Invoke(_currentNodeIndex ,_selectedNextNode.NodeNum);
                 }
                 else
                 {
