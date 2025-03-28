@@ -42,9 +42,6 @@ public class NodeManager
         NodeDic[idx].Bolt = changedValue.bolt;
         NodeDic[idx].Nut = changedValue.nut;
         NodeDic[idx].Fuel = changedValue.fuel;
-
-        //GameManager.Aircraft.UpdateAircraftResources(aircraftFood, aircraftBolt, aircraftNut, aircraftFuel);
-        //GameManager.Aircraft.RepairAircraftByInputValue(repairValue);
     }
 
     /* [Legacy] 격차가 컨펌일때 사용하던 메서드들

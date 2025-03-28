@@ -15,6 +15,11 @@ public enum GameState
     GameOver
 }
 
+public enum LayerName
+{
+    NodeMarker
+}
+
 public class Define
 {
     
