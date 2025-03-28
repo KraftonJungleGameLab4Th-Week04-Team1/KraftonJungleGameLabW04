@@ -9,25 +9,37 @@ using UnityEngine.UI;
 /// </summary>
 public class ReportManager : MonoBehaviour
 {
-    private int _currentNodeIndex;
+    public enum ResourceType
+    {
+        Food,
+        Bolt,
+        Nut,
+        Fuel
+    }
+
+    //Infos.
     private int _boltToUse;
     private int _nutToUse;
-    private int _currentAircraftFood;
-    private int _currentAircraftBolt;
-    private int _currentAircraftNut;
-    private int _currentAircraftFuel;
-    private int _currentNodeFood;
-    private int _currentNodeBolt;
-    private int _currentNodeNut;
-    private int _currentNodeFuel;
     private int _aircraftRepairValue;
     private int _currentAircraftWeight;
-    private bool isRepairable;
-    private bool isCraftable;
+
+    //amount of moving resource per input.
+    private int _amountOfFoodMovingByInput;
+    private int _amountOfBoltMovingByInput;
+    private int _amountOfNutMovingByInput;
+    private int _amountOfFuelMovingByInput;
+
+    //References.
     private Node currentNode;
     private AircraftManager aircraftManager;
     private InfoManager Info;
-    
+
+    //DTOs.
+    ResourceDto aircraftValue;
+    ResourceDto nodeValue;
+
+    private CraftData[] craftDatas; // Array to hold all CraftData ScriptableObjects
+
     //UI References.
     [SerializeField] private TextMeshProUGUI CityNameText;
     [SerializeField] private GameObject RepairBlockPanel;
@@ -58,433 +70,311 @@ public class ReportManager : MonoBehaviour
 
     void Start()
     {
+        //InitializeData
+        InitializeInformation();
+        
+        //InitializeUI
+        InitializeUI();
+        UpdateInfoUI();
+    }
+
+    private void InitializeInformation()
+    {
         Info = GameManager.Info;
         currentNode = NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex];
         aircraftManager = GameManager.Aircraft;
+
         _boltToUse = 0;
         _nutToUse = 0;
         _aircraftRepairValue = 0;
-        _currentAircraftWeight = Info.GetCurrentWeight();
-        _currentAircraftFood = aircraftManager.Food;
-        _currentAircraftBolt = aircraftManager.Bolt;
-        _currentAircraftNut = aircraftManager.Nut;
-        _currentAircraftFuel = aircraftManager.Fuel;
-        _currentNodeFood = currentNode.Food;
-        _currentNodeBolt = currentNode.Bolt;
-        _currentNodeNut = currentNode.Nut;
-        _currentNodeFuel = currentNode.Fuel;
+        _amountOfBoltMovingByInput = 1;
+        _amountOfBoltMovingByInput = 1;
+        _amountOfNutMovingByInput = 1;
+        _amountOfFuelMovingByInput = 5;
 
-        if(currentNode.NodeType == NodeType.Normal)
-        {
-            RepairPanel.SetActive(false);
-            CraftPanel.SetActive(false);
-            RepairBlockPanel.SetActive(true);
-            CraftBlockPanel.SetActive(true);
-        }
-        else if(currentNode.NodeType == NodeType.RepairNode)
-        {
-            CraftPanel.SetActive(false);
-            CraftBlockPanel.SetActive(true);
-        }
-        else if(currentNode.NodeType == NodeType.SpaceNode)
-        {
-            RepairPanel.SetActive(false);
-            RepairBlockPanel.SetActive(true);
-        }
+        aircraftValue = new ResourceDto(
+            food: aircraftManager.Food,
+            bolt: aircraftManager.Bolt,
+            nut: aircraftManager.Nut,
+            fuel: aircraftManager.Fuel,
+            repairValue: _aircraftRepairValue
+        //stateValue : ???
+        );
 
-        CityNameText.text = currentNode.NodeName;
-        UpdateAllUI();
-        ShowCraftButton();
+        nodeValue = new ResourceDto(
+            food: currentNode.Food,
+            bolt: currentNode.Bolt,
+            nut: currentNode.Nut,
+            fuel: currentNode.Fuel
+        );
+
+        _currentAircraftWeight = Info.GetWeightByResource(aircraftValue.food, aircraftValue.bolt, aircraftValue.nut, aircraftValue.fuel);
+
+        // Load all CraftData ScriptableObjects from Resources/CraftDatas/
+        craftDatas = Resources.LoadAll<CraftData>("CraftDatas");
     }
+
+    private void InitializeUI()
+    {
+        //Panel 설정.
+        if (currentNode.NodeType == NodeType.Normal)
+        {
+            RepairPanel.SetActive(false);
+            CraftPanel.SetActive(false);
+            RepairBlockPanel.SetActive(true);
+            CraftBlockPanel.SetActive(true);
+        }
+        else if (currentNode.NodeType == NodeType.RepairNode)
+        {
+            CraftPanel.SetActive(false);
+            CraftBlockPanel.SetActive(true);
+        }
+        else if (currentNode.NodeType == NodeType.SpaceNode)
+        {
+            RepairPanel.SetActive(false);
+            RepairBlockPanel.SetActive(true);
+
+            ShowCraftButton();
+        }
+
+        //상단 도시이름 설정.
+        CityNameText.text = currentNode.NodeName;
+    }
+   
 
     //Repair functions.
     public void AddBoltToUse()
     {
-        if(_currentAircraftBolt == 0 && _currentNodeBolt == 0) return;
-        if(_currentNodeBolt <= 0)
+        if(aircraftValue.bolt == 0 && nodeValue.bolt == 0) return;
+        if(nodeValue.bolt <= 0)
         {
-            _currentAircraftBolt -= 1;
+            aircraftValue.bolt -= _amountOfBoltMovingByInput;
         }
         else
         {
-            _currentNodeBolt -= 1;
+            nodeValue.bolt -= _amountOfBoltMovingByInput;
         }
-        _boltToUse += 1;
+        _boltToUse += _amountOfBoltMovingByInput;
         _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
-        UpdateAllUI();
+        UpdateInfoUI();
     }
 
     public void DecreaseBoltToUse()
     {
         if(_boltToUse <= 0) return;
-        _boltToUse -= 1;
-        _currentNodeBolt += 1;
+        _boltToUse -= _amountOfBoltMovingByInput;
+        nodeValue.bolt += _amountOfBoltMovingByInput;
         _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
-        UpdateAllUI();
+        UpdateInfoUI();
     }
 
     public void AddNutToUse()
     {
-        if(_currentAircraftNut == 0 && _currentNodeNut == 0) return;
-        if(_currentNodeNut <= 0)
+        if(aircraftValue.nut == 0 && nodeValue.nut == 0) return;
+        if(nodeValue.nut <= 0)
         {
-            _currentAircraftNut -= 1;
+            aircraftValue.nut -= _amountOfNutMovingByInput;
         }
         else
         {
-            _currentNodeNut -= 1;
+            nodeValue.nut -= _amountOfNutMovingByInput;
         }
-        _nutToUse += 1;
+        _nutToUse += _amountOfNutMovingByInput;
         _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
-        UpdateAllUI();
+        UpdateInfoUI();
     }
 
     public void DecreaseNutToUse()
     {
         if(_nutToUse <= 0) return;
-        _nutToUse -= 1;
-        _currentNodeNut += 1;
+        _nutToUse -= _amountOfNutMovingByInput;
+        nodeValue.nut += _amountOfNutMovingByInput;
         _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
         
-        UpdateAllUI();
+        UpdateInfoUI();
     }
 
-    //Resource Functions.
-    public void TakeFood()
-    {
-        if(_currentNodeFood <= 0) return;
-        if(!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food + 1, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel)) return;
+    #region Resource Funtions
+    public void TakeFood() => TransferResource(ResourceType.Food, isTaking : true);
+    public void ReleaseFood() => TransferResource(ResourceType.Food, isTaking : false);
+    public void TakeBolt() => TransferResource(ResourceType.Bolt, isTaking: true);
+    public void ReleaseBolt() => TransferResource(ResourceType.Bolt, isTaking: false);
+    public void TakeNut() => TransferResource(ResourceType.Nut, isTaking: true);
+    public void ReleaseNut() => TransferResource(ResourceType.Nut, isTaking: false);
 
-        _currentNodeFood -= 1;
-        _currentAircraftFood += 1;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
-    }
-
-    public void ReleaseFood()
-    {
-        if(_currentAircraftFood <= 0) return;
-        _currentAircraftFood -= 1;
-        _currentNodeFood += 1;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
-    }
-
-    //Resource Functions.
-    public void TakeBolt()
-    {
-        if(_currentNodeBolt <= 0) return;
-        if (!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt + 1, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel)) return;
-
-        _currentNodeBolt -= 1;
-        _currentAircraftBolt += 1;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
-    }
-
-    public void ReleaseBolt()
-    {
-        if(_currentAircraftBolt <= 0) return;
-        _currentAircraftBolt -= 1;
-        _currentNodeBolt += 1;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
-    }
-
-        //Resource Functions.
-    public void TakeNut()
-    {
-        if(_currentNodeNut <= 0) return;
-        if (!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut + 1, _currentAircraftFuel - aircraftManager.Fuel)) return;
-
-        _currentNodeNut -= 1;
-        _currentAircraftNut += 1;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
-    }
-
-    public void ReleaseNut()
-    {
-        if(_currentAircraftNut <= 0) return;
-        _currentAircraftNut -= 1;
-        _currentNodeNut += 1;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
-    }
-
-        //Resource Functions.
     public void TakeFuel()
     {
-        int finalValue;
-        if(_currentNodeFuel <= 0) return;
-        else if(_currentNodeFuel <= 5)
+        int amount = Mathf.Min(nodeValue.fuel, 5);
+        while (amount > 0 && !TransferResource(ResourceType.Fuel, true, amount))
         {
-            finalValue = 5;
-            while(!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel + finalValue))
-            {
-                finalValue--;
-            }
-            if(finalValue > _currentNodeFuel)
-            {
-                finalValue = _currentNodeFuel;
-            }
+            amount--;
         }
-        else
-        {
-            finalValue = 5;
-            while(!Info.IsPossibleWeight(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel + finalValue))
-            {
-                finalValue--;
-            }
-        }
-
-        _currentNodeFuel -= finalValue;
-        _currentAircraftFuel += finalValue;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
     }
 
     public void ReleaseFuel()
     {
-        int finalValue;
-        if(_currentAircraftFuel <= 0) return;
-        else if(_currentAircraftFuel <= 5)
+        int amount = Mathf.Min(aircraftValue.fuel, 5);
+        TransferResource(ResourceType.Fuel, false, amount);
+    }
+
+    private bool TransferResource(ResourceType type, bool isTaking, int amount = 1)
+    {
+        // Get current values based on resource type
+        int currentNodeAmount = type switch
         {
-            finalValue = _currentAircraftFuel;
+            ResourceType.Food => nodeValue.food,
+            ResourceType.Bolt => nodeValue.bolt,
+            ResourceType.Nut => nodeValue.nut,
+            ResourceType.Fuel => nodeValue.fuel,
+            _ => 0
+        };
+
+        int currentAircraftAmount = type switch
+        {
+            ResourceType.Food => aircraftValue.food,
+            ResourceType.Bolt => aircraftValue.bolt,
+            ResourceType.Nut => aircraftValue.nut,
+            ResourceType.Fuel => aircraftValue.fuel,
+            _ => 0
+        };
+
+        // Check conditions
+        if (isTaking)
+        {
+            if (currentNodeAmount < amount) return false;
+            var tempAircraftValues = new ResourceDto(
+                food: type == ResourceType.Food ? aircraftValue.food + amount : aircraftValue.food,
+                bolt: type == ResourceType.Bolt ? aircraftValue.bolt + amount : aircraftValue.bolt,
+                nut: type == ResourceType.Nut ? aircraftValue.nut + amount : aircraftValue.nut,
+                fuel: type == ResourceType.Fuel ? aircraftValue.fuel + amount : aircraftValue.fuel
+            );
+            if (!Info.IsPossibleWeightByResource(tempAircraftValues.food, tempAircraftValues.bolt, tempAircraftValues.nut, tempAircraftValues.fuel))
+                return false;
+        }
+        else if (currentAircraftAmount < amount)
+        {
+            return false;
+        }
+
+        // Update values
+        int change = isTaking ? amount : -amount;
+
+        switch (type)
+        {
+            case ResourceType.Food:
+                nodeValue.food -= change;
+                aircraftValue.food += change;
+                break;
+            case ResourceType.Bolt:
+                nodeValue.bolt -= change;
+                aircraftValue.bolt += change;
+                break;
+            case ResourceType.Nut:
+                nodeValue.nut -= change;
+                aircraftValue.nut += change;
+                break;
+            case ResourceType.Fuel:
+                nodeValue.fuel -= change;
+                aircraftValue.fuel += change;
+                break;
+        }
+
+        _currentAircraftWeight = Info.GetWeightByResource(aircraftValue.food, aircraftValue.bolt, aircraftValue.nut, aircraftValue.fuel);
+        UpdateInfoUI();
+        return true;
+    }
+
+    #endregion
+
+
+
+    #region Crafts
+    //Craft Functions.
+
+    // Craft button triggers
+    public void CraftPartA() => CraftPart(0);
+    public void CraftPartB() => CraftPart(1);
+    public void CraftPartC() => CraftPart(2);
+    public void CraftPartD() => CraftPart(3);
+    public void CraftPartE() => CraftPart(4);
+    public void CraftPartF() => CraftPart(5);
+    public void CraftPart(int partIndex)
+    {
+        if (partIndex < 0 || partIndex >= craftDatas.Length) return;
+
+        CraftData craftData = craftDatas[partIndex];
+        int totalBoltsAvailable = nodeValue.bolt + aircraftValue.bolt;
+        int totalNutsAvailable = nodeValue.nut + aircraftValue.nut;
+
+        if (totalBoltsAvailable < craftData.requiredBolts || totalNutsAvailable < craftData.requiredNuts) return;
+
+        GameManager.NodeManager.spaceStationParts[craftData.partIndex] = true;
+
+        // Deduct bolts
+        if (nodeValue.bolt >= craftData.requiredBolts)
+        {
+            nodeValue.bolt -= craftData.requiredBolts;
         }
         else
         {
-            finalValue = 5;
+            int remainingBolts = craftData.requiredBolts - nodeValue.bolt;
+            aircraftValue.bolt -= remainingBolts;
+            nodeValue.bolt = 0;
         }
 
-        _currentAircraftFuel -= finalValue;
-        _currentNodeFuel += finalValue;
-        _currentAircraftWeight = Info.GetWeightByAddResource(_currentAircraftFood - aircraftManager.Food, _currentAircraftBolt - aircraftManager.Bolt, _currentAircraftNut - aircraftManager.Nut, _currentAircraftFuel - aircraftManager.Fuel);
-        UpdateAllUI();
+        // Deduct nuts
+        if (nodeValue.nut >= craftData.requiredNuts)
+        {
+            nodeValue.nut -= craftData.requiredNuts;
+        }
+        else
+        {
+            int remainingNuts = craftData.requiredNuts - nodeValue.nut;
+            aircraftValue.nut -= remainingNuts;
+            nodeValue.nut = 0;
+        }
+
+        ShowCraftButton();
+        UpdateInfoUI();
+    }
+    public void ShowCraftButton()
+    {
+        int i = 0;
+        while (i < GameManager.NodeManager.spaceStationParts.Length && GameManager.NodeManager.spaceStationParts[i])
+        {
+            i++;
+        }
+
+        foreach (GameObject button in CraftButtons)
+        {
+            button.SetActive(false);
+        }
+        if (i < CraftButtons.Count) CraftButtons[i].SetActive(true);
     }
 
-    private void UpdateAllUI()
+    #endregion
+
+    private void UpdateInfoUI()
     {
         CurrentWeightText.text = "Current Weight : " + _currentAircraftWeight + " / " + Info.MaxWeight;
-        CurrentAircraftFoodText.text = _currentAircraftFood.ToString();
-        CurrentAircraftBoltText.text = _currentAircraftBolt.ToString();
-        CurrentAircraftNutText.text = _currentAircraftNut.ToString();
-        CurrentAircraftFuelText.text = _currentAircraftFuel.ToString();
-        CurrentNodeFoodText.text = _currentNodeFood.ToString();
-        CurrentNodeBoltText.text = _currentNodeBolt.ToString();
-        CurrentNodeNutText.text = _currentNodeNut.ToString();
-        CurrentNodeFuelText.text = _currentNodeFuel.ToString();
+        CurrentAircraftFoodText.text = aircraftValue.food.ToString();
+        CurrentAircraftBoltText.text = aircraftValue.bolt.ToString();
+        CurrentAircraftNutText.text = aircraftValue.nut.ToString();
+        CurrentAircraftFuelText.text = aircraftValue.fuel.ToString();
+        CurrentNodeFoodText.text = nodeValue.food.ToString();
+        CurrentNodeBoltText.text = nodeValue.bolt.ToString();
+        CurrentNodeNutText.text = nodeValue.nut.ToString();
+        CurrentNodeFuelText.text = nodeValue.fuel.ToString();
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
         RepairValueText.text = "Your Aircraft Will Be Repaired : +" + _aircraftRepairValue + "%";
     }
 
-    public void CraftPartA() //20, 15
-    {
-        if (_currentNodeBolt + _currentAircraftBolt < 20 || _currentNodeNut + _currentAircraftNut < 15) return;
-
-        GameManager.NodeManager.spaceStationParts[0] = true;
-
-        if (_currentNodeBolt >= 20)
-        {
-            _currentNodeBolt -= 20;
-        }
-        else
-        {
-            _currentAircraftBolt -= (20 - _currentNodeBolt);
-            _currentNodeBolt = 0;
-        }
-
-        if(_currentNodeNut >= 15)
-        {
-            _currentNodeNut -= 15;
-        }
-        else
-        {
-            _currentAircraftNut -= (15 - _currentNodeNut);
-        }
-        ShowCraftButton();
-        UpdateAllUI();
-    }
-
-    public void CraftPartB() //30, 20
-    {
-        if (_currentNodeBolt + _currentAircraftBolt < 30 || _currentNodeNut + _currentAircraftNut < 20) return;
-
-        GameManager.NodeManager.spaceStationParts[1] = true;
-
-        if (_currentNodeBolt >= 30)
-        {
-            _currentNodeBolt -= 30;
-        }
-        else
-        {
-            _currentAircraftBolt -= (30 - _currentNodeBolt);
-            _currentNodeBolt = 0;
-        }
-
-        if (_currentNodeNut >= 20)
-        {
-            _currentNodeNut -= 20;
-        }
-        else
-        {
-            _currentAircraftNut -= (20 - _currentNodeNut);
-        }
-        ShowCraftButton();
-        UpdateAllUI();
-    }
-
-    public void CraftPartC() //50, 25
-    {
-        if (_currentNodeBolt + _currentAircraftBolt < 50 || _currentNodeNut + _currentAircraftNut < 25) return;
-
-        GameManager.NodeManager.spaceStationParts[2] = true;
-
-        if (_currentNodeBolt >= 50)
-        {
-            _currentNodeBolt -= 50;
-        }
-        else
-        {
-            _currentAircraftBolt -= (50 - _currentNodeBolt);
-            _currentNodeBolt = 0;
-        }
-
-        if (_currentNodeNut >= 25)
-        {
-            _currentNodeNut -= 25;
-        }
-        else
-        {
-            _currentAircraftNut -= (25 - _currentNodeNut);
-        }
-        ShowCraftButton();
-        UpdateAllUI();
-    }
-
-    public void CraftPartD() //50, 50
-    {
-        if (_currentNodeBolt + _currentAircraftBolt < 50 || _currentNodeNut + _currentAircraftNut < 50) return;
-
-        GameManager.NodeManager.spaceStationParts[3] = true;
-
-        if (_currentNodeBolt >= 50)
-        {
-            _currentNodeBolt -= 50;
-        }
-        else
-        {
-            _currentAircraftBolt -= (50 - _currentNodeBolt);
-            _currentNodeBolt = 0;
-        }
-
-        if (_currentNodeNut >= 50)
-        {
-            _currentNodeNut -= 50;
-        }
-        else
-        {
-            _currentAircraftNut -= (50 - _currentNodeNut);
-        }
-        ShowCraftButton();
-        UpdateAllUI();
-    }
-
-    public void CraftPartE() //100, 80
-    {
-        if (_currentNodeBolt + _currentAircraftBolt < 100 || _currentNodeNut + _currentAircraftNut < 80) return;
-
-        GameManager.NodeManager.spaceStationParts[4] = true;
-
-        if (_currentNodeBolt >= 100)
-        {
-            _currentNodeBolt -= 100;
-        }
-        else
-        {
-            _currentAircraftBolt -= (100 - _currentNodeBolt);
-            _currentNodeBolt = 0;
-        }
-
-        if (_currentNodeNut >= 80)
-        {
-            _currentNodeNut -= 80;
-        }
-        else
-        {
-            _currentAircraftNut -= (80 - _currentNodeNut);
-        }
-
-        ShowCraftButton();
-        UpdateAllUI();
-    }
-
-    public void CraftPartF() //200, 150
-    {
-        if (_currentNodeBolt + _currentAircraftBolt < 200 || _currentNodeNut + _currentAircraftNut < 150) return;
-
-        GameManager.NodeManager.spaceStationParts[5] = true;
-
-        if (_currentNodeBolt >= 200)
-        {
-            _currentNodeBolt -= 200;
-        }
-        else
-        {
-            _currentAircraftBolt -= (200 - _currentNodeBolt);
-            _currentNodeBolt = 0;
-        }
-
-        if (_currentNodeNut >= 150)
-        {
-            _currentNodeNut -= 150;
-        }
-        else
-        {
-            _currentAircraftNut -= (150 - _currentNodeNut);
-        }
-
-        ShowCraftButton();
-        UpdateAllUI();
-    }
-    public void ShowCraftButton()
-    {
-        int i = 0;
-
-        while (GameManager.NodeManager.spaceStationParts[i])
-        {
-            i++;
-            if (i == 6) break;
-        }
-
-        foreach(GameObject button in CraftButtons)
-        {
-            button.SetActive(false);
-        }
-        CraftButtons[i].SetActive(true);
-
-
-    }
-
     public void ConfirmReport()
     {
-        // 일단 임시로 여기서 초기화하는데 dto를 reportManager에서 변수로 하나 만들어서 함수 각각이 넣어주고 마지막에 invoke할때 주는게 맞을듯싶어요.
-        ResourceDto aircraftValue = new ResourceDto(
-            food : _currentAircraftFood,
-            bolt : _currentAircraftBolt, 
-            nut : _currentAircraftNut, 
-            fuel : _currentAircraftFuel, 
-            repairValue : _aircraftRepairValue
-            //stateValue : ???
-            );
-
-        ResourceDto nodeValue = new ResourceDto(
-            food: _currentNodeFood,
-            bolt: _currentNodeBolt,
-            nut: _currentNodeNut,
-            fuel: _currentNodeFuel
-            );
+        Debug.Log($"Confirming - Node: Food={nodeValue.food}, Bolt={nodeValue.bolt}, Nut={nodeValue.nut}, Fuel={nodeValue.fuel}");
+        Debug.Log($"Confirming - Aircraft: Food={aircraftValue.food}, Bolt={aircraftValue.bolt}, Nut={aircraftValue.nut}, Fuel={aircraftValue.fuel}");
+        Debug.Log($"Repair: BoltsToUse={_boltToUse}, NutsToUse={_nutToUse}, RepairValue={_aircraftRepairValue}");
 
         GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
         Debug.Log("after repair : " + GameManager.Aircraft.CurrentAircraftState);
