@@ -25,8 +25,12 @@ public class GameManager : MonoBehaviour
     public Action<int> OnSelectNodeAction; //다른 노드를 눌렀을 때 창 띄우기 등.
     public Action<int> OnMoveNodeAction; //다른 노드로의 움직임을 시작했을 때.
     public Action<int> OnArriveAction; //현재 노드를 클릭하거나, 다른 노드에 도착 했을 때의 액션.
-    //aircraftFood, aircraftBolt, aircraftNut, aircraftFuel, repairValue, nodeFood, nodeBolt, nodeNut, nodeFuel
-    public Action<int, int, int, int, int, int, int, int, int> OnConfirmAction;
+    
+    // 현재 최종값을 받아오는 구조라 이렇게 두개의 dto를 넘기는 형식으로 구성했습니다.
+    // 격차를 받아오는 식이라면 dto 하나만 받아서 메서드 내부에서 계산할 수 있을 것같아서 고민입니다.
+    // 액션 분리도 고려해볼만 합니다.
+    // 노드최종값, 비행기최종값을 받아서 갱신하는 액션
+    public Action<ResourceDto, ResourceDto> OnConfirmAction;
     #endregion
 
     #region Properties
