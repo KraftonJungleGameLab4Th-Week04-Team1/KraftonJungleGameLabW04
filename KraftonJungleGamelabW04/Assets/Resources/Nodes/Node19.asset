@@ -16,11 +16,11 @@ MonoBehaviour:
   _NodeName: Pironesia
   _nodeNum: 19
   _nodeIdx: 28
-  _food: 60
-  _bolt: 60
-  _nut: 350
-  _fuel: 100
-  _isVisited: 1
+  _food: 10
+  _bolt: 5
+  _nut: 30
+  _fuel: 450
+  _isVisited: 0
   _risk: 5
-  _nodeType: 0
+  _nodeType: 2
   _spaceStationLevel: 0

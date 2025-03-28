@@ -15,11 +15,11 @@ MonoBehaviour:
   _nodeGroup: 4
   _NodeName: Ratio
   _nodeNum: 14
-  _nodeIdx: 20
-  _food: 70
-  _bolt: 20
-  _nut: 15
-  _fuel: 200
+  _nodeIdx: 21
+  _food: 120
+  _bolt: 10
+  _nut: 70
+  _fuel: 400
   _isVisited: 0
   _risk: 5
   _nodeType: 0

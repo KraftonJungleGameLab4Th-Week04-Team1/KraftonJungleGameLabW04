@@ -15,11 +15,11 @@ MonoBehaviour:
   _nodeGroup: 5
   _NodeName: Dellarus
   _nodeNum: 18
-  _nodeIdx: 25
-  _food: 10
-  _bolt: 5
-  _nut: 10
-  _fuel: 1500
+  _nodeIdx: 27
+  _food: 80
+  _bolt: 110
+  _nut: 120
+  _fuel: 80
   _isVisited: 0
   _risk: 10
   _nodeType: 0

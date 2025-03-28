@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: Norden
   _nodeNum: 20
   _nodeIdx: 30
-  _food: 0
-  _bolt: 55
-  _nut: 50
-  _fuel: 400
+  _food: 240
+  _bolt: 50
+  _nut: 200
+  _fuel: 70
   _isVisited: 0
   _risk: 10
   _nodeType: 0

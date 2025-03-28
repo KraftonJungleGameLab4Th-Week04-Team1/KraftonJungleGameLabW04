@@ -15,11 +15,11 @@ MonoBehaviour:
   _nodeGroup: 2
   _NodeName: Fortran
   _nodeNum: 7
-  _nodeIdx: 11
-  _food: 100
-  _bolt: 5
-  _nut: 15
-  _fuel: 200
+  _nodeIdx: 10
+  _food: 80
+  _bolt: 30
+  _nut: 30
+  _fuel: 820
   _isVisited: 0
   _risk: 10
   _nodeType: 0

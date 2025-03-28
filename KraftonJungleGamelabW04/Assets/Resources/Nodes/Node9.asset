@@ -15,12 +15,12 @@ MonoBehaviour:
   _nodeGroup: 2
   _NodeName: Emeria
   _nodeNum: 9
-  _nodeIdx: 13
-  _food: 50
-  _bolt: 20
-  _nut: 20
-  _fuel: 200
+  _nodeIdx: 12
+  _food: 20
+  _bolt: 50
+  _nut: 10
+  _fuel: 50
   _isVisited: 0
   _risk: 5
-  _nodeType: 2
+  _nodeType: 0
   _spaceStationLevel: 0

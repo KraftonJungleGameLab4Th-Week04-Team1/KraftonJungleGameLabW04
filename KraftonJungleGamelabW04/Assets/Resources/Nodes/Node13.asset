@@ -15,11 +15,11 @@ MonoBehaviour:
   _nodeGroup: 4
   _NodeName: Resus
   _nodeNum: 13
-  _nodeIdx: 18
-  _food: 100
+  _nodeIdx: 20
+  _food: 320
   _bolt: 30
   _nut: 30
-  _fuel: 400
+  _fuel: 175
   _isVisited: 0
   _risk: 20
   _nodeType: 0
