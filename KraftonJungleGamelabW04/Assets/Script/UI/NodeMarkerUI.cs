@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +21,6 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private TMP_Text _etaText;
 
     private RectTransform _canvasRect;
-    private bool _isMoving; //비행기 움직이면 Move 입력을 막는 변수.
 
     private void Start()
     {
@@ -164,5 +162,10 @@ public class NodeMarkerUI : MonoBehaviour
         }
 
         return isVisible;
+    }
+
+    public void OnButtonExit()
+    {
+        _canvas.enabled = false;
     }
 }
