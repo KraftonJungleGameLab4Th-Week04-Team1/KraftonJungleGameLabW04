@@ -11,7 +11,7 @@ public class EscapeCheck : MonoBehaviour
     {
         _partPrefabs = new GameObject[PartCount];
 
-        for (int i = 0; i < PartCount - 1; i++)
+        for (int i = 0; i < PartCount; i++)
         {
             _partPrefabs[i] = gameObject.transform.GetChild(i).gameObject;
         }
