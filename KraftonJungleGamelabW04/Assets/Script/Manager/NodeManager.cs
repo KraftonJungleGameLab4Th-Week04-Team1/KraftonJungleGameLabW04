@@ -16,11 +16,11 @@ public class NodeManager
         }
 
         GameManager.Instance.OnConfirmAction += (nodeResources, _) => UpdateCurrentNodeAndAircraft(nodeResources);
-        GameManager.Instance.OnMoveNodeAction += GetDamageOnAircraft;
-        GameManager.Instance.OnMoveNodeAction += VisitNodeFirstTime;
+        GameManager.Instance.OnArriveAction += VisitNodeFirstTime;
+        GameManager.Instance.OnArriveAction += GetDamageOnAircraft;
 
         // Move중 가장 마지막에 호출될 함수. 가변변수 초기화
-        GameManager.Instance.OnMoveNodeAction += SetNodeRisk;
+        GameManager.Instance.OnArriveAction += SetNodeRisk;
     }
 
     private void AddDataToBossInfo(int key, string scriptableObjectPath)

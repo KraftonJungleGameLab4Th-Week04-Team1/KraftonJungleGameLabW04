@@ -33,7 +33,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.OnChangedGameTimeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnMoveNodeAction += _ => UpdateBasicUI();
         GameManager.Instance.OnConfirmAction += IgnoreParamsUpdateBasicUI;
-        
         GameManager.Instance.OnArriveAction += _ => UpdateBasicUI();
     }
 
