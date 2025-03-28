@@ -139,8 +139,12 @@ public class GameManager : MonoBehaviour
         // Get selected node
         if (Input.GetMouseButtonDown(0))
         {
-            // Check if UI is activated
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            if (IsMoving)
+            {
+                return;
+            }
+            
+            if (FindAnyObjectByType<ReportManager>())
             {
                 return;
             }
