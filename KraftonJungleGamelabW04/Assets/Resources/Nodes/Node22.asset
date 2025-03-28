@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Node22
   m_EditorClassIdentifier: 
   _nodeGroup: 5
-  _NodeName: Estovakia
+  _NodeName: "\uC5D0\uC2A4\uD1A0\uBC14\uD0A4\uC544"
   _nodeNum: 22
   _nodeIdx: 32
-  _food: 80
-  _bolt: 60
-  _nut: 60
-  _fuel: 400
+  _food: 20
+  _bolt: 40
+  _nut: 20
+  _fuel: 200
   _isVisited: 0
   _risk: 10
   _nodeType: 0

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// 생성시 자동으로 지역의 정보와 플레이어의 정보를 모두 가져옵니다. Instantiate 해주세요.

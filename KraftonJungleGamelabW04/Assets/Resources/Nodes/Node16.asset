@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Node16
   m_EditorClassIdentifier: 
   _nodeGroup: 4
-  _NodeName: Ostgaroa
+  _NodeName: "\uC624\uC2A4\uD2B8\uAC00\uB85C\uC544"
   _nodeNum: 16
   _nodeIdx: 23
-  _food: 300
-  _bolt: 5
-  _nut: 5
-  _fuel: 100
+  _food: 320
+  _bolt: 0
+  _nut: 0
+  _fuel: 200
   _isVisited: 0
   _risk: 10
   _nodeType: 2

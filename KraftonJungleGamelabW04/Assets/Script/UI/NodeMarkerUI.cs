@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +29,6 @@ public class NodeMarkerUI : MonoBehaviour
     #endregion
 
     private RectTransform _canvasRect;
-    private bool _isMoving; //비행기 움직이면 Move 입력을 막는 변수.
 
     private void Start()
     {
@@ -86,11 +84,11 @@ public class NodeMarkerUI : MonoBehaviour
 
         if(thisNode.NodeType == NodeType.RepairNode)
         {
-            _typeText.text = $"ABLE TO REPAIR";
+            _typeText.text = $"수리 가능 지역";
         }
         else if(thisNode.NodeType == NodeType.SpaceNode)
         {
-            _typeText.text = $"Escape Point";
+            _typeText.text = $"탈출 가능 지역";
         }
         else
         {
@@ -167,5 +165,10 @@ public class NodeMarkerUI : MonoBehaviour
         }
 
         return isVisible;
+    }
+
+    public void OnButtonExit()
+    {
+        _canvas.enabled = false;
     }
 }

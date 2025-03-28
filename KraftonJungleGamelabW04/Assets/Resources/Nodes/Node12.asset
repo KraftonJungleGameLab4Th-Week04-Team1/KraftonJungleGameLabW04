@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Node12
   m_EditorClassIdentifier: 
   _nodeGroup: 3
-  _NodeName: GrisWall
+  _NodeName: "\uADF8\uB9AC\uC2A4\uC6D4"
   _nodeNum: 12
-  _nodeIdx: 16
-  _food: 15
-  _bolt: 30
-  _nut: 30
+  _nodeIdx: 17
+  _food: 50
+  _bolt: 0
+  _nut: 0
   _fuel: 50
-  _isVisited: 1
+  _isVisited: 0
   _risk: 0
   _nodeType: 1
   _spaceStationLevel: 0

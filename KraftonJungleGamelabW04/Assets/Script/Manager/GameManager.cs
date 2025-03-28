@@ -174,6 +174,9 @@ public class GameManager : MonoBehaviour
 
     private void SpawnReport()
     {
-        Instantiate((GameObject)Resources.Load("HW/Canvas_ReportUI"));
+        //Instantiate((GameObject)Resources.Load("HW/Canvas_ReportUI"));
+
+        // 새 리포트 UI 테스트
+        Instantiate(Resources.Load<GameObject>("GJ/Prefabs/Canvas_ReportUI_Slider"));
     }
 }
