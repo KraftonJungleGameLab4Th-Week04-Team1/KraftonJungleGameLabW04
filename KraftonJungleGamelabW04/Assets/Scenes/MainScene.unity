@@ -2912,7 +2912,6 @@ GameObject:
   - component: {fileID: 793260202}
   - component: {fileID: 793260201}
   - component: {fileID: 793260200}
-  - component: {fileID: 793260199}
   - component: {fileID: 793260198}
   - component: {fileID: 793260203}
   m_Layer: 0
@@ -2937,18 +2936,6 @@ MonoBehaviour:
   _autoRotationSpeed: 0.25
   _rotationSpeed: 30
   _currentCameraAngle: 0
---- !u!114 &793260199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 793260197}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3afe93639febee842887ebb7544dbf50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &793260200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10051,6 +10038,10 @@ PrefabInstance:
     - target: {fileID: 8005260651695475970, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_Name
       value: LogCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005260651695475970, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8259189239998230341, guid: 962d11ae7ed38be4fa638ca811c8055f, type: 3}
       propertyPath: m_Enabled

@@ -59,7 +59,6 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     private void UpdateBasicUI()
     {
         AircraftManager aircraft = GameManager.Aircraft;
-        Debug.Log($"aircraft : {aircraft.Food}, {aircraft.Bolt}, {aircraft.Nut}, {aircraft.Fuel}, {aircraft.CurrentWeight}");
         _foodText.text = $"{aircraft.Food}";
         _boltText.text = $"{aircraft.Bolt}";
         _nutText.text = $"{aircraft.Nut}";
