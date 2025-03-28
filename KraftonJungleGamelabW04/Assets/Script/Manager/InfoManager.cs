@@ -178,6 +178,19 @@ public class InfoManager
     }
 
     /// <summary>
+    /// 자원을 입력해 소지 가능한지 검사합니다.
+    /// </summary>
+    /// <param name="food"></param>
+    /// <param name="bolt"></param>
+    /// <param name="nut"></param>
+    /// <param name="fuel"></param>
+    /// <returns></returns>
+    public bool IsPossibleWeightByResource(int food, int bolt, int nut, int fuel)
+    {
+        return GetWeightByResource(food, bolt, nut, fuel) <= _maxWeight;
+    }
+
+    /// <summary>
     /// 현재 플레이어의 자원량이 가능한 값인지 bool값으로 반환합니다.
     /// </summary>
     /// <returns></returns>

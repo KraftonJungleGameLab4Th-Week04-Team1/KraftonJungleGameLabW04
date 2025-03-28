@@ -39,17 +39,15 @@ public class AircraftManager
 
     void Start()
     {
-        //_food = GameManager.Info.InitialFood; 
-        //_fuel = GameManager.Info.InitialFuel;
         
     }
 
     public void UpdateAircraftResources(ResourceDto changedValue)
     {
-        _food += changedValue.food;
-        _bolt += changedValue.bolt;
-        _nut += changedValue.nut;
-        _fuel += changedValue.fuel;
+        _food = changedValue.food;
+        _bolt = changedValue.bolt;
+        _nut = changedValue.nut;
+        _fuel = changedValue.fuel;
 
         RepairAircraftByInputValue(changedValue.repairValue);
 
@@ -123,24 +121,11 @@ public class AircraftManager
         bool foodLack = false;
         bool fuelLack = false;
 
-
-
-
-
-        int xDistance = (NodeManager.NodeDic[destinationIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx);
-
-        if (xDistance < 0)
-        {
-
-            int distance1 = 32 + xDistance;
-            int distance2 = -xDistance;
-            xDistance = Mathf.Min(distance1, distance2);
-        }
+        int xDistance = GameManager.Info.GetDistanceFromCurrentIndex(destinationIndex);
 
         int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
         int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);
-        //int damage = NodeManager.NodeDic[destinationIndex].Risk;
-        //DamageAircraft(damage);
+
 
         if (foodToUse > _food)
         {
