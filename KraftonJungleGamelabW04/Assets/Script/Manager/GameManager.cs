@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     [Header("시간 관련")]
     private float _gameTime;
     public float GameTime => _gameTime;
-
     private readonly float _timeInterval = 0.5f; //_timeInterval당 인게임 시간 1분 증가.
     private float _time;
 
@@ -69,7 +68,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    // 사실 매니저 빼서 GameManager를 따로 관리해야 했으나, 이번 프로젝트에선 GameManager가 모든 매니저 통하기 때문에 Manager역할을 합니다.
     private void Init()
     {
         // 객체별 초기화 순서를 정하기 위한 구조 = 각 매니저별로 Awake()를 호출하지 않아도 됩니다.
@@ -140,7 +138,6 @@ public class GameManager : MonoBehaviour
                 return;
             }
             
-            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
@@ -149,13 +146,13 @@ public class GameManager : MonoBehaviour
 
                 _nodeManager.SelectedNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
                 
-                if(_nodeManager.SelectedNode.NodeNum != Instance.CurrentNodeIndex)
+                if(_nodeManager.SelectedNode.NodeNum != _currentNodeIndex)
                 {
-                    Instance.OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
+                    OnSelectNodeAction?.Invoke(_nodeManager.SelectedNode.NodeNum);
                 }
                 else
                 {
-                    Instance.OnArriveAction?.Invoke(Instance.CurrentNodeIndex);
+                    OnArriveAction?.Invoke(_currentNodeIndex);
                 }
             }
         }

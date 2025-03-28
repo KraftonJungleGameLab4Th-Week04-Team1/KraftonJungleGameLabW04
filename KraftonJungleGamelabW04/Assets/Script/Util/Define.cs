@@ -17,7 +17,8 @@ public enum GameState
 
 public enum LayerName
 {
-    NodeMarker
+    NodeMarker,
+    Plane
 }
 
 public class Define
