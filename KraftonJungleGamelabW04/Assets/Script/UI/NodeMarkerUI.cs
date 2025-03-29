@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class NodeMarkerUI : MonoBehaviour
@@ -77,11 +78,21 @@ public class NodeMarkerUI : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (IsPointerOverUI())
+        {
+            return;
+        }
+        
         int currentNodeNum = GameManager.Instance.CurrentNodeIndex;
         if (currentNodeNum != Node.NodeNum)
         {
             GameManager.Instance.OnSelectNodeAction?.Invoke(currentNodeNum, Node.NodeNum);
         }
+    }
+    
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 
     public void DeactivateNodeUI(int nodeNum)
