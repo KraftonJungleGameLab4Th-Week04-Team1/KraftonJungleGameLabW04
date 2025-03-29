@@ -32,6 +32,7 @@ public class ButtonHoldHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
     public void OnPointerDown(PointerEventData eventData)
     {
         _isButtonHold = true;
+        SoundManager.Instance.PlayBasicClickSound();
         _holdTimer = 0f;
     }
 
@@ -52,6 +53,7 @@ public class ButtonHoldHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
                 if (_repeatTimer >= _repeatInterval)
                 {
                     _repeatTimer = 0f;
+                    SoundManager.Instance.PlayBasicClickSound();
                     // 증가할때
                     if (_isIncrease)
                     {
