@@ -84,6 +84,11 @@ public class ReportManager : MonoBehaviour
         UpdateInfoUI();
     }
 
+    public CraftData GetCraftDataByNodeIndex(int index)
+    {
+        return craftDatas[index];
+    }
+
     private void InitializeInformation()
     {
         Info = GameManager.Info;

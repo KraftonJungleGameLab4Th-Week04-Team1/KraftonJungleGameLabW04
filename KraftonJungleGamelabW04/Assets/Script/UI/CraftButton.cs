@@ -11,6 +11,10 @@ public class CraftButton : MonoBehaviour
     [SerializeField] private GameObject lockedPanel;
     [SerializeField] private int craftIndex;
 
+    [SerializeField] private CraftData craftData;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI resourceText;
+
     private void Start()
     {
         if (reportManager == null)
@@ -21,7 +25,15 @@ public class CraftButton : MonoBehaviour
         craftButton.GetComponent<Button>().onClick.AddListener(CheckThisCraftButton);
         checkedButton.GetComponent<Button>().onClick.AddListener(UnCheckThisCraftButton);
 
+        craftData = reportManager.GetCraftDataByNodeIndex(craftIndex);
+        nameText.text = craftData.partName;
+        resourceText.text = craftData.requiredBolts + "/" + craftData.requiredNuts;
+
+
+
         reportManager.OnCraftCheckAction += SetCraftButtonState;
+
+
         // 초기 상태 설정 (ReportManager의 필드가 public이어야 함)
         // SetCraftButtonState(reportManager.finalCheckedIndex, reportManager.finalConfirmedIndex);
     }
