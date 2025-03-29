@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     // 액션 분리도 고려해볼만 합니다.
     // 노드최종값, 비행기최종값을 받아서 갱신하는 액션
     public Action<ResourceDto, ResourceDto> OnConfirmAction;
+    // 게임 오버시 실행할 액션
+    public Action OnGameOverAction;
     #endregion
 
     #region Properties
@@ -97,11 +99,12 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         //액션 해제
+        OnGameOverAction = null;
+        OnConfirmAction = null;
         OnArriveAction = null;
         OnChangedGameTimeAction = null;
         OnSelectNodeAction = null;
         OnMoveNodeAction = null;
-        OnConfirmAction = null;
     }
 
     private void GameStart()
@@ -112,8 +115,15 @@ public class GameManager : MonoBehaviour
 
         //무빙 확인시 현재 노드 인덱스 변경.
         OnArriveAction += ChangeCurrentNodeIndex; //현재 노드인덱스는 도착시 변경.
+        OnGameOverAction += GameOver;
     }
     
+    private void GameOver()
+    {
+        isGameFinished = true;
+        GameState = GameState.GameOver;
+    }
+
     public void StartGameTimer(bool isStart)
     {
         _isGameStarted = isStart;

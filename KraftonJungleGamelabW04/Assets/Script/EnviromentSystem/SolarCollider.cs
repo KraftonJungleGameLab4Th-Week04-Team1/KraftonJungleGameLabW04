@@ -15,8 +15,7 @@ public class SolarCollider : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer(nameof(LayerName.Plane)))
         {
             Debug.Log("게임오버");
-            GameManager.Instance.isGameFinished = true;
-            GameManager.Instance.GameState = GameState.GameOver;
+            GameManager.Instance.OnGameOverAction?.Invoke();
         }
     }
 }
