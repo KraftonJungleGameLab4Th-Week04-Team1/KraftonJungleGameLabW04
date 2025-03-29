@@ -9,6 +9,8 @@ public class NodeManager
 
     public void Init()
     {
+        NodeDic.Clear();
+
         //22개 노드 경로 추가
         for (int i = 1; i <= 22; i++)
         {
