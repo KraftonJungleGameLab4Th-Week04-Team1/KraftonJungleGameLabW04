@@ -392,8 +392,10 @@ public class ReportManager : MonoBehaviour
 
     public void CancelReport()
     {
-        if(gameObject != null)
+        if (this != null)
+        {
             Destroy(gameObject);
+        }
     }
 }
  
