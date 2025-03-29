@@ -23,6 +23,9 @@ public class NodeManager
 
         // Move중 가장 마지막에 호출될 함수. 가변변수 초기화
         GameManager.Instance.OnArriveAction += SetNodeRisk;
+        
+        // 첫번째 노드 방문 여부 활성화
+        NodeDic[1].IsVisited = true;
     }
 
     private void AddDataToNodeInfo(int key, string scriptableObjectPath)
