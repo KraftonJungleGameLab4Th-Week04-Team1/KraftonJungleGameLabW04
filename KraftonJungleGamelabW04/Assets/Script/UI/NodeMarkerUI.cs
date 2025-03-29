@@ -26,21 +26,53 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private TMP_Text _foodToGoText;
     [SerializeField] private TMP_Text _fuelToGoText;
     [SerializeField] private TMP_Text _etaText;
+    [SerializeField] private TMP_Text _foodMultiplierText;
+    [SerializeField] private TMP_Text _fuelMultiplierText;
     #endregion
 
     private RectTransform _canvasRect;
 
     private void Start()
     {
+        Initialize();
+
+        ActivateNodeMarkerCanvas(false);
+    }
+
+    void Initialize()
+    {
+
         _canvasRect = _canvas.GetComponent<RectTransform>();
         _thisNodeNum = Node.NodeNum;
 
-        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(GameManager.Instance.CurrentNodeIndex,_thisNodeNum));
+        _moveBtn.onClick.AddListener(() => OnClickMoveBtn(GameManager.Instance.CurrentNodeIndex, _thisNodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
         GameManager.Instance.OnMoveNodeAction += DeactivateNodeUI;
         GameManager.Instance.OnArriveAction += OnNotMove;
 
-        ActivateNodeMarkerCanvas(false);
+        MakeNode();
+
+    }
+
+    void MakeNode()
+    {
+        //노드의 모델링 프리팹을 하위에 instantiate. 
+        string typeString = "";
+        
+        switch(Node.NodeType)
+        {
+            case NodeType.RepairNode:
+                typeString = "RepairPin";
+                break;
+            case NodeType.SpaceNode:
+                typeString = "CraftPin";
+                break;
+            case NodeType.Normal:
+                typeString = "NormalPin";
+                break;
+        };
+        Pin newPin = Instantiate((GameObject)Resources.Load("Pins/Prefabs/" + typeString), gameObject.transform).GetComponent<Pin>();
+        newPin.Init(_thisNodeNum);
     }
 
     private void OnMouseEnter()
@@ -117,7 +149,10 @@ public class NodeMarkerUI : MonoBehaviour
         Tuple<int, int, int> distanceResource = CalculateResource(currentIdx, selectedIdx);
         _foodToGoText.text = distanceResource.Item1.ToString();
         _fuelToGoText.text = distanceResource.Item2.ToString();
-        _etaText.text = "ETA : " + distanceResource.Item3;
+        _etaText.text = "소요 시간 " + distanceResource.Item3 / 60 + " : " + distanceResource.Item3 % 60;
+
+        _foodMultiplierText.text = "x " + GameManager.Info.GetCurrentMultiplierOfRequiredFoodInMove().ToString("F2");
+        //_fuelMultiplierText.text = "x " + GameManager.Info.GetCurrentMultiplierOfRequiredFuelInMove().ToString("F2");
     }
 
     private Tuple<int,int,int> CalculateResource(int currentIdx, int selectedIdx)
