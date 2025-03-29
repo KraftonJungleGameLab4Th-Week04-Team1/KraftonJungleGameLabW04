@@ -12020,10 +12020,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionAudioSource: {fileID: 1887589977}
-  basicClickSound: {fileID: 8300000, guid: 2042a93c48f76c642ad48280606111d2, type: 3}
-  basicClickSoundVolume: 1
-  aircraftMoveSound: {fileID: 8300000, guid: 013f71806f757774abea91daa051e1c4, type: 3}
-  aircraftMoveSoundVolume: 1
+  basicClickSound: {fileID: 8300000, guid: f637b760c98a0834c96175e0d5a317c7, type: 3}
+  basicClickSoundVolume: 0.8
+  aircraftMoveSound: {fileID: 8300000, guid: 5f6fca7cbe48946428b71e701c02da0c, type: 3}
+  aircraftMoveSoundVolume: 0.8
 --- !u!1 &1906850320
 GameObject:
   m_ObjectHideFlags: 0
