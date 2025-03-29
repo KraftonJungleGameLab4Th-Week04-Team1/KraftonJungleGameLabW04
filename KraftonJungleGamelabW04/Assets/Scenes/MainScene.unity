@@ -11546,6 +11546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cd3587f3c9656e4983810b273d389fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeInterval: 1
   IsMoving: 0
 --- !u!1 &1906850320
 GameObject:
@@ -12079,7 +12080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 826.1735, y: -6.5524}
+  m_AnchoredPosition: {x: 826.1735, y: 11}
   m_SizeDelta: {x: 1258.3469, y: 63.1048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107722799
@@ -12103,6 +12104,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uC774\uB3D9\uC5D0\uB294 \uC2DD\uB7C9\uACFC \uC5F0\uB8CC\uAC00 \uC18C\uBAA8\uB429\uB2C8\uB2E4.
+    \uAC70\uB9AC\uAC00 \uBA40\uC218\uB85D, \uB0B4\uAD6C\uB3C4\uAC00 \uB0AE\uC744
+    \uC218\uB85D, \uBB34\uAC8C\uAC00 \uB192\uC744\uC218\uB85D \uB9CE\uC774 \uC18C\uBAA8\uB429\uB2C8\uB2E4.
     \uD0DC\uC591\uC73C\uB85C\uBD80\uD130 \uB3C4\uB9DD\uCE58\uC138\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3493b83c33ad62a44b255a421af9ba10, type: 2}

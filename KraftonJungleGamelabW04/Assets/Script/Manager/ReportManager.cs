@@ -378,7 +378,7 @@ public class ReportManager : MonoBehaviour
         CurrentNodeFuelText.text = nodeValue.fuel.ToString();
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
-        RepairValueText.text = "항공기가 " + _aircraftRepairValue + "% 만큼 수리됩니다.";
+        RepairValueText.text = "항공기가 +" + _aircraftRepairValue + "\n수리됩니다.";
     }
 
     //public void ConfirmReport()
