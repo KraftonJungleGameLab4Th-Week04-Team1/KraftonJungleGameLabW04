@@ -16,10 +16,10 @@ MonoBehaviour:
   _NodeName: "\uBCA8\uCE74"
   _nodeNum: 15
   _nodeIdx: 22
-  _food: 20
-  _bolt: 50
-  _nut: 20
-  _fuel: 150
+  _food: 15
+  _bolt: 30
+  _nut: 12
+  _fuel: 360
   _isVisited: 0
   _risk: 10
   _nodeType: 0

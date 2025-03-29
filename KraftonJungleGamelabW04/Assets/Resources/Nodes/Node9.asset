@@ -16,11 +16,11 @@ MonoBehaviour:
   _NodeName: "\uC5D0\uBA54\uB9AC\uC544"
   _nodeNum: 9
   _nodeIdx: 12
-  _food: 20
-  _bolt: 50
-  _nut: 10
-  _fuel: 50
+  _food: 12
+  _bolt: 1
+  _nut: 2
+  _fuel: 410
   _isVisited: 0
   _risk: 5
-  _nodeType: 0
+  _nodeType: 2
   _spaceStationLevel: 0
