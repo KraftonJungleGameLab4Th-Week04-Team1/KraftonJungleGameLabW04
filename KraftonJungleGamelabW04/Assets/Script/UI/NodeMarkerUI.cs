@@ -29,15 +29,11 @@ public class NodeMarkerUI : MonoBehaviour
     #endregion
 
     private RectTransform _canvasRect;
-    private Collider _currentHit;
-    private Collider _prevHit;
 
     private void Start()
     {
         _canvasRect = _canvas.GetComponent<RectTransform>();
         _thisNodeNum = Node.NodeNum;
-        _currentHit = null;
-        _prevHit = null;
 
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(GameManager.Instance.CurrentNodeIndex,_thisNodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
@@ -47,9 +43,6 @@ public class NodeMarkerUI : MonoBehaviour
         ActivateNodeMarkerCanvas(false);
     }
 
-    public void HandleMouseEnter() => OnMouseEnter();
-    public void HandleMouseExit() => OnMouseExit();
-
     private void OnMouseEnter()
     {
         int currentNodeNum = GameManager.Instance.CurrentNodeIndex;
@@ -57,20 +50,11 @@ public class NodeMarkerUI : MonoBehaviour
         {
             GameManager.Instance.OnSelectNodeAction?.Invoke(currentNodeNum, Node.NodeNum);
         }
-        else
-        {
-            // GameManager.Instance.OnArriveAction?.Invoke(currentNodeNum);
-        }
     }
 
-    private void OnMouseExit()
+    public void DeactivateNodeUI(int nodeNum)
     {
-        DeactivateNodeUI(Node.NodeNum);
-    }
-
-    private void DeactivateNodeUI(int nodeNum)
-    {
-        _canvas.enabled = false;
+        _canvas.gameObject.SetActive(false);
     }
     
     // Activate node marker UI
@@ -102,7 +86,7 @@ public class NodeMarkerUI : MonoBehaviour
             var newPos = new Vector3(_canvas.transform.localPosition.x, -4.5f, _canvas.transform.localPosition.z);
             _canvas.transform.localPosition = newPos;
         }
-        _canvas.enabled = isActive;
+        _canvas.gameObject.SetActive(isActive);
         
     }
 
@@ -151,7 +135,7 @@ public class NodeMarkerUI : MonoBehaviour
     private void OnClickMoveBtn(int currentIdx, int selectedIdx)
     {
         if (GameManager.Instance.IsMoving) return;
-        // if(_thisNodeNum != index) return;
+        if (FindAnyObjectByType<ReportManager>()) return;
 
         Tuple<int, int, int> distanceResource = CalculateResource(currentIdx, selectedIdx);
         int foodToUse = distanceResource.Item1;
@@ -197,6 +181,6 @@ public class NodeMarkerUI : MonoBehaviour
 
     public void OnButtonExit()
     {
-        _canvas.enabled = false;
+        _canvas.gameObject.SetActive(false);
     }
 }

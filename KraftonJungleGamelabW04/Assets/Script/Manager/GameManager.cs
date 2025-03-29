@@ -139,10 +139,31 @@ public class GameManager : MonoBehaviour
         {
             _time -= _timeInterval;
             GameTime++;
-            Debug.Log(GameTime);
+            // Debug.Log(GameTime);
 
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(nameof(LayerName.NodeMarker))))
+            {
+                if (hit.collider.GetComponent<NodeMarkerUI>() == null) return;
+                if (FindAnyObjectByType<ReportManager>()) return;
+                
+                var selectedNextNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
+                
+                if(selectedNextNode.NodeNum == _currentNodeIndex)
+                {
+                    // 현재 노드를 클릭했을 때.
+                    OnArriveAction?.Invoke(_currentNodeIndex);
+                }
+            }
+        }
+        
     }
 
     private void ChangeCurrentNodeIndex(int arrivedNodeIdx)

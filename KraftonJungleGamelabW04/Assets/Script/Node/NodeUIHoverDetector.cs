@@ -9,15 +9,8 @@ public class NodeUIHoverDetector : MonoBehaviour
         _nodeMarkerUI = GetComponentInParent<NodeMarkerUI>();
     }
 
-    private void OnMouseEnter()
-    {
-        Debug.Log($"{_nodeMarkerUI}");
-        _nodeMarkerUI?.HandleMouseEnter();
-    }
-
     private void OnMouseExit()
     {
-        Debug.Log($"{_nodeMarkerUI}");
-        _nodeMarkerUI?.HandleMouseExit();
+        _nodeMarkerUI.DeactivateNodeUI(0);
     }
 }
