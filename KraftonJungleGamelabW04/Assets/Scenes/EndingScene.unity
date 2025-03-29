@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeAmplitude: 2
-  shakeFrequency: 10
+  shakeFrequency: 8
 --- !u!1001 &797726314
 PrefabInstance:
   m_ObjectHideFlags: 0
