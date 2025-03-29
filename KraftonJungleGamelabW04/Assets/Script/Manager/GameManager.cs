@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     [Header("게임 상태")]
     private bool _isGameStarted = false;
+    public bool isGameFinished = false;
     public bool IsMoving;
     private GameState _gameState;
     public GameState GameState
@@ -108,6 +109,7 @@ public class GameManager : MonoBehaviour
     {
         GameState = GameState.Title;
         _currentNodeIndex = 1;
+        isGameFinished = false;
 
         //무빙 확인시 현재 노드 인덱스 변경.
         OnArriveAction += ChangeCurrentNodeIndex; //현재 노드인덱스는 도착시 변경.

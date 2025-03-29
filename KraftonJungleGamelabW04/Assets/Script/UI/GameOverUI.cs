@@ -10,8 +10,8 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private float _fadeDuration = 2f;
 
     [SerializeField] private float _timer = 0f;
-    [SerializeField] private float _startTextTiming = 3f;
-    [SerializeField] private float _endTiming = 5f;
+    [SerializeField] private float _startTextTiming = 1.5f;
+    [SerializeField] private float _endTiming = 3f;
 
     private bool _isFading = false;
 
