@@ -37,15 +37,25 @@ public class NodeMarkerUI : MonoBehaviour
 
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(GameManager.Instance.CurrentNodeIndex,_thisNodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
-        //GameManager.Instance.OnMoveNodeAction += ChangeNodeMarkerUI;
+        GameManager.Instance.OnMoveNodeAction += DeactivateNodeUI;
         GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);
+    }
+
+    private void DeactivateNodeUI(int nodeNum)
+    {
+        _canvas.enabled = false;
     }
     
     // Activate node marker UI
     private void ActivateNodeMarkerUI(int currentIdx, int selectedIdx)
     {
+        if (GameManager.Instance.IsMoving)
+        {
+            return;
+        }
+        
         // 고른 노드가 자기 자신이라면
         if (_thisNodeNum != selectedIdx)
         {
@@ -55,6 +65,7 @@ public class NodeMarkerUI : MonoBehaviour
         {
             Debug.Log("셀렉액션");
             ChangeNodeMarkerUI(currentIdx, selectedIdx);
+            ActivateNodeMarkerCanvas(true);
             ActivateNodeMarkerCanvas(true);
         }
     }
