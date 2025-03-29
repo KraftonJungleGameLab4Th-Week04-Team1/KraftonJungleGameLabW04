@@ -11722,8 +11722,8 @@ MonoBehaviour:
   _gameOverText: {fileID: 1569783853}
   _fadeDuration: 2
   _timer: 0
-  _startTextTiming: 5
-  _endTiming: 10
+  _startTextTiming: 2
+  _endTiming: 4
 --- !u!1 &1881840326
 GameObject:
   m_ObjectHideFlags: 0
@@ -11907,7 +11907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cd3587f3c9656e4983810b273d389fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeInterval: 1
+  _timeInterval: 2
   isGameFinished: 0
   IsMoving: 0
 --- !u!82 &1887589977
