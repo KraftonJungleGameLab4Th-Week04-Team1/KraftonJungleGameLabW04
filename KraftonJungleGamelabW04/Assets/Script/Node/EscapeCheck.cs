@@ -69,7 +69,7 @@ public class EscapeCheck : MonoBehaviour
 
     private void EscapeEnding(int food)
     {
-        if(CheckEscape(food))
+        if(CheckEscape(food) || GameManager.Instance.CurrentNodeIndex == 12)
         {
             SceneManager.LoadScene("EndingScene");
         }
