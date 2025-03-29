@@ -49,6 +49,11 @@ public class UIManager
         }
     }
 
+    public void UpdateGameTimeUI(float time)
+    {
+        _basicUI.UpdateGameTime(time);
+    }
+
     private void DeactivateUI()
     {
         _titleUICanvas.enabled = false;

@@ -21,6 +21,9 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TMP_Text _currentWeightText;
     [SerializeField] private TMP_Text _currentAircraftStateText;
 
+    [Header("Game Time")]
+    [SerializeField] private TMP_Text _gameTimeText;
+
     private void Start()
     {
         // 자식 오브젝트의 RectTransform을 가져옵니다.
@@ -64,5 +67,13 @@ public class BasicUI : MonoBehaviour, IPointerDownHandler
         _fuelText.text = $"{aircraft.Fuel}";
         _currentWeightText.text = $"{aircraft.CurrentWeight}";
         _currentAircraftStateText.text = $"{aircraft.CurrentAircraftState}";
+    }
+
+    public void UpdateGameTime(float gameTime)
+    {
+        int days = (int)gameTime / 1440;
+        int hours = (int)gameTime / 60;
+        int minutes = (int)gameTime % 60;
+        _gameTimeText.text = $"D{days + 1} {hours:D2}:{minutes:D2}";
     }
 }
