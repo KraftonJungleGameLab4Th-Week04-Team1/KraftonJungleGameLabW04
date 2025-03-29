@@ -138,14 +138,7 @@ public class NodeMarkerUI : MonoBehaviour
 
     private Tuple<int,int,int> CalculateResource(int currentIdx, int selectedIdx)
     {
-        int xDistance = (selectedIdx - currentIdx);
-
-        if (xDistance < 0)
-        {
-            int distance1 = 32 + xDistance;
-            int distance2 = -xDistance;
-            xDistance = Mathf.Min(distance1, distance2);
-        }
+        int xDistance = GameManager.Info.GetDistance(currentIdx, selectedIdx);
 
         int foodToUse = GameManager.Info.GetFoodRequiredBetweenNodes(xDistance);
         int fuelToUse = GameManager.Info.GetFuelRequiredBetweenNodes(xDistance);

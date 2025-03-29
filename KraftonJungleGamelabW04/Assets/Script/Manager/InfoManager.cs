@@ -58,6 +58,13 @@ public class InfoManager
 
             xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
         }
+        else if (xDistance >= 0) //인덱스 역초과 및 뒤로가기
+        {
+            int possibleDistance1 = xDistance;
+            int possibleDistance2 = 32 - xDistance;
+
+            xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
+        }
 
         return xDistance;
     }
@@ -70,10 +77,17 @@ public class InfoManager
     public int GetDistanceFromCurrentIndex(int destinationNodeIndex)
     {
         int xDistance = NodeManager.NodeDic[destinationNodeIndex].NodeIdx - NodeManager.NodeDic[GameManager.Instance.CurrentNodeIndex].NodeIdx;
-        if (xDistance < 0) // 음수 처리..
+        if (xDistance < 0) // 인덱스 초과 및 앞으로가기.
         {
             int possibleDistance1 = -xDistance;
             int possibleDistance2 = 32 + xDistance;
+
+            xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
+        }
+        else if(xDistance >= 0) //인덱스 역초과 및 뒤로가기
+        {
+            int possibleDistance1 = xDistance;
+            int possibleDistance2 = 32 - xDistance;
 
             xDistance = Mathf.Min(possibleDistance1, possibleDistance2);
         }
