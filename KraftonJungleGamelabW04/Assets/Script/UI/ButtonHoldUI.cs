@@ -6,8 +6,8 @@ public class ButtonHoldHandler : MonoBehaviour, IPointerDownHandler, IPointerUpH
 {
     private bool _isButtonHold = false;
 
-    private float _holdDuration = 0.2f;
-    private float _repeatInterval = 0.1f;
+    private float _holdDuration = 0.1f;
+    private float _repeatInterval = 0.05f;
     private float _holdTimer = 0f;
     private float _repeatTimer = 0f;
 
