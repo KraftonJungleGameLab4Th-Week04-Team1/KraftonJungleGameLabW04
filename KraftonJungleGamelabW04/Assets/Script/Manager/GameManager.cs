@@ -39,7 +39,15 @@ public class GameManager : MonoBehaviour
     #region Properties
     [Header("시간 관련")]
     private float _gameTime;
-    public float GameTime => _gameTime;
+    public float GameTime
+    {
+        get => _gameTime;
+        set
+        {
+            _gameTime = value;
+            _uiManager.UpdateGameTimeUI(value);
+        }
+    }
     [SerializeField] private float _timeInterval = 1f; //_timeInterval당 인게임 시간 1분 증가.
     private float _time;
 
@@ -112,7 +120,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeGameTime(float time)
     {
-        _gameTime += time;
+        GameTime += time;
         OnChangedGameTimeAction?.Invoke(GameTime);
     }
 
@@ -131,7 +139,7 @@ public class GameManager : MonoBehaviour
         if (_time >= _timeInterval)
         {
             _time -= _timeInterval;
-            _gameTime++;
+            GameTime++;
             Debug.Log(GameTime);
             OnChangedGameTimeAction?.Invoke(GameTime);
         }

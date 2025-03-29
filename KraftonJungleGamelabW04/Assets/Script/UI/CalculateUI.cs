@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CalculateUI : MonoBehaviour, IPointerDownHandler
+public class CalculateUI : MonoBehaviour //, IPointerDownHandler
 {
     private RectTransform _rectTransform;
 
@@ -16,6 +16,7 @@ public class CalculateUI : MonoBehaviour, IPointerDownHandler
         _rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
     }
 
+    /* [Legacy Code]
     public void OnPointerDown(PointerEventData eventData)
     {
         _isPanelOn = !_isPanelOn;
@@ -28,4 +29,5 @@ public class CalculateUI : MonoBehaviour, IPointerDownHandler
             _rectTransform.DOAnchorPosY(30, _panelMoveSpeed).SetEase(Ease.OutExpo);
         }
     }
+    */
 }
