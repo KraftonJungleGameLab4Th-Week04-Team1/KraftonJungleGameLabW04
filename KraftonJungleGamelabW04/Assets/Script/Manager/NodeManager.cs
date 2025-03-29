@@ -12,7 +12,7 @@ public class NodeManager
         //22개 노드 경로 추가
         for (int i = 1; i <= 22; i++)
         {
-            AddDataToBossInfo(i, "Nodes/Node" + i.ToString());
+            AddDataToNodeInfo(i, "Nodes/Node" + i.ToString());
         }
 
         GameManager.Instance.OnConfirmAction += (nodeResources, _) => UpdateCurrentNodeAndAircraft(nodeResources);
@@ -23,7 +23,7 @@ public class NodeManager
         GameManager.Instance.OnArriveAction += SetNodeRisk;
     }
 
-    private void AddDataToBossInfo(int key, string scriptableObjectPath)
+    private void AddDataToNodeInfo(int key, string scriptableObjectPath)
     {
         if (!NodeDic.ContainsKey(key))
         {
@@ -69,3 +69,5 @@ public class NodeManager
         }
     }
 }
+
+
