@@ -11932,7 +11932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cd3587f3c9656e4983810b273d389fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeInterval: 2
+  _timeInterval: 1.5
   isGameFinished: 0
   IsMoving: 0
 --- !u!82 &1887589977

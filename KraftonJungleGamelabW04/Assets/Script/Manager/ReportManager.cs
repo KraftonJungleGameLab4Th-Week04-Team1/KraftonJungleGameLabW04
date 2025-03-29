@@ -84,6 +84,11 @@ public class ReportManager : MonoBehaviour
         UpdateInfoUI();
     }
 
+    public CraftData GetCraftDataByNodeIndex(int index)
+    {
+        return craftDatas[index];
+    }
+
     private void InitializeInformation()
     {
         Info = GameManager.Info;
@@ -160,7 +165,11 @@ public class ReportManager : MonoBehaviour
     //Repair functions.
     public void AddBoltToUse()
     {
-        if(aircraftValue.bolt == 0 && nodeValue.bolt == 0) return;
+        if (aircraftValue.bolt == 0 && nodeValue.bolt == 0) return;
+
+        // hp 최대라면 자원 넣지 않음
+        if (Info.GetRepairValue(_boltToUse, _nutToUse) + GameManager.Aircraft.CurrentAircraftState >= 100) return;
+
         if(nodeValue.bolt <= 0)
         {
             aircraftValue.bolt -= _amountOfBoltMovingByInput;
@@ -171,12 +180,13 @@ public class ReportManager : MonoBehaviour
         }
         _boltToUse += _amountOfBoltMovingByInput;
         aircraftValue.repairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
+        
         UpdateInfoUI();
     }
 
     public void DecreaseBoltToUse()
     {
-        if(_boltToUse <= 0) return;
+        if (_boltToUse <= 0) return;
         _boltToUse -= _amountOfBoltMovingByInput;
         nodeValue.bolt += _amountOfBoltMovingByInput;
         aircraftValue.repairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
@@ -186,7 +196,10 @@ public class ReportManager : MonoBehaviour
     public void AddNutToUse()
     {
         if(aircraftValue.nut == 0 && nodeValue.nut == 0) return;
-        if(nodeValue.nut <= 0)
+        // hp 최대라면 자원 넣지 않음
+        if (Info.GetRepairValue(_boltToUse, _nutToUse) + GameManager.Aircraft.CurrentAircraftState >= 100) return;
+
+        if (nodeValue.nut <= 0)
         {
             aircraftValue.nut -= _amountOfNutMovingByInput;
         }
