@@ -154,7 +154,7 @@ public class ReportManager : MonoBehaviour
         }
 
         //상단 도시이름 설정.
-        CityNameText.text = currentNode.NodeName;
+        CityNameText.text = "<" + currentNode.NodeName + ">";
     }
    
 
@@ -171,7 +171,7 @@ public class ReportManager : MonoBehaviour
             nodeValue.bolt -= _amountOfBoltMovingByInput;
         }
         _boltToUse += _amountOfBoltMovingByInput;
-        _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
+        aircraftValue.repairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
         UpdateInfoUI();
     }
 
@@ -180,7 +180,7 @@ public class ReportManager : MonoBehaviour
         if(_boltToUse <= 0) return;
         _boltToUse -= _amountOfBoltMovingByInput;
         nodeValue.bolt += _amountOfBoltMovingByInput;
-        _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
+        aircraftValue.repairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
         UpdateInfoUI();
     }
 
@@ -196,7 +196,7 @@ public class ReportManager : MonoBehaviour
             nodeValue.nut -= _amountOfNutMovingByInput;
         }
         _nutToUse += _amountOfNutMovingByInput;
-        _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
+        aircraftValue.repairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
         UpdateInfoUI();
     }
 
@@ -205,8 +205,8 @@ public class ReportManager : MonoBehaviour
         if(_nutToUse <= 0) return;
         _nutToUse -= _amountOfNutMovingByInput;
         nodeValue.nut += _amountOfNutMovingByInput;
-        _aircraftRepairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
-        
+        aircraftValue.repairValue = Info.GetRepairValue(_boltToUse, _nutToUse);
+
         UpdateInfoUI();
     }
 
@@ -378,7 +378,7 @@ public class ReportManager : MonoBehaviour
         CurrentNodeFuelText.text = nodeValue.fuel.ToString();
         CurrentBoltsToUseText.text = _boltToUse.ToString();
         CurrentNutsToUseText.text = _nutToUse.ToString();
-        RepairValueText.text = "항공기가 +" + _aircraftRepairValue + "\n수리됩니다.";
+        RepairValueText.text = "항공기가 " + aircraftValue.repairValue + "%\n 수리됩니다.";
     }
 
     //public void ConfirmReport()
