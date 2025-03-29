@@ -60,8 +60,12 @@ public class NodeManager
 
     public void GetDamageOnAircraft(int nextNodeIdx)
     {
-        Debug.Log("GetDamageOnAircraft : " + NodeDic[nextNodeIdx].Risk);
-        GameManager.Aircraft.DamageAircraft(NodeDic[nextNodeIdx].Risk);
+        if(GameManager.Instance.CurrentNodeIndex != nextNodeIdx)
+        {
+            Debug.Log("GetDamageOnAircraft : " + NodeDic[nextNodeIdx].Risk);
+            GameManager.Aircraft.DamageAircraft(NodeDic[nextNodeIdx].Risk);
+        }
+
     }
 
     // 이동 확정 시 노드들의 기본 리스크(이벤트 적용 전)를 재설정합니다.    
