@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
             _uiManager.UpdateGameTimeUI(value);
         }
     }
-    [SerializeField] private float _timeInterval = 2f; //_timeInterval당 인게임 시간 1분 증가.
+    [SerializeField] private float _timeInterval = 1.5f; //_timeInterval당 인게임 시간 1분 증가.
     private float _time;
 
     [Header("노드 관련")]
