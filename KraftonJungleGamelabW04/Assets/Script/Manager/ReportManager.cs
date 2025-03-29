@@ -218,20 +218,10 @@ public class ReportManager : MonoBehaviour
     public void TakeNut() => TransferResource(ResourceType.Nut, isTaking: true);
     public void ReleaseNut() => TransferResource(ResourceType.Nut, isTaking: false);
 
-    public void TakeFuel()
-    {
-        int amount = Mathf.Min(nodeValue.fuel, 5);
-        while (amount > 0 && !TransferResource(ResourceType.Fuel, true, amount))
-        {
-            amount--;
-        }
-    }
+    public void TakeFuel() => TransferResource(ResourceType.Fuel, isTaking: true);
 
-    public void ReleaseFuel()
-    {
-        int amount = Mathf.Min(aircraftValue.fuel, 5);
-        TransferResource(ResourceType.Fuel, false, amount);
-    }
+    public void ReleaseFuel() => TransferResource(ResourceType.Fuel, isTaking: false);
+
 
     private bool TransferResource(ResourceType type, bool isTaking, int amount = 1)
     {
