@@ -213,6 +213,16 @@ public class InfoManager
         return GetCurrentWeight() < _maxWeight;
     }
 
+    public float GetCurrentMultiplierOfRequiredFoodInMove()
+    {
+        AircraftManager aircraftManager;
+        aircraftManager = GameManager.Aircraft;
+
+        float currentMultiplier = (1 + ((float)aircraftManager.CurrentWeight / aircraftManager.MaxWeight)) * ((float)(2 * _maxAircraftState - aircraftManager.CurrentAircraftState) / aircraftManager.MaxAircraftState);
+        Debug.Log(currentMultiplier + " " + aircraftManager.CurrentWeight + " " + aircraftManager.CurrentAircraftState);
+        return currentMultiplier;
+    }
+
     /// <summary>
     /// 볼트와 너트 값을 기반으로 수리되는 기체의 상태의 수치를 반환합니다. 최대치를 넘어가는 수리의 경우 인수가 늘어나도 그 이상의 값이 반환되지 않습니다.
     /// 실제로 수리 행동을 진행하는 경우 반환되는 값을 기반으로 액션을 트리거 해주세요.

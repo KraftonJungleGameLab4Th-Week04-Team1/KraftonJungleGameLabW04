@@ -26,8 +26,8 @@ public class NodeMarkerUI : MonoBehaviour
     [SerializeField] private TMP_Text _foodToGoText;
     [SerializeField] private TMP_Text _fuelToGoText;
     [SerializeField] private TMP_Text _etaText;
-    [SerializeField] private TMP_Text _foodQuotinentText;
-    [SerializeField] private TMP_Text _fuelQuotinentText;
+    [SerializeField] private TMP_Text _foodMultiplierText;
+    [SerializeField] private TMP_Text _fuelMultiplierText;
     #endregion
 
     private RectTransform _canvasRect;
@@ -149,7 +149,10 @@ public class NodeMarkerUI : MonoBehaviour
         Tuple<int, int, int> distanceResource = CalculateResource(currentIdx, selectedIdx);
         _foodToGoText.text = distanceResource.Item1.ToString();
         _fuelToGoText.text = distanceResource.Item2.ToString();
-        _etaText.text = "소요 시간 : " + distanceResource.Item3 / 60 + "시간 " + distanceResource.Item3 % 60 + "분";
+        _etaText.text = "소요 시간 " + distanceResource.Item3 / 60 + " : " + distanceResource.Item3 % 60;
+
+        _foodMultiplierText.text = "x " + GameManager.Info.GetCurrentMultiplierOfRequiredFoodInMove().ToString("F2");
+        //_fuelMultiplierText.text = "x " + GameManager.Info.GetCurrentMultiplierOfRequiredFuelInMove().ToString("F2");
     }
 
     private Tuple<int,int,int> CalculateResource(int currentIdx, int selectedIdx)
@@ -176,6 +179,7 @@ public class NodeMarkerUI : MonoBehaviour
         {
             // UseResourceForFly 액션 순서 파악하고 넣는거로 리팩토링 예정
             GameManager.Aircraft.UseResourceForFly(selectedIdx);
+            SoundManager.Instance.PlayAircraftMoveSound();
             GameManager.Instance.OnMoveNodeAction?.Invoke(selectedIdx);
             GameManager.Instance.IsMoving = true;
         }
