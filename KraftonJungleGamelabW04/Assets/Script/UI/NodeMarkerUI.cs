@@ -144,6 +144,7 @@ public class NodeMarkerUI : MonoBehaviour
         {
             // UseResourceForFly 액션 순서 파악하고 넣는거로 리팩토링 예정
             GameManager.Aircraft.UseResourceForFly(selectedIdx);
+            SoundManager.Instance.PlayAircraftMoveSound();
             GameManager.Instance.OnMoveNodeAction?.Invoke(selectedIdx);
             GameManager.Instance.IsMoving = true;
         }
