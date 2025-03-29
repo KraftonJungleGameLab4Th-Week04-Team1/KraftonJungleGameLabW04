@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
     [Header("노드 관련")]
     private int _currentNodeIndex;
     public int CurrentNodeIndex => _currentNodeIndex;
-    private Node _selectedNextNode;
 
     [Header("게임 상태")]
     private bool _isGameStarted = false;
@@ -140,45 +139,31 @@ public class GameManager : MonoBehaviour
         {
             _time -= _timeInterval;
             GameTime++;
-            Debug.Log(GameTime);
+            // Debug.Log(GameTime);
+
             OnChangedGameTimeAction?.Invoke(GameTime);
         }
-        
-        // Get selected node
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (IsMoving)
-            {
-                return;
-            }
-            
-            if (FindAnyObjectByType<ReportManager>())
-            {
-                return;
-            }
-            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(nameof(LayerName.NodeMarker), nameof(LayerName.Earth))))
             {
-                // 지구 클릭 시 return
-                NodeMarkerUI nodeMarker = hit.collider.GetComponent<NodeMarkerUI>();
-                if (nodeMarker == null) return;
-
-                _selectedNextNode = nodeMarker.Node;
-
-                if(_selectedNextNode.NodeNum != _currentNodeIndex)
-                {
-                    OnSelectNodeAction?.Invoke(_currentNodeIndex ,_selectedNextNode.NodeNum);
-                }
-                else
+                if (hit.collider.GetComponent<NodeMarkerUI>() == null) return;
+                if (FindAnyObjectByType<ReportManager>()) return;
+                
+                var selectedNextNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
+                
+                if(selectedNextNode.NodeNum == _currentNodeIndex)
                 {
                     // 현재 노드를 클릭했을 때.
                     OnArriveAction?.Invoke(_currentNodeIndex);
                 }
             }
         }
+        
     }
 
     private void ChangeCurrentNodeIndex(int arrivedNodeIdx)

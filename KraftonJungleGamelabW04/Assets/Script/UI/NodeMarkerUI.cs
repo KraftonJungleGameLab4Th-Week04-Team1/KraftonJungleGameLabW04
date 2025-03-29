@@ -43,9 +43,18 @@ public class NodeMarkerUI : MonoBehaviour
         ActivateNodeMarkerCanvas(false);
     }
 
-    private void DeactivateNodeUI(int nodeNum)
+    private void OnMouseEnter()
     {
-        _canvas.enabled = false;
+        int currentNodeNum = GameManager.Instance.CurrentNodeIndex;
+        if (currentNodeNum != Node.NodeNum)
+        {
+            GameManager.Instance.OnSelectNodeAction?.Invoke(currentNodeNum, Node.NodeNum);
+        }
+    }
+
+    public void DeactivateNodeUI(int nodeNum)
+    {
+        _canvas.gameObject.SetActive(false);
     }
     
     // Activate node marker UI
@@ -66,7 +75,6 @@ public class NodeMarkerUI : MonoBehaviour
             Debug.Log("셀렉액션");
             ChangeNodeMarkerUI(currentIdx, selectedIdx);
             ActivateNodeMarkerCanvas(true);
-            ActivateNodeMarkerCanvas(true);
         }
     }
 
@@ -78,7 +86,7 @@ public class NodeMarkerUI : MonoBehaviour
             var newPos = new Vector3(_canvas.transform.localPosition.x, -4.5f, _canvas.transform.localPosition.z);
             _canvas.transform.localPosition = newPos;
         }
-        _canvas.enabled = isActive;
+        _canvas.gameObject.SetActive(isActive);
         
     }
 
@@ -127,7 +135,7 @@ public class NodeMarkerUI : MonoBehaviour
     private void OnClickMoveBtn(int currentIdx, int selectedIdx)
     {
         if (GameManager.Instance.IsMoving) return;
-        // if(_thisNodeNum != index) return;
+        if (FindAnyObjectByType<ReportManager>()) return;
 
         Tuple<int, int, int> distanceResource = CalculateResource(currentIdx, selectedIdx);
         int foodToUse = distanceResource.Item1;
@@ -173,6 +181,6 @@ public class NodeMarkerUI : MonoBehaviour
 
     public void OnButtonExit()
     {
-        _canvas.enabled = false;
+        _canvas.gameObject.SetActive(false);
     }
 }
