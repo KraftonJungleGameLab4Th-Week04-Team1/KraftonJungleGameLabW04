@@ -71,7 +71,10 @@ public class PlaneController : MonoBehaviour
             transform.rotation = _planes[_targetNodeIdx].rotation;
             _curNodeIdx = _targetNodeIdx;
             _isMoving = false;
-            GameManager.Instance.OnArriveAction?.Invoke(_curNodeIdx + 1);
+            if (!GameManager.Instance.isGameFinished)
+            {
+                GameManager.Instance.OnArriveAction?.Invoke(_curNodeIdx + 1);
+            }
             return;
         }
 
