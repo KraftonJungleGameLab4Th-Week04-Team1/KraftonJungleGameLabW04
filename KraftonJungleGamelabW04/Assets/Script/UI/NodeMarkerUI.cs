@@ -29,11 +29,15 @@ public class NodeMarkerUI : MonoBehaviour
     #endregion
 
     private RectTransform _canvasRect;
+    private Collider _currentHit;
+    private Collider _prevHit;
 
     private void Start()
     {
         _canvasRect = _canvas.GetComponent<RectTransform>();
         _thisNodeNum = Node.NodeNum;
+        _currentHit = null;
+        _prevHit = null;
 
         _moveBtn.onClick.AddListener(() => OnClickMoveBtn(GameManager.Instance.CurrentNodeIndex,_thisNodeNum));
         GameManager.Instance.OnSelectNodeAction += ActivateNodeMarkerUI;
@@ -41,6 +45,27 @@ public class NodeMarkerUI : MonoBehaviour
         GameManager.Instance.OnArriveAction += OnNotMove;
 
         ActivateNodeMarkerCanvas(false);
+    }
+
+    public void HandleMouseEnter() => OnMouseEnter();
+    public void HandleMouseExit() => OnMouseExit();
+
+    private void OnMouseEnter()
+    {
+        int currentNodeNum = GameManager.Instance.CurrentNodeIndex;
+        if (currentNodeNum != Node.NodeNum)
+        {
+            GameManager.Instance.OnSelectNodeAction?.Invoke(currentNodeNum, Node.NodeNum);
+        }
+        else
+        {
+            // GameManager.Instance.OnArriveAction?.Invoke(currentNodeNum);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        DeactivateNodeUI(Node.NodeNum);
     }
 
     private void DeactivateNodeUI(int nodeNum)
@@ -65,7 +90,6 @@ public class NodeMarkerUI : MonoBehaviour
         {
             Debug.Log("셀렉액션");
             ChangeNodeMarkerUI(currentIdx, selectedIdx);
-            ActivateNodeMarkerCanvas(true);
             ActivateNodeMarkerCanvas(true);
         }
     }
