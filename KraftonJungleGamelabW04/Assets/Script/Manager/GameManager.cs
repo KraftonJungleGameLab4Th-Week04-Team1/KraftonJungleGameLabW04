@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     [Header("시간 관련")]
     private float _gameTime;
     public float GameTime => _gameTime;
-    private readonly float _timeInterval = 0.5f; //_timeInterval당 인게임 시간 1분 증가.
+    [SerializeField] private float _timeInterval = 1f; //_timeInterval당 인게임 시간 1분 증가.
     private float _time;
 
     [Header("노드 관련")]
