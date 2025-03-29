@@ -121,11 +121,11 @@ public class ReportManager : MonoBehaviour
         int i = 0;
         while (i < GameManager.NodeManager.spaceStationParts.Length && GameManager.NodeManager.spaceStationParts[i])
         {
-            i++;
+            i++; 
         }
         finalCheckedIndex = i - 1;
         finalConfirmedIndex = i - 1;
-
+        Invoke("UpdateCraftButton", 0.15f);
         // Load all CraftData ScriptableObjects from Resources/CraftDatas/
         craftDatas = Resources.LoadAll<CraftData>("CraftDatas");
     }
@@ -307,16 +307,9 @@ public class ReportManager : MonoBehaviour
     #region Crafts
     //Craft Functions.
 
-    // Craft button triggers
-    //public void CraftPartA() => CheckCraftPart(0);
-    //public void CraftPartB() => CheckCraftPart(1);
-    //public void CraftPartC() => CheckCraftPart(2);
-    //public void CraftPartD() => CheckCraftPart(3);
-    //public void CraftPartE() => CheckCraftPart(4);
-    ////public void CraftPartF() => CheckCraftPart(5);
     public void CheckCraftPart(int partIndex)
     {
-        if (partIndex < 0 || partIndex >= craftDatas.Length) return;
+        if (partIndex < 0 || partIndex >= craftDatas.Length || partIndex >= GameManager.NodeManager.spaceStationParts.Length) return;
 
         CraftData craftData = craftDatas[partIndex];
         int totalBoltsAvailable = nodeValue.bolt + aircraftValue.bolt;
@@ -324,49 +317,45 @@ public class ReportManager : MonoBehaviour
 
         if (totalBoltsAvailable < craftData.requiredBolts || totalNutsAvailable < craftData.requiredNuts) return;
 
-        //GameManager.NodeManager.spaceStationParts[craftData.partIndex] = true;
+        int boltsFromNode = Math.Min(nodeValue.bolt, craftData.requiredBolts);
+        nodeValue.bolt -= boltsFromNode;
+        aircraftValue.bolt -= (craftData.requiredBolts - boltsFromNode);
 
-        // Deduct bolts
-        if (nodeValue.bolt >= craftData.requiredBolts)
-        {
-            nodeValue.bolt -= craftData.requiredBolts;
-        }
-        else
-        {
-            int remainingBolts = craftData.requiredBolts - nodeValue.bolt;
-            aircraftValue.bolt -= remainingBolts;
-            nodeValue.bolt = 0;
-        }
-
-        // Deduct nuts
-        if (nodeValue.nut >= craftData.requiredNuts)
-        {
-            nodeValue.nut -= craftData.requiredNuts;
-        }
-        else
-        {
-            int remainingNuts = craftData.requiredNuts - nodeValue.nut;
-            aircraftValue.nut -= remainingNuts;
-            nodeValue.nut = 0;
-        }
+        int nutsFromNode = Math.Min(nodeValue.nut, craftData.requiredNuts);
+        nodeValue.nut -= nutsFromNode;
+        aircraftValue.nut -= (craftData.requiredNuts - nutsFromNode);
 
         finalCheckedIndex = partIndex;
-
         UpdateCraftButton();
         UpdateInfoUI();
     }
 
     public void UnCheckCraftPart(int partIndex)
     {
-        CraftData uncheckedCraftData = craftDatas[partIndex];
+        if (partIndex < 0 || partIndex >= craftDatas.Length || partIndex >= GameManager.NodeManager.spaceStationParts.Length) return;
 
-        nodeValue.bolt += uncheckedCraftData.requiredBolts;
-        nodeValue.nut += uncheckedCraftData.requiredNuts;
+        for (int i = partIndex; i <= finalCheckedIndex; i++)
+        {
+            CraftData craftData = craftDatas[i];
+            nodeValue.bolt += craftData.requiredBolts;
+            nodeValue.nut += craftData.requiredNuts;
+        }
 
         finalCheckedIndex = partIndex - 1;
-
         UpdateCraftButton();
         UpdateInfoUI();
+    }
+
+    public void ConfirmReport()
+    {
+        for (int i = finalConfirmedIndex + 1; i <= finalCheckedIndex; i++)
+        {
+            GameManager.NodeManager.spaceStationParts[i] = true;
+        }
+        finalConfirmedIndex = finalCheckedIndex;
+
+        GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
+        Destroy(gameObject);
     }
     public void UpdateCraftButton()
     {
@@ -392,25 +381,25 @@ public class ReportManager : MonoBehaviour
         RepairValueText.text = "항공기가 " + _aircraftRepairValue + "% 만큼 수리됩니다.";
     }
 
-    public void ConfirmReport()
-    {
-        Debug.Log($"Confirming - Node: Food={nodeValue.food}, Bolt={nodeValue.bolt}, Nut={nodeValue.nut}, Fuel={nodeValue.fuel}");
-        Debug.Log($"Confirming - Aircraft: Food={aircraftValue.food}, Bolt={aircraftValue.bolt}, Nut={aircraftValue.nut}, Fuel={aircraftValue.fuel}");
-        Debug.Log($"Repair: BoltsToUse={_boltToUse}, NutsToUse={_nutToUse}, RepairValue={_aircraftRepairValue}");
+    //public void ConfirmReport()
+    //{
+    //    Debug.Log($"Confirming - Node: Food={nodeValue.food}, Bolt={nodeValue.bolt}, Nut={nodeValue.nut}, Fuel={nodeValue.fuel}");
+    //    Debug.Log($"Confirming - Aircraft: Food={aircraftValue.food}, Bolt={aircraftValue.bolt}, Nut={aircraftValue.nut}, Fuel={aircraftValue.fuel}");
+    //    Debug.Log($"Repair: BoltsToUse={_boltToUse}, NutsToUse={_nutToUse}, RepairValue={_aircraftRepairValue}");
 
-        int i = 0;
-        while (i < GameManager.NodeManager.spaceStationParts.Length && i <= finalCheckedIndex)
-        {
-            GameManager.NodeManager.spaceStationParts[i] = true;
-            i++;
-        }
+    //    int i = 0;
+    //    while (i < GameManager.NodeManager.spaceStationParts.Length && i <= finalCheckedIndex)
+    //    {
+    //        GameManager.NodeManager.spaceStationParts[i] = true;
+    //        i++;
+    //    }
 
 
 
-        GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
-        Debug.Log("after repair : " + GameManager.Aircraft.CurrentAircraftState);
-        Destroy(gameObject);
-    }
+    //    GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
+    //    Debug.Log("after repair : " + GameManager.Aircraft.CurrentAircraftState);
+    //    Destroy(gameObject);
+    //}
 
     public void CancelReport()
     {

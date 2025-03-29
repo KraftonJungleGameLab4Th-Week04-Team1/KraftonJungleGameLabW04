@@ -10874,6 +10874,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7254325346402331837}
     m_Modifications:
+    - target: {fileID: -6473291981201412006, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
+      propertyPath: craftIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1397937822148001485, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
       propertyPath: m_Name
       value: Craft4
@@ -11078,6 +11082,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7254325346402331837}
     m_Modifications:
+    - target: {fileID: -6473291981201412006, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
+      propertyPath: craftIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1397937822148001485, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
       propertyPath: m_Name
       value: Craft2
@@ -11180,6 +11188,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7254325346402331837}
     m_Modifications:
+    - target: {fileID: -6473291981201412006, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
+      propertyPath: craftIndex
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1397937822148001485, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
       propertyPath: m_Name
       value: Craft5
@@ -11282,6 +11294,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7254325346402331837}
     m_Modifications:
+    - target: {fileID: -6473291981201412006, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
+      propertyPath: craftIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1397937822148001485, guid: 714b8bfafe56c564eac5a68f9c810b99, type: 3}
       propertyPath: m_Name
       value: Craft3

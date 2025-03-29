@@ -232,7 +232,6 @@ MonoBehaviour:
   donePanel: {fileID: 8923011936258897099}
   checkedButton: {fileID: 9012491849076688588}
   lockedPanel: {fileID: 1878158440641398632}
-  requireText: {fileID: 320336399649958755}
   craftIndex: 0
 --- !u!1 &1878158440641398632
 GameObject:
