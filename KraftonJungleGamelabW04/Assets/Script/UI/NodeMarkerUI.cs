@@ -71,7 +71,8 @@ public class NodeMarkerUI : MonoBehaviour
                 typeString = "NormalPin";
                 break;
         };
-        Instantiate((GameObject)Resources.Load("Pins/Prefabs/" + typeString), gameObject.transform);
+        Pin newPin = Instantiate((GameObject)Resources.Load("Pins/Prefabs/" + typeString), gameObject.transform).GetComponent<Pin>();
+        newPin.Init(_thisNodeNum);
     }
 
     private void OnMouseEnter()
