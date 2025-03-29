@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partName: Part C
   requiredBolts: 50
-  requiredNuts: 30
+  requiredNuts: 25
   partIndex: 2

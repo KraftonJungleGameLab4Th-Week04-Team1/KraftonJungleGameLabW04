@@ -12,7 +12,7 @@ public class SolarSystem : MonoBehaviour
     public void Init()
     {
         GameManager.Instance.OnChangedGameTimeAction += SolarRotation;     // 초기 회전 설정
-        GameManager.Instance.OnArriveAction += HandleSolarMovement;
+        GameManager.Instance.OnMoveNodeAction += HandleSolarMovement;
 
         transform.rotation = Quaternion.Euler(0, 90, 0); //시작 태양위치.
     }

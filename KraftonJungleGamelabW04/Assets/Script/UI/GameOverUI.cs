@@ -10,16 +10,19 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private float _fadeDuration = 2f;
 
     [SerializeField] private float _timer = 0f;
-    [SerializeField] private float _startTextTiming = 5f;
-    [SerializeField] private float _endTiming = 10f;
+    [SerializeField] private float _startTextTiming = 3f;
+    [SerializeField] private float _endTiming = 5f;
 
     private bool _isFading = false;
 
     public void Init()
     {
-        // 자식오브젝트의 이름으로 가져옵니다. 그 이름을 가진 오브젝트는 하나입니다.
-        //_fadeInImage = transform.Find("GameOverPanel").GetComponent<Image>();
-        //_gameOverText = transform.Find("GameOverText").GetComponent<TMP_Text>();
+        Transform panel = transform.Find("GameOverPanel");
+        if (panel != null)
+        {
+            _fadeInImage = panel.GetComponent<Image>();
+            _gameOverText = panel.Find("GameOverText")?.GetComponent<TMP_Text>();
+        }
         Color c = _fadeInImage.color;
         Color c2 = _gameOverText.color;
         c.a = 0f;
@@ -27,7 +30,6 @@ public class GameOverUI : MonoBehaviour
         _fadeInImage.color = c;
         _gameOverText.color = c2;
         _isFading = false;
-        // 진엔딩이랑 같은 연출
     }
 
     public void Show()
