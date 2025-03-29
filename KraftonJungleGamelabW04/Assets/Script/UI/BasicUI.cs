@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class BasicUI : MonoBehaviour //, IPointerDownHandler
 {
@@ -28,6 +29,7 @@ public class BasicUI : MonoBehaviour //, IPointerDownHandler
     {
         // 자식 오브젝트의 RectTransform을 가져옵니다.
         _rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
+        _gameTimeText = transform.GetComponentsInChildren<TMP_Text>().FirstOrDefault(t => t.name == "GameTimeText");
         UpdateBasicUI();
     }
 
