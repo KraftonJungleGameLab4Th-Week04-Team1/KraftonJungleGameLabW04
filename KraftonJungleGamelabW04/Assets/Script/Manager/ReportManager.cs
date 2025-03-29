@@ -71,8 +71,7 @@ public class ReportManager : MonoBehaviour
 
     void Awake()
     {
-
-
+        GameManager.Instance.OnGameOverAction += CancelReport;
     }
 
     void Start()
