@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
 
     [SerializeField] private AudioSource actionAudioSource; // 단발 오디오 소스 (클릭, 버튼 클릭 등) bgm은 넣으면 안됨.
+    [SerializeField] private AudioSource bgmAudioSource; // 단발 오디오 소스 (클릭, 버튼 클릭 등) bgm은 넣으면 안됨.
 
     [SerializeField] private AudioClip basicClickSound;
     [SerializeField] private float basicClickSoundVolume;
@@ -55,5 +56,19 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(aircraftMoveSound, aircraftMoveSoundVolume);
         Debug.Log("비행기 이동 사운드 재생");
+    }
+
+    public void ToggleSound(bool isOn)
+    {
+        if (actionAudioSource.enabled)
+        {
+            actionAudioSource.enabled = false;
+            bgmAudioSource.volume = 0;
+        }
+        else
+        {
+            actionAudioSource.enabled = true;
+            bgmAudioSource.volume = 1;
+        }
     }
 }
