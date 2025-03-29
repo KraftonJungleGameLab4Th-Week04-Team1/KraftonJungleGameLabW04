@@ -16,6 +16,12 @@ public class FadeOutPanel : MonoBehaviour
 
     void Start()
     {
+        Transform panel = transform.Find("FadeoutPanel");
+        if (panel != null)
+        {
+            fadeImage = panel.GetComponent<Image>();
+            text = panel.Find("EndingText")?.GetComponent<TMP_Text>();
+        }
         Color c = fadeImage.color;
         Color c2 = text.color;
         c.a = 0f;
