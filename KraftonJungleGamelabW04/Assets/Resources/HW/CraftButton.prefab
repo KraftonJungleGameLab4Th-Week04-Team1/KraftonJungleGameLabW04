@@ -228,11 +228,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e36b22bb51bc64991cc3c5505a39b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reportManager: {fileID: 0}
   craftButton: {fileID: 4627385479592842120}
   donePanel: {fileID: 8923011936258897099}
   checkedButton: {fileID: 9012491849076688588}
   lockedPanel: {fileID: 1878158440641398632}
+  nameText: {fileID: 8522054286688682224}
+  requiredResourcesText: {fileID: 320336399649958755}
   craftIndex: 0
+  craftData: {fileID: 0}
 --- !u!1 &1878158440641398632
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +325,7 @@ GameObject:
   - component: {fileID: 4838658391237088377}
   - component: {fileID: 320336399649958755}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RequiredResources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,7 +467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3453968140277952537
 RectTransform:
   m_ObjectHideFlags: 0
@@ -771,7 +775,7 @@ GameObject:
   - component: {fileID: 698529975678838743}
   - component: {fileID: 8522054286688682224}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PartName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

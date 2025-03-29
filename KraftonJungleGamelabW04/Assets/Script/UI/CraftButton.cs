@@ -4,12 +4,19 @@ using UnityEngine.UI;
 
 public class CraftButton : MonoBehaviour
 {
+    [Header("UI References")]
     [SerializeField] private ReportManager reportManager;
     [SerializeField] private GameObject craftButton;
     [SerializeField] private GameObject donePanel;
     [SerializeField] private GameObject checkedButton;
     [SerializeField] private GameObject lockedPanel;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI requiredResourcesText;
+
+
+    [Header("CraftData References")]
     [SerializeField] private int craftIndex;
+    [SerializeField] CraftData craftData;
 
     private void Start()
     {
@@ -18,12 +25,16 @@ public class CraftButton : MonoBehaviour
             reportManager = FindAnyObjectByType<ReportManager>(); // 필요 시 유지, 권장하지 않음
         }
 
+        craftData = reportManager.GetCraftDataByIndex(craftIndex);
+        nameText.text = craftData.partName;
+        requiredResourcesText.text = craftData.requiredBolts.ToString() + "/" + craftData.requiredNuts;
+
+
         craftButton.GetComponent<Button>().onClick.AddListener(CheckThisCraftButton);
         checkedButton.GetComponent<Button>().onClick.AddListener(UnCheckThisCraftButton);
 
         reportManager.OnCraftCheckAction += SetCraftButtonState;
-        // 초기 상태 설정 (ReportManager의 필드가 public이어야 함)
-        // SetCraftButtonState(reportManager.finalCheckedIndex, reportManager.finalConfirmedIndex);
+        
     }
 
     void SetCraftButtonState(int finalCheckedIndex, int finalConfirmedIndex)
@@ -65,6 +76,5 @@ public class CraftButton : MonoBehaviour
 
     private void OnDestroy()
     {
-        //reportManager.OnCraftCheckAction -= SetCraftButtonState; // 이벤트 구독 해제
     }
 }

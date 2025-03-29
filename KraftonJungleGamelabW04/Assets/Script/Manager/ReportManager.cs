@@ -85,6 +85,11 @@ public class ReportManager : MonoBehaviour
         UpdateInfoUI();
     }
 
+    public CraftData GetCraftDataByIndex(int index)
+    {
+        return craftDatas[index];
+    }
+
     private void InitializeInformation()
     {
         Info = GameManager.Info;
@@ -345,6 +350,8 @@ public class ReportManager : MonoBehaviour
         finalConfirmedIndex = finalCheckedIndex;
 
         GameManager.Instance.OnConfirmAction?.Invoke(nodeValue, aircraftValue);
+
+        OnCraftCheckAction = null;
         Destroy(gameObject);
     }
     public void UpdateCraftButton()
@@ -393,6 +400,8 @@ public class ReportManager : MonoBehaviour
 
     public void CancelReport()
     {
+        OnCraftCheckAction = null;
+
         Destroy(gameObject);
     }
 }
