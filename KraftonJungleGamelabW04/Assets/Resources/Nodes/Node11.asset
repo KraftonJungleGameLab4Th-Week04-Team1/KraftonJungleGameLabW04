@@ -17,9 +17,9 @@ MonoBehaviour:
   _nodeNum: 11
   _nodeIdx: 14
   _food: 0
-  _bolt: 10
-  _nut: 20
-  _fuel: 1200
+  _bolt: 36
+  _nut: 12
+  _fuel: 42
   _isVisited: 0
   _risk: 10
   _nodeType: 0
