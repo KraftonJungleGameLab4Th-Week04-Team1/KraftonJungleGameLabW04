@@ -65,13 +65,13 @@ public class NodeMarkerUI : MonoBehaviour
                 typeString = "RepairPin";
                 break;
             case NodeType.SpaceNode:
-                typeString = "SpacePin";
+                typeString = "CraftPin";
                 break;
             case NodeType.Normal:
                 typeString = "NormalPin";
                 break;
         };
-        Instantiate((GameObject)Resources.Load("Pins/" + typeString), gameObject.transform);
+        Instantiate((GameObject)Resources.Load("Pins/Prefabs/" + typeString), gameObject.transform);
     }
 
     private void OnMouseEnter()
