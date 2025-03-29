@@ -159,11 +159,15 @@ public class GameManager : MonoBehaviour
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(nameof(LayerName.NodeMarker))))
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(nameof(LayerName.NodeMarker), nameof(LayerName.Earth))))
             {
-                _selectedNextNode = hit.collider.GetComponent<NodeMarkerUI>().Node;
-                
+                // 지구 클릭 시 return
+                NodeMarkerUI nodeMarker = hit.collider.GetComponent<NodeMarkerUI>();
+                if (nodeMarker == null) return;
+
+                _selectedNextNode = nodeMarker.Node;
+
                 if(_selectedNextNode.NodeNum != _currentNodeIndex)
                 {
                     OnSelectNodeAction?.Invoke(_currentNodeIndex ,_selectedNextNode.NodeNum);
