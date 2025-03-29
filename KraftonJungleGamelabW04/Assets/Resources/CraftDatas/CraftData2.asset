@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CraftData2
   m_EditorClassIdentifier: 
   partName: Part B
-  requiredBolts: 30
+  requiredBolts: 25
   requiredNuts: 20
   partIndex: 1

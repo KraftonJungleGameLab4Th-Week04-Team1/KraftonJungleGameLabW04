@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CraftData4
   m_EditorClassIdentifier: 
   partName: Part D
-  requiredBolts: 50
+  requiredBolts: 65
   requiredNuts: 50
   partIndex: 3
