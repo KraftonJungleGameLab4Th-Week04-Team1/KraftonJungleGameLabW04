@@ -9844,7 +9844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2984756405818146643, guid: 081ad97ceddf4ba40a4c914c588589ab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 19.9998
+      value: 19.999756
       objectReference: {fileID: 0}
     - target: {fileID: 2984756405818146643, guid: 081ad97ceddf4ba40a4c914c588589ab, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -12685,7 +12685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 868.0893, y: 1}
+  m_AnchoredPosition: {x: 878, y: 1}
   m_SizeDelta: {x: 1358.1787, y: 119}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2073015538
@@ -12825,7 +12825,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 826.1735, y: -6.5524}
+  m_AnchoredPosition: {x: 826.1735, y: 17}
   m_SizeDelta: {x: 1258.3469, y: 63.1048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107722799
@@ -12849,6 +12849,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uC774\uB3D9\uC5D0\uB294 \uC2DD\uB7C9\uACFC \uC5F0\uB8CC\uAC00 \uC18C\uBAA8\uB429\uB2C8\uB2E4.
+    \uC18C\uBAA8\uB7C9\uC740 \uAC70\uB9AC\uAC00 \uAE38\uC218\uB85D, \uB0B4\uAD6C\uB3C4\uAC00
+    \uC801\uC744\uC218\uB85D,\n\uBB34\uAC8C\uAC00 \uD074\uC218\uB85D \uC99D\uAC00\uD569\uB2C8\uB2E4.
     \uD0DC\uC591\uC73C\uB85C\uBD80\uD130 \uB3C4\uB9DD\uCE58\uC138\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3493b83c33ad62a44b255a421af9ba10, type: 2}
